@@ -1,0 +1,12 @@
+Done:
+Installed WPI visual code
+Uninstall old phoenix and old national instrument software
+
+
+Need to: 
+Install game tool from national instrument (can be either online or offline)
+Reboot
+Install phoenix
+Reimage roboRio (using reformat, not update)
+Install phoenix to roboRio
+Using phoenix, update talon SRX and pigeon firmware
