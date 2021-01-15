@@ -49,7 +49,7 @@ public class TankArc {
 
     	
 	       //String FILENAME = "C:\\Pathfinder\\mp_20ms_in_meter_frontcargo1_arc.csv";
-	       String FILENAME = "C:\\FIRST2019LV\\UnitTest\\Autonomous\\path_profile\\mp_20ms_in_meter_frontcargo1_arc.csv";
+	       String FILENAME = "C:\\Pathfinder\\autonomous\\mp_20ms_in_meter_arc.csv";
 	       
 	       
 	       
@@ -98,10 +98,11 @@ public class TankArc {
 	    	
 	    	
 	    	// test  
-	    	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 0.7, 1, 12.0); 
+	    	//Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 0.7, 1, 12.0); 
 	       
 	    	
-	    	
+	    	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 1.7, 2.0, 60.); 
+		       
 	    	
 	    	
 	    	
@@ -113,10 +114,73 @@ public class TankArc {
 	    	 */
 	    	
 	    	
+	    	// nowing that Pathfinder paths shouldn’t go negative,
+	    	
+	    	// 2020 robot :  left side Y is positive
+	    	
+	    	
+	    	//2021:   Glantic Search A:  tan(71.565)=3  (0,0,0) -> (1.524, 0.0, 0),  (0,0, Pathfinder.d2r(30) ) --> (1.524, -0.762, Pathfinder.d2r(30)),  (0,0, Pathfinder.d2r(30) ) ->(0.762, 2.286, Pathfinder.d2r(30)) 
+	    	
+	    	//        Barrel Path:  new Waypoint( 2.286, 0, Pathfinder.d2r(0) ), new Waypoint(2.99, -0.762, Pathfinder.d2r(-90)) , new Waypoint(2.286, -1.524, Pathfinder.d2r(-180)),new Waypoint(1.524, -0.762, Pathfinder.d2r(-270)) , new Waypoint(2.286, 0, Pathfinder.d2r(-360))
+	    	
 	        Waypoint[] points = new Waypoint[] {
+	        		    //new Waypoint(0, 0, 0),
+	        		
+	        		    // working Barrel Path:
 	        		    new Waypoint(0, 0, 0),
+	        		    new Waypoint( 2.286, 0, Pathfinder.d2r(0) ),
+	        		    new Waypoint(2.99, -0.762, Pathfinder.d2r(-90)) ,
+	        		    new Waypoint(2.286, -1.524, Pathfinder.d2r(-180)),
+	        		    new Waypoint(1.524, -0.762, Pathfinder.d2r(-270)) ,
+	        		    new Waypoint(2.286, 0, Pathfinder.d2r(-360)),
+	        		    new Waypoint(4.572, 0, Pathfinder.d2r(0)),
+	        		    new Waypoint(5.334, 0.762, Pathfinder.d2r(90)),
+	        		    new Waypoint(4.572, 1.524, Pathfinder.d2r(180)),
+	        		    new Waypoint(3.81, 0.762, Pathfinder.d2r(270)),
+	        		    new Waypoint(6.092, -1.524, Pathfinder.d2r(360)),
+	        		    new Waypoint(6.854, -0.762, Pathfinder.d2r(90)) ,
+	        		    new Waypoint(6.092, 0, Pathfinder.d2r(180))
+	        		    // end of working Barrel Path:
 	        		    
 	        		    
+	        		    //new Waypoint(0, 0, Pathfinder.d2r(0))  ,
+	        		    //new Waypoint(0.762, -0.762, Pathfinder.d2r(-90)) ,
+	        		    //new Waypoint(0, -1.524, Pathfinder.d2r(-180)),
+	        		    //new Waypoint(-0.762, -0.762, Pathfinder.d2r(-270)) ,
+	        		    //new Waypoint(0, 0, Pathfinder.d2r(-360))  
+	        		    
+	        
+	        		    //new Waypoint(1.5, 0.0, 0)
+	        		    
+	        		    //Glantic Search A:(90,90),(150,60),(180,150)  in inches 60'' = 152.4, 30 =>76.2, 90=>2.286
+	        		    // one non-stop path vs 3 different paths
+	        		    //new Waypoint(1.524, 0.0, 0)
+	        		    //new Waypoint(3.048, -0.762, 0),
+	        		    //new Waypoint(3.81,1.524, 0)
+	        		    
+	        		   // new Waypoint(1.524, -0.762, Pathfinder.d2r(30))   // second leg of Glantic Search A
+	        		    
+	        		   // new Waypoint(0.762, 2.286, 0)   // third leg of Glantic Search A
+	        		    
+	        		
+	        		   // new Waypoint(2.52, 1.7 , Pathfinder.d2r(0)) ,
+	        		    
+	        		    
+	        		    //new Waypoint(2.52, -2.3 , Pathfinder.d2r(0)) ,
+	        		    //new Waypoint(5.3, -2.3 , Pathfinder.d2r(0))
+	        		    
+	        		    
+	        		    // case #5?
+	        		    //new Waypoint(3.3, 0 , Pathfinder.d2r(0)) ,
+	        		    //new Waypoint(5.8, 1.73 , Pathfinder.d2r(0))
+	        		    
+	        		    
+	        		    
+	        		// new Waypoint(-4, -1, Pathfinder.d2r(-45)),      // Waypoint @ x=-4, y=-1, exit angle=-45 degrees
+	        		//    new Waypoint(-2, -2, 0),                        // Waypoint @ x=-2, y=-2, exit angle=0 radians
+	        		//    new Waypoint(0, 0, 0)   
+	        		
+	        		
 	        		    /*
 	        		     * Front Cargo/Panel:
 	        		     *  Front bumper need move vertically 176'' or 4.47 m, leaving 8'' to adjust
@@ -143,9 +207,10 @@ public class TankArc {
 	        		    //new Waypoint(2.78, 0.79, 0) // front Cargo  test   2.78-1 = 1.78 m which is 70''
 	        		    
 	        		    
-	        		    new Waypoint(0.5, 0, 0), 
-	        		    new Waypoint(2.28, 0.79, 0) ,
-	        		    new Waypoint(2.78, 0.79, 0)
+	        		    
+	        		    
+	        		   // new Waypoint(2.28, 0.79, 0) ,
+	        		   // new Waypoint(2.78, 0.79, 0)
 	        		    
 	        		    
 	        		    // ****  REAL FRONT PANEL, move straight 2.69 m (106'') , followed by 1.78m/70'' s-curve,  TOTAL 176'' or 4.47 m
@@ -193,9 +258,10 @@ public class TankArc {
 	        File myFile_left = new File("C:\\Pathfinder\\mp_left_test_arc.csv");
 	        Pathfinder.writeToCSV(myFile_left, left);
 	        
-	        File myFile_center = new File("C:\\Pathfinder\\mp_center_test_arc.csv");
+	        File myFile_center = new File("C:\\Pathfinder\\autonomous\\mp_x_y_center_test_arc.csv");
 	        Pathfinder.writeToCSV(myFile_center, trajectory);
 	        
+	        //System.out.println(boundHalfDegrees(r2d(6.278141)));
 	        
 	        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	        // Team 3654 Modification:  create a single combined profile used by both left and right motor, instead of two files
@@ -203,7 +269,7 @@ public class TankArc {
 	        Trajectory.Segment right_seg;
 	        Trajectory.Segment left_seg;
 	        
-	        sb.append("1,0,0,0,0,0,0,");
+	        sb.append("0,0,0,0,0,0,0,");
 	        sb.append(time_step_ms);
 	        sb.append("\n");
 	        
@@ -342,4 +408,4 @@ public class TankArc {
         return angle_degrees;
     }
 
-	}
+}
