@@ -51,7 +51,7 @@ public class OI {
 
   public OI(){
 
-  turboButton = new JoystickButton(operatorStick, RobotMap.turboButtonNumber);
+  turboButton = new JoystickButton(driverStick, RobotMap.turboButtonNumber);
   driveStraightButton = new JoystickButton(driverStick, RobotMap.driveStraightButtonNumber);
   turnLeft90Button = new JoystickButton(driverStick, RobotMap.turnLeft90ButtonNumber);
   turnRight90Button = new JoystickButton(driverStick, RobotMap.turnRight90ButtonNumber);
@@ -59,7 +59,7 @@ public class OI {
   turnRight180Button = new JoystickButton(driverStick, RobotMap.turnRight180ButtonNumber);
   colorWheelSpinButton = new JoystickButton(operatorStick, RobotMap.colorWheelSpinButtonNumber);
   colorSensorButton = new JoystickButton(operatorStick, RobotMap.colorSensorButtonNumber);
-  ballPickUpButton = new JoystickButton(driverStick, RobotMap.pickUpButtonNumber); //change to operatorStick when we have both joystick
+  ballPickUpButton = new JoystickButton(operatorStick, RobotMap.pickUpButtonNumber); //change to operatorStick when we have both joystick
   ballShooterButton = new JoystickButton(operatorStick, RobotMap.ballShooterButtonNumber); //change to operatorStick when we have both joystick
   ballFlushButton = new JoystickButton(operatorStick, RobotMap.ballFlushButtonNumber);
   limeLightButton = new JoystickButton(driverStick, RobotMap.limeLightButtonNumber);
