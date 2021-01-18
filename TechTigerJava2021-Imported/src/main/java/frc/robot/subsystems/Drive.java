@@ -28,10 +28,13 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 
-//import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
-//import com.ctre.phoenix.motorcontrol.SensorTerm;
-//import com.ctre.phoenix.sensors.PigeonIMU_StatusFrame;
-//import com.ctre.phoenix.motorcontrol.StatusFrame;
+
+import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
+import com.ctre.phoenix.motorcontrol.SensorTerm;
+import com.ctre.phoenix.sensors.PigeonIMU_StatusFrame;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
+
+
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import java.io.*;
@@ -79,6 +82,8 @@ public class Drive extends Subsystem {
   public double min_command = 0.05;
  
   double _pigeonRemoteSensoreScaleFactor = 1;
+  //double _pigeonRemoteSensoreScaleFactor = (((double) (3600)) / 8192)  ; // the remote sensor reading is 0.1 degree each value
+
 
   BufferedTrajectoryPointStream _leftBufferedStream1 = new BufferedTrajectoryPointStream();
   BufferedTrajectoryPointStream _rightBufferedStream1 = new BufferedTrajectoryPointStream();
@@ -112,12 +117,20 @@ public class Drive extends Subsystem {
 
    public Drive() {
     
-      readMPFile();
+      readMPFile(false ); // false ==> not use Arc or pigeon
 
       pigeonVinnie.configFactoryDefault();
       pigeonVinnie.setYaw(0.0);
       pigeonVinnie.setFusedHeading(0.0);
+
+
+    
       configureDrive();
+
+      // or 
+  
+     // configureArcDrive();
+
 
       //analogLowGoalDistanceSensor = new AnalogInput(1);//RobotMap.analogLowGoalDistanceSensorPort
       //analogLowGoalDistanceSensor.setAverageBits(20);
@@ -569,6 +582,236 @@ public class Drive extends Subsystem {
       zeroSensors();
   }
 
+
+  
+  public void configureArcDrive() {
+    leftFrontTalon.configFactoryDefault();
+    leftBackTalon.configFactoryDefault();
+    rightFrontTalon.configFactoryDefault();
+    rightBackTalon.configFactoryDefault();
+   
+    
+    leftFrontTalon.set(ControlMode.PercentOutput, 0);
+    rightFrontTalon.set(ControlMode.PercentOutput, 0);
+    
+    leftFrontTalon.configNeutralDeadband(0.05,30);
+    rightFrontTalon.configNeutralDeadband(0.05,30);
+    leftBackTalon.configNeutralDeadband(0.0,30);
+    rightBackTalon.configNeutralDeadband(0.0,30);
+    
+    leftBackTalon.follow(leftFrontTalon);
+    rightBackTalon.follow(rightFrontTalon);
+
+    leftFrontTalon.configClosedloopRamp(1);
+    rightFrontTalon.configClosedloopRamp(1);
+    rightFrontTalon.configOpenloopRamp(1);
+    leftFrontTalon.configOpenloopRamp(1);
+    
+    rightFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, RobotMap.pidLoopTimeout);
+    leftFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, RobotMap.pidLoopTimeout);
+
+    leftFrontTalon.selectProfileSlot(0,0);
+    rightFrontTalon.selectProfileSlot(0,0);
+
+    leftFrontTalon.config_kF(0,0.0455,30);
+    leftFrontTalon.config_kP(0,0.095,30);
+    leftFrontTalon.config_kI(0,0,30);
+    leftFrontTalon.config_kD(0,0,30);
+
+    rightFrontTalon.config_kF(0,0.0455,30);
+    rightFrontTalon.config_kP(0,0.095,30);
+    rightFrontTalon.config_kI(0,0,30);
+    rightFrontTalon.config_kD(0,0,30);
+    
+
+    // copied from Arc setup
+
+
+
+    
+    //  sensor:  integrated and remote
+ 
+    //leftFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,  RobotMap.PID_PRIMARY, RobotMap.pidLoopTimeout);
+    leftFrontTalon.configSelectedFeedbackCoefficient(1, 	RobotMap.PID_PRIMARY,	RobotMap.pidLoopTimeout);
+
+    leftFrontTalon.configRemoteFeedbackFilter(0,	RemoteSensorSource.Off, RobotMap.REMOTE_0,	RobotMap.pidLoopTimeout);
+
+    leftFrontTalon.configRemoteFeedbackFilter(pigeonVinnie.getDeviceID(),	RemoteSensorSource.GadgeteerPigeon_Yaw, RobotMap.REMOTE_1,	RobotMap.pidLoopTimeout);
+
+    leftFrontTalon.configSelectedFeedbackSensor(	FeedbackDevice.RemoteSensor1, RobotMap.PID_TURN,  RobotMap.pidLoopTimeout);
+    // Coefficient has HUGE impact on the PID:   difference x Coefficient,  3600/8192,  so if coefficient is 1, it will be 22.7 sensor unit / degree ==> more aggressive PID correction, if x (3600/8194), ==> sensor unit is 10 unit/degree
+    leftFrontTalon.configSelectedFeedbackCoefficient(	_pigeonRemoteSensoreScaleFactor, RobotMap.PID_TURN, RobotMap.pidLoopTimeout);
+
+
+
+    rightFrontTalon.configRemoteFeedbackFilter(leftFrontTalon.getDeviceID(),	RemoteSensorSource.TalonFX_SelectedSensor,	RobotMap.REMOTE_0,	RobotMap.kTimeoutMs);	
+    rightFrontTalon.configRemoteFeedbackFilter(pigeonVinnie.getDeviceID(),RemoteSensorSource.GadgeteerPigeon_Yaw,RobotMap.REMOTE_1,RobotMap.kTimeoutMs);
+    rightFrontTalon.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor0, RobotMap.pidLoopTimeout);			
+    rightFrontTalon.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.IntegratedSensor, RobotMap.pidLoopTimeout);
+
+    rightFrontTalon.configSelectedFeedbackSensor(	FeedbackDevice.IntegratedSensor, RobotMap.PID_PRIMARY, RobotMap.pidLoopTimeout);
+    rightFrontTalon.configSelectedFeedbackCoefficient(1, 	RobotMap.PID_PRIMARY,	RobotMap.pidLoopTimeout);
+
+    rightFrontTalon.configSelectedFeedbackSensor(	FeedbackDevice.RemoteSensor1,  RobotMap.PID_TURN,   RobotMap.pidLoopTimeout);
+    rightFrontTalon.configSelectedFeedbackCoefficient(	_pigeonRemoteSensoreScaleFactor, RobotMap.PID_TURN, RobotMap.pidLoopTimeout);
+
+
+    //drive     PIDF  kSlotIDx = 0
+    //leftFrontTalon.config_kF(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kF, RobotMap.pidLoopTimeout);	    
+    //leftFrontTalon.config_kP(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kP, RobotMap.pidLoopTimeout);	    
+    //leftFrontTalon.config_kI(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kI, RobotMap.pidLoopTimeout);	    
+    //leftFrontTalon.config_kD(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kD, RobotMap.pidLoopTimeout);	    
+
+
+
+    leftFrontTalon.config_IntegralZone(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
+    leftFrontTalon.configClosedLoopPeakOutput(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
+    leftFrontTalon.configAllowableClosedloopError(RobotMap.kSlotIDx, 0, RobotMap.pidLoopTimeout);
+
+   // rightFrontTalon.config_kF(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kF, RobotMap.pidLoopTimeout);	   
+   // rightFrontTalon.config_kP(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kP, RobotMap.pidLoopTimeout);	    
+   // rightFrontTalon.config_kI(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kI, RobotMap.pidLoopTimeout);	    
+   // rightFrontTalon.config_kD(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kD, RobotMap.pidLoopTimeout);	   
+
+
+    rightFrontTalon.config_IntegralZone(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
+    rightFrontTalon.configClosedLoopPeakOutput(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
+    rightFrontTalon.configAllowableClosedloopError(RobotMap.kSlotIDx, 0, RobotMap.pidLoopTimeout);
+
+    //turning   PIDF  kTurnAutonomousSlotIDx = 1
+    leftFrontTalon.config_kF(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kF);
+    leftFrontTalon.config_kP(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kP);
+    leftFrontTalon.config_kI(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kI);
+    leftFrontTalon.config_kD(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kD);
+
+    leftFrontTalon.config_IntegralZone(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
+    leftFrontTalon.configClosedLoopPeakOutput(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
+    leftFrontTalon.configAllowableClosedloopError(RobotMap.kTurnAutonomousSlotIDx, 0, RobotMap.pidLoopTimeout);
+
+
+    rightFrontTalon.config_kF(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kF);
+    rightFrontTalon.config_kP(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kP);
+    rightFrontTalon.config_kI(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kI);
+    rightFrontTalon.config_kD(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kD);
+
+    rightFrontTalon.config_IntegralZone(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
+    rightFrontTalon.configClosedLoopPeakOutput(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
+    rightFrontTalon.configAllowableClosedloopError(RobotMap.kTurnAutonomousSlotIDx, 0, RobotMap.pidLoopTimeout);
+
+
+    // frame status  speed up the target polling for PID[0] and PID-aux[1]
+
+    pigeonVinnie.setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 5, RobotMap.pidLoopTimeout);
+
+
+    rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, RobotMap.pidLoopTimeout);
+		//rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10, RobotMap.pidLoopTimeout);
+		rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, RobotMap.pidLoopTimeout);
+		// Status_10_Targets is for motion magic only
+		//rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.pidLoopTimeout);
+		rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, RobotMap.pidLoopTimeout);
+    rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20);
+    rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 20);
+
+
+     leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, RobotMap.pidLoopTimeout);
+    // leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10, RobotMap.pidLoopTimeout);
+     leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, RobotMap.pidLoopTimeout);
+		// Status_10_Targets is for motion magic only
+		//leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.pidLoopTimeout);
+		leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, RobotMap.pidLoopTimeout);
+    leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20);
+    leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 20);
+
+    
+    leftFrontTalon.setSelectedSensorPosition(0, RobotMap.kSlotIDx, RobotMap.pidLoopTimeout);
+		rightFrontTalon.setSelectedSensorPosition(0, RobotMap.kSlotIDx, RobotMap.pidLoopTimeout);
+
+    //leftFrontTalon.configMotionCruiseVelocity(4000, RobotMap.pidLoopTimeout); // decreased from 8000 which is about 1.7 m/s
+		//leftFrontTalon.configMotionAcceleration(4000, RobotMap.pidLoopTimeout);
+
+		//rightFrontTalon.configMotionCruiseVelocity(4000, RobotMap.pidLoopTimeout);
+    //rightFrontTalon.configMotionAcceleration(4000, RobotMap.pidLoopTimeout);
+
+    int closedLoopTimeMs = 1;
+		rightFrontTalon.configClosedLoopPeriod(RobotMap.kSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
+		rightFrontTalon.configClosedLoopPeriod(RobotMap.kTurnAutonomousSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
+
+		leftFrontTalon.configClosedLoopPeriod(RobotMap.kSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
+		leftFrontTalon.configClosedLoopPeriod(RobotMap.kTurnAutonomousSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
+
+
+   // end of Arc setup copy
+
+
+
+
+    leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
+    leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 30);
+
+    rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
+    rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 30);
+
+
+
+
+    leftFrontTalon.setInverted(false);
+    rightFrontTalon.setInverted(true);
+
+    leftBackTalon.setInverted(InvertType.FollowMaster);
+    rightBackTalon.setInverted(InvertType.FollowMaster);
+
+    rightFrontTalon.setSensorPhase(false);
+    leftFrontTalon.setSensorPhase(false);
+    rightBackTalon.setSensorPhase(false);
+    leftBackTalon.setSensorPhase(false);
+
+    rightFrontTalon.setNeutralMode(NeutralMode.Brake);
+    leftFrontTalon.setNeutralMode(NeutralMode.Brake);
+    rightBackTalon.setNeutralMode(NeutralMode.Brake);
+    leftBackTalon.setNeutralMode(NeutralMode.Brake);
+    
+    leftFrontTalon.configNominalOutputForward(0, 30);
+    leftFrontTalon.configNominalOutputReverse(0, 30);
+    leftFrontTalon.configPeakOutputForward(1, 30);
+    leftFrontTalon.configPeakOutputReverse(-1, 30);
+
+    rightFrontTalon.configNominalOutputForward(0, 30);
+    rightFrontTalon.configNominalOutputReverse(0, 30);
+    rightFrontTalon.configPeakOutputForward(1, 30);
+    rightFrontTalon.configPeakOutputReverse(-1, 30);
+  
+    leftFrontTalon.configMotionCruiseVelocity(4000, 30); // decreased from 8000 which is about 1.7 m/s
+    leftFrontTalon.configMotionAcceleration(4000, 30);
+
+    rightFrontTalon.configMotionCruiseVelocity(4000, 30);
+    rightFrontTalon.configMotionAcceleration(4000, 30);
+
+
+   
+    // copy from Arc setup for configAuxPIDPolarity and Profile Slot
+    rightFrontTalon.configAuxPIDPolarity(false, RobotMap.pidLoopTimeout);
+		leftFrontTalon.configAuxPIDPolarity(true, RobotMap.pidLoopTimeout); // left is independent, need flip the polarity
+
+    rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
+    leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
+
+
+    // the following two are from regular one
+    leftFrontTalon.selectProfileSlot(RobotMap.kSlotIDx, RobotMap.PID_PRIMARY); // not kPIDLoopIDx (=0)
+    rightFrontTalon.selectProfileSlot(RobotMap.kSlotIDx, RobotMap.PID_PRIMARY);
+
+    // the following are new for Arc setup
+    leftFrontTalon.selectProfileSlot(RobotMap.kTurnAutonomousSlotIDx, RobotMap.PID_TURN);
+    rightFrontTalon.selectProfileSlot(RobotMap.kTurnAutonomousSlotIDx, RobotMap.PID_TURN);
+
+
+
+
+
+    zeroSensors();
+}
+
   public double[] getTalonSensorRawReading() {
     // return all four sensor reading
       double[] ret = new double[4];
@@ -788,6 +1031,10 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
 
 
   private void readMPFile(){
+    readMPFile(false);
+  }
+
+  private void readMPFile(boolean useArc){
     String path1FileName = "";
     String path2FileName = "";
     String path3FileName = "";
@@ -832,6 +1079,12 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
             arrayList1.add(oneList);
           }
               int totalCnt = arrayList1.size();
+              if(useArc == false) {
+                initBuffer(arrayList1, totalCnt, false, 0, _leftBufferedStream1, _rightBufferedStream1);
+              }
+              else {
+                initBufferArc(arrayList1, totalCnt, false, 0, _leftBufferedStream1, _rightBufferedStream1);
+              }
               initBuffer(arrayList1, totalCnt, false, 0, _leftBufferedStream1, _rightBufferedStream1);
       } catch (IOException e) {
         // TODO Auto-generated catch block
@@ -850,7 +1103,12 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
               arrayList2.add(oneList);
             }
                 int totalCnt = arrayList2.size();
-                initBuffer(arrayList2, totalCnt, true, 1, _leftBufferedStream2, _rightBufferedStream2);
+                if(useArc == false) {
+                  initBuffer(arrayList2, totalCnt, true, 1, _leftBufferedStream2, _rightBufferedStream2);
+                }
+                else {
+                  initBufferArc(arrayList2, totalCnt, true, 1, _leftBufferedStream2, _rightBufferedStream2);
+                }
         } catch (IOException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
@@ -869,7 +1127,12 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
               arrayList3.add(oneList);
             }
                 int totalCnt = arrayList3.size();
-                initBuffer(arrayList3, totalCnt, false, 1, _leftBufferedStream3, _rightBufferedStream3);
+                if(useArc == false) {
+                   initBuffer(arrayList3, totalCnt, false, 1, _leftBufferedStream3, _rightBufferedStream3);
+                }
+                else {
+                  initBufferArc(arrayList3, totalCnt, false, 1, _leftBufferedStream3, _rightBufferedStream3);
+                }
         } catch (IOException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
@@ -888,7 +1151,12 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
               arrayList4.add(oneList);
             }
                 int totalCnt = arrayList4.size();
-                initBuffer(arrayList4, totalCnt, true, 1, _leftBufferedStream4, _rightBufferedStream4);
+                if(useArc == false) {
+                  initBuffer(arrayList4, totalCnt, true, 1, _leftBufferedStream4, _rightBufferedStream4);
+                }
+                else {
+                  initBufferArc(arrayList4, totalCnt, true, 1, _leftBufferedStream4, _rightBufferedStream4);
+                }
         } catch (IOException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
@@ -950,5 +1218,75 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
             _rightBufferedStream.Write(rightPoint);
         }
     }
+
+
+    private void initBufferArc(ArrayList<String[]> profile, int totalCnt, boolean forward, int slotNumber, BufferedTrajectoryPointStream _leftBufferedStream, BufferedTrajectoryPointStream _rightBufferedStream) {
+      // boolean forward = true; // set to false to drive in opposite direction of profile (not really needed
+                               // since you can use negative numbers in profile).
+       TrajectoryPoint leftPoint = new TrajectoryPoint(); // temp for for loop, since unused params are initialized
+       TrajectoryPoint rightPoint = new TrajectoryPoint();    
+
+       /* clear the buffer, in case it was used elsewhere */
+       _leftBufferedStream.Clear();
+       _rightBufferedStream.Clear();
+
+       // MP unit is :  meter for Position, meter/second for Velocity ===> need convert them to Talon native unit
+       //               based on wheel's effective diameter 5.6 ==> 3.14 * 5.6 * 2.54 = 45 cm / round,  optical sensor 1440 unit / round ---> 1 meter / (0.45m) x 1440 = 3200 unit / meter
+     
+       /* Insert every point into buffer, no limit on size */
+       for (int i = 0; i < totalCnt; ++i) {
+           String[] oneList = profile.get(i);
+           double direction = forward ? +1 : -1;
+           double leftPosition = Double.valueOf(oneList[1]) ; //m
+           double leftVelocity = Double.valueOf(oneList[2]) ; //m/s
+           double rightPosition = Double.valueOf(oneList[3]) ; //m
+           double rightVelocity = Double.valueOf(oneList[4]) ;
+           double leftAngle = Double.valueOf(oneList[5]) ;
+           double rightAngle = Double.valueOf(oneList[6]) ;            
+           int durationMilliseconds = Integer.valueOf(oneList[7]);
+
+           leftPoint.timeDur = durationMilliseconds;
+           rightPoint.timeDur = durationMilliseconds;
+      
+           // Our MP's unit is Meter, Meter/second,   not Rount or Revolution, assuming 5.6 diameter wheel
+           leftPoint.position = direction * leftPosition * RobotMap.kMeterToFalconSenorUnit; // Convert meter to native unit 
+           leftPoint.velocity = direction * leftVelocity * RobotMap.kMeterToFalconSenorUnit / 10.0; // Convert Meter/second to native unit per 100 ms
+           leftPoint.arbFeedFwd = 0; /* you can add a constant offset to add to PID[0] output here */
+
+           leftPoint.auxiliaryPos = leftAngle  * 10; //Constants.kTurnUnitsPerDeg;
+           leftPoint.auxiliaryVel = 0;
+           //leftPoint.profileSlotSelect0 = RobotMap.kSlotIDx; /* which set of gains would you like to use [0,3]? */
+           //leftPoint.profileSlotSelect1 = 0; /* auxiliary PID [0,1], leave zero */
+           //leftPoint.zeroPos = (i == 0); /* set this to true on the first point */
+           //leftPoint.isLastPoint = ((i + 1) == totalCnt); /* set this to true on the last point */
+          
+           leftPoint.auxiliaryArbFeedFwd = 0;
+           leftPoint.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
+           leftPoint.profileSlotSelect1 = 1; /* auxiliary PID [0,1], leave zero */
+           leftPoint.zeroPos = false; /* don't reset sensor, this is done elsewhere since we have multiple sensors */
+           leftPoint.isLastPoint = ((i + 1) == totalCnt); /* set this to true on the last point */
+           leftPoint.useAuxPID = true; /* tell MPB that we are using both pids */
+
+
+           _leftBufferedStream.Write(leftPoint);
+
+
+           rightPoint.position = direction * rightPosition * RobotMap.kMeterToFalconSenorUnit; // Convert meter to native unit 
+           rightPoint.velocity = direction * rightVelocity * RobotMap.kMeterToFalconSenorUnit / 10.0; // Convert Meter/second to native unit per 100 ms
+           rightPoint.arbFeedFwd = 0; /* you can add a constant offset to add to PID[0] output here */
+
+           rightPoint.auxiliaryPos = rightAngle * 10;// Constants.kTurnUnitsPerDeg;
+           rightPoint.auxiliaryVel = 0;
+           rightPoint.auxiliaryArbFeedFwd = 0;
+           
+           rightPoint.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
+           rightPoint.profileSlotSelect1 = 1; /* auxiliary PID [0,1], leave zero */
+           rightPoint.zeroPos = false; /* don't reset sensor, this is done elsewhere since we have multiple sensors */
+           rightPoint.isLastPoint = ((i + 1) == totalCnt); /* set this to true on the last point */
+           rightPoint.useAuxPID = true; /* tell MPB that we are using both pids */
+           
+           _rightBufferedStream.Write(rightPoint);
+       }
+   }
 
 }
