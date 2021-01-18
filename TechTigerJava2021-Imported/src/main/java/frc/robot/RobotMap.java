@@ -25,7 +25,7 @@ static Preferences prefs;
 //DRIVE VALUES!
 //test branch
 public static double driveStraightProportion = 0.01;//0.02
-public static double turnDegreeProportion = 0.0042;
+public static double turnDegreeProportion = 0.0038;
 public static double LimelightJoeyX = -0.007;
 public static double turn90DegreeTimeout = 1.5;
 public static double limeLightTimeout = 2;

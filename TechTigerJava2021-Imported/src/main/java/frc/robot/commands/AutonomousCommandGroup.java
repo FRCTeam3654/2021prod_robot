@@ -55,7 +55,7 @@ public class AutonomousCommandGroup extends CommandGroup {
        int autonomous =  (int) Math.round(SmartDashboard.getNumber("Autonomous", 1.0)); 
 
        
-      //autonomous = "LeftTurn";
+     // autonomous = 8;
 
         if (autonomous == 0 ) {  //DriveStraight
           addSequential(new AutonomousDriveBackwardsCommand());
