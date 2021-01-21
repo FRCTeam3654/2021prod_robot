@@ -128,7 +128,6 @@ public class TankArc {
 	        		    //new Waypoint(0, 0, 0),
 	        		
 	        		    // working Barrel Path:
-<<<<<<< HEAD
 	        		    new Waypoint(0, 0, 0),
 	        		    new Waypoint( 3.05, 0, Pathfinder.d2r(0) ),
 	        		    new Waypoint(3.81, -0.762, Pathfinder.d2r(-90)) ,
@@ -143,7 +142,6 @@ public class TankArc {
 	        		    new Waypoint(7.62, -0.762, Pathfinder.d2r(90)) ,
 						new Waypoint(6.86, 0, Pathfinder.d2r(180)),
 						new Waypoint(0, 0,Pathfinder.d2r(180))
-=======
 	        		   /* new Waypoint(0, 0, 0),
 	        		    new Waypoint( 2.286, 0, Pathfinder.d2r(0) ),
 	        		    new Waypoint(2.99, -0.762, Pathfinder.d2r(-90)) ,
@@ -157,12 +155,11 @@ public class TankArc {
 	        		    new Waypoint(6.092, -1.524, Pathfinder.d2r(360)),
 	        		    new Waypoint(6.854, -0.762, Pathfinder.d2r(90)) ,
 	        		    new Waypoint(6.092, 0, Pathfinder.d2r(180))*/
->>>>>>> 976665e5b1e0b5f1369945bd482244e7244c2a11
 	        		    // end of working Barrel Path:
 	        		    
 						//begin of bounce path 1
 						new Waypoint(0, 0, 0),
-						new Waypoint(1.52, 0.762, Pathfinder.d2r(90)),
+						//new Waypoint(1.52, 0.762, Pathfinder.d2r(90)),
 						new Waypoint(1.52, 1.52, Pathfinder.d2r(90))
 						//begin
 						/*
