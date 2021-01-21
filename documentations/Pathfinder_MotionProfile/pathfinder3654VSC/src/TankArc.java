@@ -59,7 +59,7 @@ public class TankArc {
 	    	
 	    	int time_step_ms = 20;
 	    	
-	    	double wheelbaseinmeter = 0.5;// 0.635;//0.7;// 0.8;
+	    	double wheelbaseinmeter = 0.55245;// 0.635;//0.7;// 0.8; 0.55245 is 2021 robot
 	    	
 	    	
 	    	//boolean useRotationAsUnit = false;
@@ -129,18 +129,19 @@ public class TankArc {
 	        		
 	        		    // working Barrel Path:
 	        		    new Waypoint(0, 0, 0),
-	        		    new Waypoint( 2.286, 0, Pathfinder.d2r(0) ),
-	        		    new Waypoint(2.99, -0.762, Pathfinder.d2r(-90)) ,
-	        		    new Waypoint(2.286, -1.524, Pathfinder.d2r(-180)),
-	        		    new Waypoint(1.524, -0.762, Pathfinder.d2r(-270)) ,
-	        		    new Waypoint(2.286, 0, Pathfinder.d2r(-360)),
-	        		    new Waypoint(4.572, 0, Pathfinder.d2r(0)),
-	        		    new Waypoint(5.334, 0.762, Pathfinder.d2r(90)),
-	        		    new Waypoint(4.572, 1.524, Pathfinder.d2r(180)),
-	        		    new Waypoint(3.81, 0.762, Pathfinder.d2r(270)),
-	        		    new Waypoint(6.092, -1.524, Pathfinder.d2r(360)),
-	        		    new Waypoint(6.854, -0.762, Pathfinder.d2r(90)) ,
-	        		    new Waypoint(6.092, 0, Pathfinder.d2r(180))
+	        		    new Waypoint( 3.05, 0, Pathfinder.d2r(0) ),
+	        		    new Waypoint(3.81, -0.762, Pathfinder.d2r(-90)) ,
+	        		    new Waypoint(3.05, -1.524, Pathfinder.d2r(-180)),
+	        		    new Waypoint(2.286, -0.762, Pathfinder.d2r(-270)) ,
+	        		    new Waypoint(3.05, 0, Pathfinder.d2r(-360)),
+	        		    new Waypoint(5.33, 0, Pathfinder.d2r(-360)),
+	        		    new Waypoint(6.1, 0.762, Pathfinder.d2r(-270)),
+	        		    new Waypoint(5.33, 1.524, Pathfinder.d2r(-180)),
+	        		    new Waypoint(4.57, 0.762, Pathfinder.d2r(-90)),
+	        		    new Waypoint(6.86, -1.524, Pathfinder.d2r(0)),
+	        		    new Waypoint(7.62, -0.762, Pathfinder.d2r(90)) ,
+						new Waypoint(6.86, 0, Pathfinder.d2r(180)),
+						new Waypoint(0, 0,Pathfinder.d2r(180))
 	        		    // end of working Barrel Path:
 	        		    
 	        		    
