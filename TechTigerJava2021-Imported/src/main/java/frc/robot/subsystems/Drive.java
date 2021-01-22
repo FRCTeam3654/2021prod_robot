@@ -528,13 +528,13 @@ public class Drive extends Subsystem {
       leftFrontTalon.selectProfileSlot(0,0);
       rightFrontTalon.selectProfileSlot(0,0);
 
-      leftFrontTalon.config_kF(0,0.0455,30);
-      leftFrontTalon.config_kP(0,0.095,30);
+      leftFrontTalon.config_kF(0,0.09,30);// 0.045
+      leftFrontTalon.config_kP(0,0.1,30); //0.095
       leftFrontTalon.config_kI(0,0,30);
       leftFrontTalon.config_kD(0,0,30);
 
-      rightFrontTalon.config_kF(0,0.0455,30);
-      rightFrontTalon.config_kP(0,0.095,30);
+      rightFrontTalon.config_kF(0,0.09,30); // 0.045
+      rightFrontTalon.config_kP(0,0.1,30); //0.095
       rightFrontTalon.config_kI(0,0,30);
       rightFrontTalon.config_kD(0,0,30);
       
