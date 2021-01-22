@@ -59,7 +59,7 @@ public class TankArc {
 	    	
 	    	int time_step_ms = 20;
 	    	
-	    	double wheelbaseinmeter = 0.55245;// 0.635;//0.7;// 0.8; 0.55245 is 2021 robot
+	    	double wheelbaseinmeter = 0.7;// 0.635;//0.7;// 0.8; 0.55245 is 2021 robot
 	    	
 	    	
 	    	//boolean useRotationAsUnit = false;
@@ -101,7 +101,7 @@ public class TankArc {
 	    	//Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 0.7, 1, 12.0); 
 	       
 	    	
-	    	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 1.7, 2.0, 60.0); 
+	    	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 1.0, 1.0, 30.0); 
 		       
 	    	//Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 0.6, 1.2, 20.0); 
 		    
@@ -128,7 +128,7 @@ public class TankArc {
 	        		    //new Waypoint(0, 0, 0),
 	        		
 	        		    // working Barrel Path:
-	        		    new Waypoint(0, 0, 0),
+	        		    /*new Waypoint(0, 0, 0),
 	        		    new Waypoint( 3.05, 0, Pathfinder.d2r(0) ),
 	        		    new Waypoint(3.81, -0.762, Pathfinder.d2r(-90)) ,
 	        		    new Waypoint(3.05, -1.524, Pathfinder.d2r(-180)),
@@ -141,7 +141,7 @@ public class TankArc {
 	        		    new Waypoint(6.86, -1.524, Pathfinder.d2r(0)),
 	        		    new Waypoint(7.62, -0.762, Pathfinder.d2r(90)) ,
 						new Waypoint(6.86, 0, Pathfinder.d2r(180)),
-						new Waypoint(0, 0,Pathfinder.d2r(180))
+						new Waypoint(0, 0,Pathfinder.d2r(180))*/
 	        		   /* new Waypoint(0, 0, 0),
 	        		    new Waypoint( 2.286, 0, Pathfinder.d2r(0) ),
 	        		    new Waypoint(2.99, -0.762, Pathfinder.d2r(-90)) ,
