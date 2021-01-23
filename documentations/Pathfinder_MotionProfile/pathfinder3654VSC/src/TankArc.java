@@ -126,12 +126,14 @@ public class TankArc {
 	    	
 	        Waypoint[] points = new Waypoint[] {
 
+						/* third loop
 						new Waypoint(0, 0, 0),
 						new Waypoint(1, 0, 0),
 						new Waypoint(1.85, 0.762, Pathfinder.d2r(90)),
 						new Waypoint(1.0, 1.524, Pathfinder.d2r(180)) ,
 						new Waypoint(0, 1.524, Pathfinder.d2r(180)),
 
+						*/
 
 						/* second loop
 	        		    new Waypoint(0, 0, 0),
@@ -142,14 +144,14 @@ public class TankArc {
 						new Waypoint(0.57, 0, Pathfinder.d2r(270))
 						*/
 						// working Barrel Path:
-						/*
+						
 	        		    new Waypoint(0, 0, 0),
 	        		    new Waypoint( 1.05, 0, Pathfinder.d2r(0) ),
 	        		    new Waypoint(1.81, -0.762, Pathfinder.d2r(-90)) ,
 	        		    new Waypoint(1.05, -1.524, Pathfinder.d2r(-180)),
 	        		    new Waypoint(0.286, -0.762, Pathfinder.d2r(-270)) ,
 						new Waypoint(1.05, 0, Pathfinder.d2r(-360))
-						*/
+					
 
 						/*
 						new Waypoint(0, 0, 0),
