@@ -117,17 +117,17 @@ public class Drive extends Subsystem {
 
    public Drive() {
     
-    //  readMPFile(false ); // false ==> not use Arc or pigeon
-        readMPFile(true ); // false ==> not use Arc or pigeon
+     readMPFile(false ); // false ==> not use Arc or pigeon
+       // readMPFile(true ); // false ==> not use Arc or pigeon
 
       pigeonVinnie.configFactoryDefault();
       pigeonVinnie.setYaw(0.0);
       pigeonVinnie.setFusedHeading(0.0);
     
-      //configureDrive();
+      configureDrive();
       // or 
 
-      configureArcFXDrive();
+      //configureArcFXDrive();
   }
 
   
