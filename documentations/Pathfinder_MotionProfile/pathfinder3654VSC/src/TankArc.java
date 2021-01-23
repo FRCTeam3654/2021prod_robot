@@ -59,7 +59,7 @@ public class TankArc {
 	    	
 	    	int time_step_ms = 20;
 	    	
-	    	double wheelbaseinmeter = 0.55245;// 0.635;//0.7;// 0.8; 0.55245 is 2021 robot
+	    	double wheelbaseinmeter = 0.64;//0.652;// 0.635;//0.7;// 0.8; 0.55245 is 2021 robot
 	    	
 	    	
 	    	//boolean useRotationAsUnit = false;
@@ -101,7 +101,7 @@ public class TankArc {
 	    	//Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 0.7, 1, 12.0); 
 	       
 	    	
-	    	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 1.7, 2.0, 60.0); 
+	    	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 1.3, 1.3, 30.0); 
 		       
 	    	//Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 0.6, 1.2, 20.0); 
 		    
@@ -125,16 +125,39 @@ public class TankArc {
 	    	//        Barrel Path:  new Waypoint( 2.286, 0, Pathfinder.d2r(0) ), new Waypoint(2.99, -0.762, Pathfinder.d2r(-90)) , new Waypoint(2.286, -1.524, Pathfinder.d2r(-180)),new Waypoint(1.524, -0.762, Pathfinder.d2r(-270)) , new Waypoint(2.286, 0, Pathfinder.d2r(-360))
 	    	
 	        Waypoint[] points = new Waypoint[] {
-	        		    //new Waypoint(0, 0, 0),
-	        		
-	        		    // working Barrel Path:
-<<<<<<< HEAD
+
+						new Waypoint(0, 0, 0),
+						new Waypoint(1, 0, 0),
+						new Waypoint(1.85, 0.762, Pathfinder.d2r(90)),
+						new Waypoint(1.0, 1.524, Pathfinder.d2r(180)) ,
+						new Waypoint(0, 1.524, Pathfinder.d2r(180)),
+
+
+						/* second loop
 	        		    new Waypoint(0, 0, 0),
+						new Waypoint(1.33, 0, Pathfinder.d2r(0)),
+	        		    new Waypoint(2.1, 0.762, Pathfinder.d2r(90)),
+	        		    new Waypoint(1.33, 1.524, Pathfinder.d2r(180)),
+	        		    new Waypoint(0.57, 0.762, Pathfinder.d2r(270)),
+						new Waypoint(0.57, 0, Pathfinder.d2r(270))
+						*/
+						// working Barrel Path:
+						/*
+	        		    new Waypoint(0, 0, 0),
+	        		    new Waypoint( 1.05, 0, Pathfinder.d2r(0) ),
+	        		    new Waypoint(1.81, -0.762, Pathfinder.d2r(-90)) ,
+	        		    new Waypoint(1.05, -1.524, Pathfinder.d2r(-180)),
+	        		    new Waypoint(0.286, -0.762, Pathfinder.d2r(-270)) ,
+						new Waypoint(1.05, 0, Pathfinder.d2r(-360))
+						*/
+
+						/*
+						new Waypoint(0, 0, 0),
 	        		    new Waypoint( 3.05, 0, Pathfinder.d2r(0) ),
 	        		    new Waypoint(3.81, -0.762, Pathfinder.d2r(-90)) ,
 	        		    new Waypoint(3.05, -1.524, Pathfinder.d2r(-180)),
 	        		    new Waypoint(2.286, -0.762, Pathfinder.d2r(-270)) ,
-	        		    new Waypoint(3.05, 0, Pathfinder.d2r(-360)),
+						new Waypoint(3.05, 0, Pathfinder.d2r(-360)),
 	        		    new Waypoint(5.33, 0, Pathfinder.d2r(-360)),
 	        		    new Waypoint(6.1, 0.762, Pathfinder.d2r(-270)),
 	        		    new Waypoint(5.33, 1.524, Pathfinder.d2r(-180)),
@@ -143,27 +166,12 @@ public class TankArc {
 	        		    new Waypoint(7.62, -0.762, Pathfinder.d2r(90)) ,
 						new Waypoint(6.86, 0, Pathfinder.d2r(180)),
 						new Waypoint(0, 0,Pathfinder.d2r(180))
-=======
-	        		   /* new Waypoint(0, 0, 0),
-	        		    new Waypoint( 2.286, 0, Pathfinder.d2r(0) ),
-	        		    new Waypoint(2.99, -0.762, Pathfinder.d2r(-90)) ,
-	        		    new Waypoint(2.286, -1.524, Pathfinder.d2r(-180)),
-	        		    new Waypoint(1.524, -0.762, Pathfinder.d2r(-270)) ,
-	        		    new Waypoint(2.286, 0, Pathfinder.d2r(-360)),
-	        		    new Waypoint(4.572, 0, Pathfinder.d2r(0)),
-	        		    new Waypoint(5.334, 0.762, Pathfinder.d2r(90)),
-	        		    new Waypoint(4.572, 1.524, Pathfinder.d2r(180)),
-	        		    new Waypoint(3.81, 0.762, Pathfinder.d2r(270)),
-	        		    new Waypoint(6.092, -1.524, Pathfinder.d2r(360)),
-	        		    new Waypoint(6.854, -0.762, Pathfinder.d2r(90)) ,
-	        		    new Waypoint(6.092, 0, Pathfinder.d2r(180))*/
->>>>>>> 976665e5b1e0b5f1369945bd482244e7244c2a11
 	        		    // end of working Barrel Path:
-	        		    
+	        		  */  
 						//begin of bounce path 1
-						new Waypoint(0, 0, 0),
-						new Waypoint(1.52, 0.762, Pathfinder.d2r(90)),
-						new Waypoint(1.52, 1.52, Pathfinder.d2r(90))
+						//new Waypoint(0, 0, 0),
+						//new Waypoint(1.52, 0.762, Pathfinder.d2r(90)),
+						//new Waypoint(1.52, 1.52, Pathfinder.d2r(90))
 						//begin
 						/*
 1.523925632	0.761962816	90
@@ -188,92 +196,7 @@ public class TankArc {
 	        		    //new Waypoint(0, -1.524, Pathfinder.d2r(-180)),
 	        		    //new Waypoint(-0.762, -0.762, Pathfinder.d2r(-270)) ,
 	        		    //new Waypoint(0, 0, Pathfinder.d2r(-360))  
-	        		    
-	        
-	        		    //new Waypoint(1.5, 0.0, 0)
-	        		    
-	        		    //Glantic Search A:(90,90),(150,60),(180,150)  in inches 60'' = 152.4, 30 =>76.2, 90=>2.286
-	        		    // one non-stop path vs 3 different paths
-	        		    //new Waypoint(1.524, 0.0, 0)
-	        		    //new Waypoint(3.048, -0.762, 0),
-	        		    //new Waypoint(3.81,1.524, 0)
-	        		    
-	        		   // new Waypoint(1.524, -0.762, Pathfinder.d2r(30))   // second leg of Glantic Search A
-	        		    
-	        		   // new Waypoint(0.762, 2.286, 0)   // third leg of Glantic Search A
-	        		    
-	        		
-	        		   // new Waypoint(2.52, 1.7 , Pathfinder.d2r(0)) ,
-	        		    
-	        		    
-	        		    //new Waypoint(2.52, -2.3 , Pathfinder.d2r(0)) ,
-	        		    //new Waypoint(5.3, -2.3 , Pathfinder.d2r(0))
-	        		    
-	        		    
-	        		    // case #5?
-	        		    //new Waypoint(3.3, 0 , Pathfinder.d2r(0)) ,
-	        		    //new Waypoint(5.8, 1.73 , Pathfinder.d2r(0))
-	        		    
-	        		    
-	        		    
-	        		// new Waypoint(-4, -1, Pathfinder.d2r(-45)),      // Waypoint @ x=-4, y=-1, exit angle=-45 degrees
-	        		//    new Waypoint(-2, -2, 0),                        // Waypoint @ x=-2, y=-2, exit angle=0 radians
-	        		//    new Waypoint(0, 0, 0)   
-	        		
-	        		
-	        		    /*
-	        		     * Front Cargo/Panel:
-	        		     *  Front bumper need move vertically 176'' or 4.47 m, leaving 8'' to adjust
-	        		     *                			horizontally, need move 31'' wihich is 0.79 m
-	        		     * 
-	        		     *  Path planning strategy:  
-	        		     *  1) move straight to the segment that do S curve movement, say 1 meter for testing
-	        		     *  2) use next or last 70'' to do the S curve
-	        		     */
-	        		  
-	        		    
-	        		    // **** test with short straight line movement, followed by s-curve in last 70''
-	        		    
-	        		    
-	        		    // Front Panel, Turn RIGHT ( left starting position )
-	        		    /*
-	        		    new Waypoint(1, 0, 0), 
-	        		    new Waypoint(2.78, -0.79, 0), // front Cargo  test   2.78-1 = 1.78 m which is 70''
-	        		    */
-	        		    
-	        		    // Front Panel, Turn LEFT ( right starting position )
-	        		    
-	        		    //new Waypoint(1, 0, 0), 
-	        		    //new Waypoint(2.78, 0.79, 0) // front Cargo  test   2.78-1 = 1.78 m which is 70''
-	        		    
-	        		    
-	        		    
-	        		    
-	        		   // new Waypoint(2.28, 0.79, 0) ,
-	        		   // new Waypoint(2.78, 0.79, 0)
-	        		    
-	        		    
-	        		    // ****  REAL FRONT PANEL, move straight 2.69 m (106'') , followed by 1.78m/70'' s-curve,  TOTAL 176'' or 4.47 m
-	        		    /*
-	        		    new Waypoint(2.69, 0, 0), 
-	        		    new Waypoint(4.47, 0.79, 0) // front Cargo
-	        		    */
-	        		    
-	        		
-	        		    /*
-	        		     *   Side Panel
-	        		     *   Need move vertically 176 +8 + 40 = 224'' + mid of robot (not front bumper for side panel) 12'' =  236    or 6.0 m
-	        		     *             horizontally, need give robot some room to adjust, say 24'' or 0.61m
-	        		     *             
-	        		     *     so straight line can have extra 20'' to straight out itself, 106+20=126'' or 3.2m
-	        		     *     the ending s-curve has extra 40'' ( 8+40 +12 - 20 = 40), so 70 + 40 = 110 or 2.79 m
-	        		     *   
-	        		    new Waypoint(3.2, 0, 0), 
-	        		    new Waypoint(6.0, 0.61, 0) // side Panel
-	        		    */
-	        		
-	        		
-	        	
+
 	          		    
 	        };
 
