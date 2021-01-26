@@ -126,33 +126,31 @@ public class TankArc {
 	    	
 	        Waypoint[] points = new Waypoint[] {
 
-						/* third loop
+						//Barrel Path
+						/*
+						//Barrel Path first loop
 						new Waypoint(0, 0, 0),
-						new Waypoint(1, 0, 0),
-						new Waypoint(1.85, 0.762, Pathfinder.d2r(90)),
-						new Waypoint(1.0, 1.524, Pathfinder.d2r(180)) ,
-						new Waypoint(0, 1.524, Pathfinder.d2r(180)),
-
-						*/
-
-						/* second loop
+	        		    new Waypoint( 1.05, 0, Pathfinder.d2r(0) ),
+	        		    new Waypoint(1.81, -0.762, Pathfinder.d2r(-90)) ,
+	        		    new Waypoint(1.05, -1.524, Pathfinder.d2r(-180)),
+	        		    new Waypoint(0.286, -0.762, Pathfinder.d2r(-270)) ,
+						new Waypoint(1.05, 0, Pathfinder.d2r(-360))
+						//Barrel Path second loop
 	        		    new Waypoint(0, 0, 0),
 						new Waypoint(1.33, 0, Pathfinder.d2r(0)),
 	        		    new Waypoint(2.1, 0.762, Pathfinder.d2r(90)),
 	        		    new Waypoint(1.33, 1.524, Pathfinder.d2r(180)),
 	        		    new Waypoint(0.57, 0.762, Pathfinder.d2r(270)),
 						new Waypoint(0.57, 0, Pathfinder.d2r(270))
+						//Barrel Path third loop
+						new Waypoint(0, 0, 0),
+						new Waypoint(1, 0, 0),
+						new Waypoint(1.85, 0.762, Pathfinder.d2r(90)),
+						new Waypoint(1.0, 1.524, Pathfinder.d2r(180)) ,
+						new Waypoint(0, 1.524, Pathfinder.d2r(180)),
 						*/
-						// working Barrel Path:
-						
-	        		    new Waypoint(0, 0, 0),
-	        		    new Waypoint( 1.05, 0, Pathfinder.d2r(0) ),
-	        		    new Waypoint(1.81, -0.762, Pathfinder.d2r(-90)) ,
-	        		    new Waypoint(1.05, -1.524, Pathfinder.d2r(-180)),
-	        		    new Waypoint(0.286, -0.762, Pathfinder.d2r(-270)) ,
-						new Waypoint(1.05, 0, Pathfinder.d2r(-360))
-					
 
+						// Barrel Path full path
 						/*
 						new Waypoint(0, 0, 0),
 	        		    new Waypoint( 3.05, 0, Pathfinder.d2r(0) ),
@@ -168,36 +166,51 @@ public class TankArc {
 	        		    new Waypoint(7.62, -0.762, Pathfinder.d2r(90)) ,
 						new Waypoint(6.86, 0, Pathfinder.d2r(180)),
 						new Waypoint(0, 0,Pathfinder.d2r(180))
-	        		    // end of working Barrel Path:
-	        		  */  
-						//begin of bounce path 1
+						// end of working Barrel Path
+						*/
+						
+
+
+						
+						//Slalom Path
+
+
+				
+
+						//begin of Bounce Path 1
 						//new Waypoint(0, 0, 0),
 						//new Waypoint(1.52, 0.762, Pathfinder.d2r(90)),
 						//new Waypoint(1.52, 1.52, Pathfinder.d2r(90))
 						//begin
 						/*
-1.523925632	0.761962816	90
-2.285888449	-0.761962816	135
-3.047851265	-1.523925632	180
-3.809814081	-0.761962816	270
-3.809814081	1.523925632	270
+						1.523925632	0.761962816	90
+						2.285888449	-0.761962816	135
+						3.047851265	-1.523925632	180
+						3.809814081	-0.761962816	270
+						3.809814081	1.523925632	270
 		
-3.809814081	-0.761962816	270
-4.571776897	-1.523925632	360
-5.333739714	-1.523925632	360
-6.09570253	0	450
-6.09570253	1.523925632	450
+						3.809814081	-0.761962816	270
+						4.571776897	-1.523925632	360
+						5.333739714	-1.523925632	360
+						6.09570253	0	450
+						6.09570253	1.523925632	450
 		
-7.619628162	0	540 */
+						7.619628162	0	540 */
 
 
 
 
-	        		    //new Waypoint(0, 0, Pathfinder.d2r(0))  ,
-	        		    //new Waypoint(0.762, -0.762, Pathfinder.d2r(-90)) ,
-	        		    //new Waypoint(0, -1.524, Pathfinder.d2r(-180)),
-	        		    //new Waypoint(-0.762, -0.762, Pathfinder.d2r(-270)) ,
-	        		    //new Waypoint(0, 0, Pathfinder.d2r(-360))  
+
+						//Galactic Search Path A
+
+
+
+
+
+						//Galactic Search Path B
+
+
+
 
 	          		    
 	        };
