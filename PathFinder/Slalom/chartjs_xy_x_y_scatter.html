@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Gradient Line Chart - Chart.js</title>
+
+  <style>
+    html, body{
+      background: #f1f1f1;
+      padding-top: 50px;
+    }
+    .wrapper{
+      width:70%;
+      display:block;
+      overflow:hidden;
+      margin:0 auto;
+      padding: 60px 50px;
+      background:#fff;
+      border-radius:4px;
+    }
+    canvas{
+      background:#fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <canvas id="myChart"></canvas>
+  </div>
+   
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>  
+  <script src="Chart.bundle.js"></script>
+  
+  <script>
+  
+    function float2dollar(value) {
+		return  (value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+	}
+  
+    function renderChart(mydata, labels) {
+		
+		var ctx = document.getElementById('myChart').getContext("2d");
+
+		var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
+		gradientStroke.addColorStop(0, "#80b6f4");
+		gradientStroke.addColorStop(1, "#f49080");
+
+		var gradientFill = ctx.createLinearGradient(500, 0, 100, 0);
+		gradientFill.addColorStop(0, "rgba(128, 182, 244, 0.6)");
+		gradientFill.addColorStop(1, "rgba(244, 144, 128, 0.6)");
+
+		var myChart = new Chart(ctx, {
+		  type: 'scatter',
+		  data: {
+            datasets: [{
+                label: 'Scatter Dataset',
+                data: mydata,
+                backgroundColor: 'rgb(255, 99, 132)'
+            }],
+			backgroundColor: 'rgb(255, 99, 132)'
+        },
+		  options: {
+			  scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom'
+                }
+            }
+		
+				
+		  }
+		});
+	}
+		
+	
+	
+		
+	//////////////////////////////////////////////////////////
+	
+	
+	
+	//////////////////////////////////////////////////////////
+
+	function readFile(file) {
+	  return new Promise((resolve, reject) => {
+		let fr = new FileReader();
+		fr.onload = x=> resolve(fr.result);
+		fr.readAsText(file);
+	})}
+
+	async function read(e) {
+	  var oneMP = await readFile(e.target.files[0]);
+	  
+	  var lines = oneMP.split("\n");
+	  
+	  var arraysize = lines.length;
+	  
+	  var trajArray = new Array(arraysize);
+	  
+	  var data = [];
+	  var data1 = []
+	  var data2 = []
+	  var labels = []
+
+      // need use mp_x_y_center_test_arc.csv
+	  for (var i = 1; i < arraysize; i++) {
+	      //if( i % 4 == 1 ) {
+			  trajArray[i] = lines[i].split(",");
+			  var myObj = new Object();
+			  myObj.x=trajArray[i][1];
+			  myObj.y = trajArray[i][2];
+			  data.push(myObj);
+		  //}
+	  }
+	  
+	  //data.push(data1);
+      //data.push(data2);
+	  
+	  renderChart(data, labels);
+	  
+
+	}
+	
+	function r2d(radians)
+	{
+	  var pi = Math.PI;
+	  return radians * (180/pi);
+	}
+	
+	function boundHalfDegrees( angle_degrees){
+		while (angle_degrees >= 180.0) {
+     		angle_degrees -= 360.0;
+		}
+		
+		while (angle_degrees < -180.0) {
+			angle_degrees += 360.0;
+		}
+		
+		return angle_degrees;
+	}
+
+
+  </script>
+  
+  <input type="file"  onchange="read(event)"/>
+
+  
+</body>
+</html>
