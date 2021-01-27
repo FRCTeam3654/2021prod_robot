@@ -48,8 +48,8 @@ public class TankArc {
 		   // System.setProperty("java.library.path", "C:\\Pathfinder\\wpilib\\user\\java\\lib\\pathfinderjava.lib");
 
     	
-	       //String FILENAME = "C:\\Pathfinder\\mp_20ms_in_meter_frontcargo1_arc.csv";
-	       String FILENAME = "C:\\Pathfinder\\autonomous\\mp_20ms_in_meter_arc.csv";
+		   //String FILENAME = "C:\\Pathfinder\\mp_20ms_in_meter_frontcargo1_arc.csv";
+	       String FILENAME = "C:\\Pathfinder\\autonomous\\mp_20ms_in_meter_arc.csv"; 
 	       
 	       
 	       
@@ -151,7 +151,7 @@ public class TankArc {
 						*/
 
 						// Barrel Path full path
-						
+						/*
 						new Waypoint(0, 0, 0),
 	        		    new Waypoint( 3.05, 0, Pathfinder.d2r(0) ),
 	        		    new Waypoint(3.81, -0.762, Pathfinder.d2r(-90)) ,
@@ -167,11 +167,11 @@ public class TankArc {
 						new Waypoint(6.86, 0, Pathfinder.d2r(180)),
 						new Waypoint(0, 0,Pathfinder.d2r(180))
 						// end of working Barrel Path
+						*/
 						
-						
 
 
-
+						/*
 						//Slalom Path
 						new Waypoint(0, 0, 0),
 						new Waypoint(1.524, 0,Pathfinder.d2r(0)),
@@ -187,7 +187,7 @@ public class TankArc {
 						new Waypoint(3.81, 0,Pathfinder.d2r(180)),
 						new Waypoint(2.286, 0,Pathfinder.d2r(135)),
 						new Waypoint(0, 1.524,Pathfinder.d2r(180))
-
+						*/
 						
 
 
@@ -219,8 +219,25 @@ public class TankArc {
 
 
 
-						//Galactic Search Path A
-
+						//Galactic Search Path A 
+						//red 
+						new Waypoint(0, 0, 0),
+						new Waypoint(1.524, 0,Pathfinder.d2r(-90)),
+						new Waypoint(1.524, -0.762,Pathfinder.d2r(0)),
+						new Waypoint(3.048, -0.762,Pathfinder.d2r(-90)),
+						new Waypoint(3.048, 1.524,Pathfinder.d2r(0)),
+						new Waypoint(3.810, 1.524,Pathfinder.d2r(0)),
+						new Waypoint(7.620, 1.524,Pathfinder.d2r(0))
+						/*
+						//blue
+						new Waypoint(0, 0, 0),
+						new Waypoint(6.096, 0,Pathfinder.d2r(-90)),
+						new Waypoint(6.096, -1.524,Pathfinder.d2r(-180)),
+						new Waypoint(3.810, -1.524,Pathfinder.d2r(90)),
+						new Waypoint(3.810, 0.762,Pathfinder.d2r(0)),
+						new Waypoint(4.572, 0.762,Pathfinder.d2r(0)),
+						new Waypoint(7.620, 0.762,Pathfinder.d2r(0))
+						*/
 
 
 
