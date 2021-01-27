@@ -222,12 +222,12 @@ public class TankArc {
 						//Galactic Search Path A 
 						//red 
 						new Waypoint(0, 0, 0),
-						new Waypoint(1.524, 0,Pathfinder.d2r(-90)),
-						new Waypoint(1.524, -0.762,Pathfinder.d2r(0)),
-						new Waypoint(3.048, -0.762,Pathfinder.d2r(-90)),
-						new Waypoint(3.048, 1.524,Pathfinder.d2r(0)),
-						new Waypoint(3.810, 1.524,Pathfinder.d2r(0)),
-						new Waypoint(7.620, 1.524,Pathfinder.d2r(0))
+						new Waypoint(1.905, 0,Pathfinder.d2r(-30)),						
+						new Waypoint(3.429, -0.762,Pathfinder.d2r(0)),
+						new Waypoint(4.191, 1.524,Pathfinder.d2r(30)),
+						new Waypoint(8.382, 1.524,Pathfinder.d2r(0))
+						
+					
 						/*
 						//blue
 						new Waypoint(0, 0, 0),
