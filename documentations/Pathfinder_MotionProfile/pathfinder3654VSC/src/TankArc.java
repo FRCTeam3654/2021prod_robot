@@ -173,6 +173,24 @@ public class TankArc {
 
 						
 						//Slalom Path
+						/*new Waypoint(0, 0, 0),
+						new Waypoint(1.524, 0,Pathfinder.d2r(0)),
+						new Waypoint(1.829, 0.762,Pathfinder.d2r(90)),
+						new Waypoint(2.286, 1.524,Pathfinder.d2r(45)),
+						new Waypoint(3.81, 2.286,Pathfinder.d2r(0)),
+						new Waypoint(5.486, 1.524,Pathfinder.d2r(-45)),
+						new Waypoint(6.858, 0,Pathfinder.d2r(0)),
+						new Waypoint(8.382, 0.762,Pathfinder.d2r(90)),
+						new Waypoint(6.858, 1.524,Pathfinder.d2r(180)),
+						new Waypoint(6.096, 0.762,Pathfinder.d2r(235)),
+						new Waypoint(5.334, 0,Pathfinder.d2r(180)),
+						new Waypoint(3.81, 0,Pathfinder.d2r(180)),
+						new Waypoint(2.286, 0,Pathfinder.d2r(135)),
+						new Waypoint(0, 1.524,Pathfinder.d2r(180))
+
+						*/
+
+
 
 
 				
