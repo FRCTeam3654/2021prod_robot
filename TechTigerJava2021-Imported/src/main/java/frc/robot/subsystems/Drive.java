@@ -117,383 +117,17 @@ public class Drive extends Subsystem {
 
    public Drive() {
     
-      readMPFile(false ); // false ==> not use Arc or pigeon
+     readMPFile(false ); // false ==> not use Arc or pigeon
+       // readMPFile(true ); // false ==> not use Arc or pigeon
 
       pigeonVinnie.configFactoryDefault();
       pigeonVinnie.setYaw(0.0);
       pigeonVinnie.setFusedHeading(0.0);
-
-
     
       configureDrive();
-
       // or 
-  
-     // configureArcDrive();
 
-
-      //analogLowGoalDistanceSensor = new AnalogInput(1);//RobotMap.analogLowGoalDistanceSensorPort
-      //analogLowGoalDistanceSensor.setAverageBits(20);
-
-    /*
-        readMPFile();
-
-        leftBackTalon.configFactoryDefault();
-        rightBackTalon.configFactoryDefault();
-        
-        leftBackTalon.configNeutralDeadband(0.0,30);
-        rightBackTalon.configNeutralDeadband(0.0,30);
-        
-        leftBackTalon.follow(leftFrontTalon);
-        rightBackTalon.follow(rightFrontTalon);
-        
-        leftBackTalon.setSensorPhase(false);
-        rightBackTalon.setSensorPhase(true);
-        
-        leftBackTalon.setInverted(InvertType.FollowMaster);
-        rightBackTalon.setInverted(InvertType.FollowMaster);
-
-
-        _leftMasterconfig.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
-        _leftMasterconfig.neutralDeadband = RobotMap.kNeutralDeadband; 
-        _leftMasterconfig.slot0.kF = RobotMap.kGains_MotProf.kF;
-        _leftMasterconfig.slot0.kP = RobotMap.kGains_MotProf.kP;
-        _leftMasterconfig.slot0.kI = RobotMap.kGains_MotProf.kI;
-        _leftMasterconfig.slot0.kD = RobotMap.kGains_MotProf.kD;
-        _leftMasterconfig.slot0.integralZone = (int) RobotMap.kGains_MotProf.kIzone;
-        _leftMasterconfig.slot0.closedLoopPeakOutput = RobotMap.kGains_MotProf.kPeakOutput; 
-        // _config.slot0.allowableClosedloopError // left default for this example
-        // _config.slot0.maxIntegralAccumulator; // left default for this example
-        // _config.slot0.closedLoopPeriod; // left default for this example
-        leftFrontTalon.configAllSettings(_leftMasterconfig);
-     
-        //_master.setSensorPhase(true);
-        leftFrontTalon.setSensorPhase(false);
-        leftFrontTalon.setInverted(false);
-
-        leftFrontTalon.configClosedloopRamp(1);
-        rightFrontTalon.configClosedloopRamp(1);
-        rightFrontTalon.configOpenloopRamp(1);
-        leftFrontTalon.configOpenloopRamp(1);
-
-        leftFrontTalon.configMotionCruiseVelocity(8000, 30);
-        leftFrontTalon.configMotionAcceleration(8000, 30);
-    
-        rightFrontTalon.configMotionCruiseVelocity(8000, 30);
-        rightFrontTalon.configMotionAcceleration(8000, 30);
-
-        _rightMasterconfig.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
-        _rightMasterconfig.neutralDeadband = RobotMap.kNeutralDeadband; 
-        _rightMasterconfig.slot0.kF = RobotMap.kGains_MotProf.kF;
-        _rightMasterconfig.slot0.kP = RobotMap.kGains_MotProf.kP;
-        _rightMasterconfig.slot0.kI = RobotMap.kGains_MotProf.kI;
-        _rightMasterconfig.slot0.kD = RobotMap.kGains_MotProf.kD;
-        _rightMasterconfig.slot0.integralZone = (int) RobotMap.kGains_MotProf.kIzone;
-        _rightMasterconfig.slot0.closedLoopPeakOutput = RobotMap.kGains_MotProf.kPeakOutput;
-
-        rightFrontTalon.configAllSettings(_rightMasterconfig);
-
-        rightFrontTalon.setInverted(true);
-
-        leftFrontTalon.selectProfileSlot(RobotMap.kSlotIDx, RobotMap.kPIDLoopIDx);
-        rightFrontTalon.selectProfileSlot(RobotMap.kSlotIDx, RobotMap.kPIDLoopIDx);
-
-        zeroSensors();
-
-        try {
-            Thread.sleep(1000);// sleep for one second to let the MP buffer to finish
-        }
-        catch (Exception e) {
-
-        }
-*/
-
-
-   /*
-    leftFrontTalon.configFactoryDefault();
-    leftBackTalon.configFactoryDefault();
-    rightFrontTalon.configFactoryDefault();
-    rightBackTalon.configFactoryDefault();
-    pigeonVinnie.configFactoryDefault();
-    pigeonVinnie.setYaw(0.0);
-    pigeonVinnie.setFusedHeading(0.0);
-    
-    leftFrontTalon.set(ControlMode.PercentOutput, 0);
-		rightFrontTalon.set(ControlMode.PercentOutput, 0);
-		
-		leftFrontTalon.configNeutralDeadband(0.05,30);
-		rightFrontTalon.configNeutralDeadband(0.05,30);
-		leftBackTalon.configNeutralDeadband(0.0,30);
-		rightBackTalon.configNeutralDeadband(0.0,30);
-
-    
-    leftBackTalon.follow(leftFrontTalon);
-    rightBackTalon.follow(rightFrontTalon);
-
-    leftFrontTalon.configClosedloopRamp(1);
-		rightFrontTalon.configClosedloopRamp(1);
-		rightFrontTalon.configOpenloopRamp(1);
-    leftFrontTalon.configOpenloopRamp(1);
-    
-    rightFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, RobotMap.pidLoopTimeout);
-    leftFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, RobotMap.pidLoopTimeout);
-
-    leftFrontTalon.selectProfileSlot(0,0);
-		rightFrontTalon.selectProfileSlot(0,0);
-
-		leftFrontTalon.config_kF(0,0.0455,30);
-		leftFrontTalon.config_kP(0,0.095,30);
-		leftFrontTalon.config_kI(0,0,30);
-		leftFrontTalon.config_kD(0,0,30);
-
-		rightFrontTalon.config_kF(0,0.0455,30);
-		rightFrontTalon.config_kP(0,0.095,30);
-		rightFrontTalon.config_kI(0,0,30);
-    rightFrontTalon.config_kD(0,0,30);
-    
-    leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
-		leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 30);
-
-		rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
-		rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 30);
-
-
-    leftFrontTalon.setInverted(false);
-    rightFrontTalon.setInverted(true);
-
-    leftBackTalon.setInverted(InvertType.FollowMaster);
-    rightBackTalon.setInverted(InvertType.FollowMaster);
-
-    rightFrontTalon.setSensorPhase(false);
-    leftFrontTalon.setSensorPhase(false);
-    rightBackTalon.setSensorPhase(false);
-    leftBackTalon.setSensorPhase(false);
-
-    rightFrontTalon.setNeutralMode(NeutralMode.Brake);
-    leftFrontTalon.setNeutralMode(NeutralMode.Brake);
-    rightBackTalon.setNeutralMode(NeutralMode.Brake);
-    leftBackTalon.setNeutralMode(NeutralMode.Brake);
-    
-
-    
-    leftFrontTalon.configNominalOutputForward(0, 30);
-		leftFrontTalon.configNominalOutputReverse(0, 30);
-		leftFrontTalon.configPeakOutputForward(1, 30);
-		leftFrontTalon.configPeakOutputReverse(-1, 30);
-
-		rightFrontTalon.configNominalOutputForward(0, 30);
-		rightFrontTalon.configNominalOutputReverse(0, 30);
-		rightFrontTalon.configPeakOutputForward(1, 30);
-		rightFrontTalon.configPeakOutputReverse(-1, 30);
-
-
-	
-		leftFrontTalon.configMotionCruiseVelocity(8000, 30);
-		leftFrontTalon.configMotionAcceleration(8000, 30);
-
-		rightFrontTalon.configMotionCruiseVelocity(8000, 30);
-    rightFrontTalon.configMotionAcceleration(8000, 30);
-
-
-    leftFrontTalon.selectProfileSlot(RobotMap.kSlotIDx, RobotMap.kPIDLoopIDx);
-    rightFrontTalon.selectProfileSlot(RobotMap.kSlotIDx, RobotMap.kPIDLoopIDx);
-
-    zeroSensors();
-    */
-    
-
-/*
-    leftFrontTalon.configFactoryDefault();
-    leftBackTalon.configFactoryDefault();
-    rightFrontTalon.configFactoryDefault();
-    rightBackTalon.configFactoryDefault();
-    pigeonVinnie.configFactoryDefault();
-    pigeonVinnie.setYaw(0.0);
-    pigeonVinnie.setFusedHeading(0.0);
-    pigeonVinnie.setAccumZAngle(0, RobotMap.pidLoopTimeout);
-    
-    leftFrontTalon.set(ControlMode.PercentOutput, 0);
-		rightFrontTalon.set(ControlMode.PercentOutput, 0);
-		
-    
-    leftFrontTalon.configNeutralDeadband(RobotMap.driveDeadband, RobotMap.pidLoopTimeout);
-		rightFrontTalon.configNeutralDeadband(RobotMap.driveDeadband, RobotMap.pidLoopTimeout);
-    //DON'T SET FOLLOWERS DEADBAND TO NON-ZERO
-    leftBackTalon.configNeutralDeadband(0, RobotMap.pidLoopTimeout);
-    rightBackTalon.configNeutralDeadband(0, RobotMap.pidLoopTimeout);
-    
-
-    
-    leftBackTalon.follow(leftFrontTalon);
-    rightBackTalon.follow(rightFrontTalon);
-
-
-    leftFrontTalon.configClosedloopRamp(RobotMap.talonDriveAccelerationRate);
-		rightFrontTalon.configClosedloopRamp(RobotMap.talonDriveAccelerationRate);
-		rightFrontTalon.configOpenloopRamp(RobotMap.talonDriveAccelerationRate);
-    leftFrontTalon.configOpenloopRamp(RobotMap.talonDriveAccelerationRate);
-
-    
-    //  sensor:  integrated and remote
- 
-    leftFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,  RobotMap.PID_PRIMARY, RobotMap.pidLoopTimeout);
-    leftFrontTalon.configSelectedFeedbackCoefficient(1, 	RobotMap.PID_PRIMARY,	RobotMap.pidLoopTimeout);
-
-    leftFrontTalon.configRemoteFeedbackFilter(0,	RemoteSensorSource.Off, RobotMap.REMOTE_0,	RobotMap.pidLoopTimeout);
-
-		leftFrontTalon.configRemoteFeedbackFilter(pigeonVinnie.getDeviceID(),	RemoteSensorSource.GadgeteerPigeon_Yaw, RobotMap.REMOTE_1,	RobotMap.pidLoopTimeout);
-
-    leftFrontTalon.configSelectedFeedbackSensor(	FeedbackDevice.RemoteSensor1, RobotMap.PID_TURN,  RobotMap.pidLoopTimeout);
-    // Coefficient has HUGE impact on the PID:   difference x Coefficient,  3600/8192,  so if coefficient is 1, it will be 22.7 sensor unit / degree ==> more aggressive PID correction, if x (3600/8194), ==> sensor unit is 10 unit/degree
-    leftFrontTalon.configSelectedFeedbackCoefficient(	_pigeonRemoteSensoreScaleFactor, RobotMap.PID_TURN, RobotMap.pidLoopTimeout);
-
-
-
-    rightFrontTalon.configRemoteFeedbackFilter(leftFrontTalon.getDeviceID(),	RemoteSensorSource.TalonFX_SelectedSensor,	RobotMap.REMOTE_0,	RobotMap.kTimeoutMs);	
-    rightFrontTalon.configRemoteFeedbackFilter(pigeonVinnie.getDeviceID(),RemoteSensorSource.GadgeteerPigeon_Yaw,RobotMap.REMOTE_1,RobotMap.kTimeoutMs);
-    rightFrontTalon.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor0, RobotMap.pidLoopTimeout);			
-		rightFrontTalon.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.IntegratedSensor, RobotMap.pidLoopTimeout);
-
-    rightFrontTalon.configSelectedFeedbackSensor(	FeedbackDevice.IntegratedSensor, RobotMap.PID_PRIMARY, RobotMap.pidLoopTimeout);
-    rightFrontTalon.configSelectedFeedbackCoefficient(1, 	RobotMap.PID_PRIMARY,	RobotMap.pidLoopTimeout);
-
-    rightFrontTalon.configSelectedFeedbackSensor(	FeedbackDevice.RemoteSensor1,RobotMap.PID_TURN,RobotMap.pidLoopTimeout);
-    rightFrontTalon.configSelectedFeedbackCoefficient(	_pigeonRemoteSensoreScaleFactor, RobotMap.PID_TURN, RobotMap.pidLoopTimeout);
-
-
-    leftFrontTalon.setInverted(false);
-    rightFrontTalon.setInverted(true);
-
-    leftBackTalon.setInverted(InvertType.FollowMaster);
-    rightBackTalon.setInverted(InvertType.FollowMaster);
-
-    rightFrontTalon.setSensorPhase(false);
-    leftFrontTalon.setSensorPhase(false);
-    rightBackTalon.setSensorPhase(false);
-    leftBackTalon.setSensorPhase(false);
-
-
-    // frame status
-
-    pigeonVinnie.setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 5, RobotMap.pidLoopTimeout);
-
-
-    rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, RobotMap.pidLoopTimeout);
-		rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10, RobotMap.pidLoopTimeout);
-		rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, RobotMap.pidLoopTimeout);
-		// Status_10_Targets is for motion magic only
-		rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.pidLoopTimeout);
-		rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, RobotMap.pidLoopTimeout);
-
-     leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, RobotMap.pidLoopTimeout);
-     leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10, RobotMap.pidLoopTimeout);
-     leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, RobotMap.pidLoopTimeout);
-		// Status_10_Targets is for motion magic only
-		leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.pidLoopTimeout);
-		leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, RobotMap.pidLoopTimeout);
-
-
-    
-    leftFrontTalon.configMotionCruiseVelocity(8000, RobotMap.pidLoopTimeout);
-		leftFrontTalon.configMotionAcceleration(8000, RobotMap.pidLoopTimeout);
-
-		rightFrontTalon.configMotionCruiseVelocity(8000, RobotMap.pidLoopTimeout);
-    rightFrontTalon.configMotionAcceleration(8000, RobotMap.pidLoopTimeout);
-
-    
-
-    //drive     PIDF 
-    leftFrontTalon.config_kF(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kF, RobotMap.pidLoopTimeout);	    
-    leftFrontTalon.config_kP(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kP, RobotMap.pidLoopTimeout);	    
-    leftFrontTalon.config_kI(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kI, RobotMap.pidLoopTimeout);	    
-    leftFrontTalon.config_kD(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kD, RobotMap.pidLoopTimeout);	    
-
-
-
-    leftFrontTalon.config_IntegralZone(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
-    leftFrontTalon.configClosedLoopPeakOutput(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
-    leftFrontTalon.configAllowableClosedloopError(RobotMap.kSlotIDx, 0, RobotMap.pidLoopTimeout);
-
-    rightFrontTalon.config_kF(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kF, RobotMap.pidLoopTimeout);	   
-    rightFrontTalon.config_kP(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kP, RobotMap.pidLoopTimeout);	    
-    rightFrontTalon.config_kI(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kI, RobotMap.pidLoopTimeout);	    
-    rightFrontTalon.config_kD(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kD, RobotMap.pidLoopTimeout);	   
-
-
-    rightFrontTalon.config_IntegralZone(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
-    rightFrontTalon.configClosedLoopPeakOutput(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
-    rightFrontTalon.configAllowableClosedloopError(RobotMap.kSlotIDx, 0, RobotMap.pidLoopTimeout);
-
-    //turning   PIDF
-    leftFrontTalon.config_kF(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kF);
-    leftFrontTalon.config_kP(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kP);
-    leftFrontTalon.config_kI(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kI);
-    leftFrontTalon.config_kD(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kD);
-
-    leftFrontTalon.config_IntegralZone(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
-    leftFrontTalon.configClosedLoopPeakOutput(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
-    leftFrontTalon.configAllowableClosedloopError(RobotMap.kTurnAutonomousSlotIDx, 0, RobotMap.pidLoopTimeout);
-
-
-    rightFrontTalon.config_kF(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kF);
-    rightFrontTalon.config_kP(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kP);
-    rightFrontTalon.config_kI(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kI);
-    rightFrontTalon.config_kD(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kD);
-
-    rightFrontTalon.config_IntegralZone(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
-    rightFrontTalon.configClosedLoopPeakOutput(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
-    rightFrontTalon.configAllowableClosedloopError(RobotMap.kTurnAutonomousSlotIDx, 0, RobotMap.pidLoopTimeout);
-
-
-
-    int closedLoopTimeMs = 1;
-    rightFrontTalon.configClosedLoopPeriod(RobotMap.kSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
-		rightFrontTalon.configClosedLoopPeriod(RobotMap.kTurnAutonomousSlotIDx, closedLoopTimeMs,RobotMap.pidLoopTimeout);
-
-		leftFrontTalon.configClosedLoopPeriod(RobotMap.kSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
-		leftFrontTalon.configClosedLoopPeriod(RobotMap.kTurnAutonomousSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
-  
-
-
-
-    // Others
-
-
-
-    rightFrontTalon.setNeutralMode(NeutralMode.Brake);
-    leftFrontTalon.setNeutralMode(NeutralMode.Brake);
-    rightBackTalon.setNeutralMode(NeutralMode.Brake);
-    leftBackTalon.setNeutralMode(NeutralMode.Brake);
-    
-
-    
-    leftFrontTalon.configNominalOutputForward(0, 30);
-		leftFrontTalon.configNominalOutputReverse(0, 30);
-		leftFrontTalon.configPeakOutputForward(1, 30);
-		leftFrontTalon.configPeakOutputReverse(-1, 30);
-
-		rightFrontTalon.configNominalOutputForward(0, 30);
-		rightFrontTalon.configNominalOutputReverse(0, 30);
-		rightFrontTalon.configPeakOutputForward(1, 30);
-		rightFrontTalon.configPeakOutputReverse(-1, 30);
-
-
-    //rightFrontTalon.configAuxPIDPolarity(false, RobotMap.pidLoopTimeout);
-		//leftFrontTalon.configAuxPIDPolarity(false, RobotMap.pidLoopTimeout); // left is independent, need flip the polarity
-
-		rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
-    leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
-    
-  
-    rightFrontTalon.selectProfileSlot(RobotMap.kSlotIDx, RobotMap.PID_PRIMARY);
-		rightFrontTalon.selectProfileSlot(RobotMap.kTurnAutonomousSlotIDx, RobotMap.PID_TURN);
-
-		leftFrontTalon.selectProfileSlot(RobotMap.kSlotIDx, RobotMap.PID_PRIMARY);
-		leftFrontTalon.selectProfileSlot(RobotMap.kTurnAutonomousSlotIDx, RobotMap.PID_TURN);
-
-    zeroSensors();
-	 */
-
+      //configureArcFXDrive();
   }
 
   
@@ -528,13 +162,13 @@ public class Drive extends Subsystem {
       leftFrontTalon.selectProfileSlot(0,0);
       rightFrontTalon.selectProfileSlot(0,0);
 
-      leftFrontTalon.config_kF(0,0.0455,30);
-      leftFrontTalon.config_kP(0,0.095,30);
+      leftFrontTalon.config_kF(0,0.09,30);// 0.045
+      leftFrontTalon.config_kP(0,0.1,30); //0.095
       leftFrontTalon.config_kI(0,0,30);
       leftFrontTalon.config_kD(0,0,30);
 
-      rightFrontTalon.config_kF(0,0.0455,30);
-      rightFrontTalon.config_kP(0,0.095,30);
+      rightFrontTalon.config_kF(0,0.09,30); // 0.045
+      rightFrontTalon.config_kP(0,0.1,30); //0.095
       rightFrontTalon.config_kI(0,0,30);
       rightFrontTalon.config_kD(0,0,30);
       
@@ -583,235 +217,7 @@ public class Drive extends Subsystem {
   }
 
 
-  
-  public void configureArcDrive() {
-    leftFrontTalon.configFactoryDefault();
-    leftBackTalon.configFactoryDefault();
-    rightFrontTalon.configFactoryDefault();
-    rightBackTalon.configFactoryDefault();
-   
-    
-    leftFrontTalon.set(ControlMode.PercentOutput, 0);
-    rightFrontTalon.set(ControlMode.PercentOutput, 0);
-    
-    leftFrontTalon.configNeutralDeadband(0.05,30);
-    rightFrontTalon.configNeutralDeadband(0.05,30);
-    leftBackTalon.configNeutralDeadband(0.0,30);
-    rightBackTalon.configNeutralDeadband(0.0,30);
-    
-    leftBackTalon.follow(leftFrontTalon);
-    rightBackTalon.follow(rightFrontTalon);
-
-    leftFrontTalon.configClosedloopRamp(1);
-    rightFrontTalon.configClosedloopRamp(1);
-    rightFrontTalon.configOpenloopRamp(1);
-    leftFrontTalon.configOpenloopRamp(1);
-    
-    rightFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, RobotMap.pidLoopTimeout);
-    leftFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, RobotMap.pidLoopTimeout);
-
-    leftFrontTalon.selectProfileSlot(0,0);
-    rightFrontTalon.selectProfileSlot(0,0);
-
-    leftFrontTalon.config_kF(0,0.0455,30);
-    leftFrontTalon.config_kP(0,0.095,30);
-    leftFrontTalon.config_kI(0,0,30);
-    leftFrontTalon.config_kD(0,0,30);
-
-    rightFrontTalon.config_kF(0,0.0455,30);
-    rightFrontTalon.config_kP(0,0.095,30);
-    rightFrontTalon.config_kI(0,0,30);
-    rightFrontTalon.config_kD(0,0,30);
-    
-
-    // copied from Arc setup
-
-
-
-    
-    //  sensor:  integrated and remote
  
-    //leftFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,  RobotMap.PID_PRIMARY, RobotMap.pidLoopTimeout);
-    leftFrontTalon.configSelectedFeedbackCoefficient(1, 	RobotMap.PID_PRIMARY,	RobotMap.pidLoopTimeout);
-
-    leftFrontTalon.configRemoteFeedbackFilter(0,	RemoteSensorSource.Off, RobotMap.REMOTE_0,	RobotMap.pidLoopTimeout);
-
-    leftFrontTalon.configRemoteFeedbackFilter(pigeonVinnie.getDeviceID(),	RemoteSensorSource.GadgeteerPigeon_Yaw, RobotMap.REMOTE_1,	RobotMap.pidLoopTimeout);
-
-    leftFrontTalon.configSelectedFeedbackSensor(	FeedbackDevice.RemoteSensor1, RobotMap.PID_TURN,  RobotMap.pidLoopTimeout);
-    // Coefficient has HUGE impact on the PID:   difference x Coefficient,  3600/8192,  so if coefficient is 1, it will be 22.7 sensor unit / degree ==> more aggressive PID correction, if x (3600/8194), ==> sensor unit is 10 unit/degree
-    leftFrontTalon.configSelectedFeedbackCoefficient(	_pigeonRemoteSensoreScaleFactor, RobotMap.PID_TURN, RobotMap.pidLoopTimeout);
-
-
-
-    rightFrontTalon.configRemoteFeedbackFilter(leftFrontTalon.getDeviceID(),	RemoteSensorSource.TalonFX_SelectedSensor,	RobotMap.REMOTE_0,	RobotMap.kTimeoutMs);	
-    rightFrontTalon.configRemoteFeedbackFilter(pigeonVinnie.getDeviceID(),RemoteSensorSource.GadgeteerPigeon_Yaw,RobotMap.REMOTE_1,RobotMap.kTimeoutMs);
-    rightFrontTalon.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor0, RobotMap.pidLoopTimeout);			
-    rightFrontTalon.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.IntegratedSensor, RobotMap.pidLoopTimeout);
-
-    rightFrontTalon.configSelectedFeedbackSensor(	FeedbackDevice.IntegratedSensor, RobotMap.PID_PRIMARY, RobotMap.pidLoopTimeout);
-    rightFrontTalon.configSelectedFeedbackCoefficient(1, 	RobotMap.PID_PRIMARY,	RobotMap.pidLoopTimeout);
-
-    rightFrontTalon.configSelectedFeedbackSensor(	FeedbackDevice.RemoteSensor1,  RobotMap.PID_TURN,   RobotMap.pidLoopTimeout);
-    rightFrontTalon.configSelectedFeedbackCoefficient(	_pigeonRemoteSensoreScaleFactor, RobotMap.PID_TURN, RobotMap.pidLoopTimeout);
-
-
-    //drive     PIDF  kSlotIDx = 0
-    //leftFrontTalon.config_kF(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kF, RobotMap.pidLoopTimeout);	    
-    //leftFrontTalon.config_kP(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kP, RobotMap.pidLoopTimeout);	    
-    //leftFrontTalon.config_kI(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kI, RobotMap.pidLoopTimeout);	    
-    //leftFrontTalon.config_kD(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kD, RobotMap.pidLoopTimeout);	    
-
-
-
-    leftFrontTalon.config_IntegralZone(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
-    leftFrontTalon.configClosedLoopPeakOutput(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
-    leftFrontTalon.configAllowableClosedloopError(RobotMap.kSlotIDx, 0, RobotMap.pidLoopTimeout);
-
-   // rightFrontTalon.config_kF(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kF, RobotMap.pidLoopTimeout);	   
-   // rightFrontTalon.config_kP(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kP, RobotMap.pidLoopTimeout);	    
-   // rightFrontTalon.config_kI(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kI, RobotMap.pidLoopTimeout);	    
-   // rightFrontTalon.config_kD(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kD, RobotMap.pidLoopTimeout);	   
-
-
-    rightFrontTalon.config_IntegralZone(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
-    rightFrontTalon.configClosedLoopPeakOutput(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
-    rightFrontTalon.configAllowableClosedloopError(RobotMap.kSlotIDx, 0, RobotMap.pidLoopTimeout);
-
-    //turning   PIDF  kTurnAutonomousSlotIDx = 1
-    leftFrontTalon.config_kF(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kF);
-    leftFrontTalon.config_kP(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kP);
-    leftFrontTalon.config_kI(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kI);
-    leftFrontTalon.config_kD(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kD);
-
-    leftFrontTalon.config_IntegralZone(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
-    leftFrontTalon.configClosedLoopPeakOutput(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
-    leftFrontTalon.configAllowableClosedloopError(RobotMap.kTurnAutonomousSlotIDx, 0, RobotMap.pidLoopTimeout);
-
-
-    rightFrontTalon.config_kF(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kF);
-    rightFrontTalon.config_kP(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kP);
-    rightFrontTalon.config_kI(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kI);
-    rightFrontTalon.config_kD(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kD);
-
-    rightFrontTalon.config_IntegralZone(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
-    rightFrontTalon.configClosedLoopPeakOutput(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
-    rightFrontTalon.configAllowableClosedloopError(RobotMap.kTurnAutonomousSlotIDx, 0, RobotMap.pidLoopTimeout);
-
-
-    // frame status  speed up the target polling for PID[0] and PID-aux[1]
-
-    pigeonVinnie.setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 5, RobotMap.pidLoopTimeout);
-
-
-    rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, RobotMap.pidLoopTimeout);
-		//rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10, RobotMap.pidLoopTimeout);
-		rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, RobotMap.pidLoopTimeout);
-		// Status_10_Targets is for motion magic only
-		//rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.pidLoopTimeout);
-		rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, RobotMap.pidLoopTimeout);
-    rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20);
-    rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 20);
-
-
-     leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, RobotMap.pidLoopTimeout);
-    // leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10, RobotMap.pidLoopTimeout);
-     leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, RobotMap.pidLoopTimeout);
-		// Status_10_Targets is for motion magic only
-		//leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.pidLoopTimeout);
-		leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, RobotMap.pidLoopTimeout);
-    leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20);
-    leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 20);
-
-    
-    leftFrontTalon.setSelectedSensorPosition(0, RobotMap.kSlotIDx, RobotMap.pidLoopTimeout);
-		rightFrontTalon.setSelectedSensorPosition(0, RobotMap.kSlotIDx, RobotMap.pidLoopTimeout);
-
-    //leftFrontTalon.configMotionCruiseVelocity(4000, RobotMap.pidLoopTimeout); // decreased from 8000 which is about 1.7 m/s
-		//leftFrontTalon.configMotionAcceleration(4000, RobotMap.pidLoopTimeout);
-
-		//rightFrontTalon.configMotionCruiseVelocity(4000, RobotMap.pidLoopTimeout);
-    //rightFrontTalon.configMotionAcceleration(4000, RobotMap.pidLoopTimeout);
-
-    int closedLoopTimeMs = 1;
-		rightFrontTalon.configClosedLoopPeriod(RobotMap.kSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
-		rightFrontTalon.configClosedLoopPeriod(RobotMap.kTurnAutonomousSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
-
-		leftFrontTalon.configClosedLoopPeriod(RobotMap.kSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
-		leftFrontTalon.configClosedLoopPeriod(RobotMap.kTurnAutonomousSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
-
-
-   // end of Arc setup copy
-
-
-
-
-    leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
-    leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 30);
-
-    rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
-    rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 30);
-
-
-
-
-    leftFrontTalon.setInverted(false);
-    rightFrontTalon.setInverted(true);
-
-    leftBackTalon.setInverted(InvertType.FollowMaster);
-    rightBackTalon.setInverted(InvertType.FollowMaster);
-
-    rightFrontTalon.setSensorPhase(false);
-    leftFrontTalon.setSensorPhase(false);
-    rightBackTalon.setSensorPhase(false);
-    leftBackTalon.setSensorPhase(false);
-
-    rightFrontTalon.setNeutralMode(NeutralMode.Brake);
-    leftFrontTalon.setNeutralMode(NeutralMode.Brake);
-    rightBackTalon.setNeutralMode(NeutralMode.Brake);
-    leftBackTalon.setNeutralMode(NeutralMode.Brake);
-    
-    leftFrontTalon.configNominalOutputForward(0, 30);
-    leftFrontTalon.configNominalOutputReverse(0, 30);
-    leftFrontTalon.configPeakOutputForward(1, 30);
-    leftFrontTalon.configPeakOutputReverse(-1, 30);
-
-    rightFrontTalon.configNominalOutputForward(0, 30);
-    rightFrontTalon.configNominalOutputReverse(0, 30);
-    rightFrontTalon.configPeakOutputForward(1, 30);
-    rightFrontTalon.configPeakOutputReverse(-1, 30);
-  
-    leftFrontTalon.configMotionCruiseVelocity(4000, 30); // decreased from 8000 which is about 1.7 m/s
-    leftFrontTalon.configMotionAcceleration(4000, 30);
-
-    rightFrontTalon.configMotionCruiseVelocity(4000, 30);
-    rightFrontTalon.configMotionAcceleration(4000, 30);
-
-
-   
-    // copy from Arc setup for configAuxPIDPolarity and Profile Slot
-    rightFrontTalon.configAuxPIDPolarity(false, RobotMap.pidLoopTimeout);
-		leftFrontTalon.configAuxPIDPolarity(true, RobotMap.pidLoopTimeout); // left is independent, need flip the polarity
-
-    rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
-    leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
-
-
-    // the following two are from regular one
-    leftFrontTalon.selectProfileSlot(RobotMap.kSlotIDx, RobotMap.PID_PRIMARY); // not kPIDLoopIDx (=0)
-    rightFrontTalon.selectProfileSlot(RobotMap.kSlotIDx, RobotMap.PID_PRIMARY);
-
-    // the following are new for Arc setup
-    leftFrontTalon.selectProfileSlot(RobotMap.kTurnAutonomousSlotIDx, RobotMap.PID_TURN);
-    rightFrontTalon.selectProfileSlot(RobotMap.kTurnAutonomousSlotIDx, RobotMap.PID_TURN);
-
-
-
-
-
-    zeroSensors();
-}
-
   public double[] getTalonSensorRawReading() {
     // return all four sensor reading
       double[] ret = new double[4];
@@ -857,7 +263,6 @@ public class Drive extends Subsystem {
   }
 
   public double[] getYawPitchRoll() {
-    // boolean angleIsGood = (_pidgey.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
     double [] yawPitchRollArray = null;
     if (pigeonVinnie.getState() == PigeonIMU.PigeonState.Ready) {
       yawPitchRollArray = new double [3];
@@ -874,7 +279,6 @@ public class Drive extends Subsystem {
   
   public void setArcade(double velocity, double turn) {
       mercyArcadeDrive(velocity, turn);
-    // differentialDrive.arcadeDrive(velocity, turn);
   }
 
   public void setMotionMagic(double distance, int cruiseVelocity, int accelerationVelocity) {
@@ -1253,7 +657,7 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
            leftPoint.velocity = direction * leftVelocity * RobotMap.kMeterToFalconSenorUnit / 10.0; // Convert Meter/second to native unit per 100 ms
            leftPoint.arbFeedFwd = 0; /* you can add a constant offset to add to PID[0] output here */
 
-           leftPoint.auxiliaryPos = leftAngle  * 10; //Constants.kTurnUnitsPerDeg;
+           leftPoint.auxiliaryPos = leftAngle  * 22.755; //Constants.kTurnUnitsPerDeg;
            leftPoint.auxiliaryVel = 0;
            //leftPoint.profileSlotSelect0 = RobotMap.kSlotIDx; /* which set of gains would you like to use [0,3]? */
            //leftPoint.profileSlotSelect1 = 0; /* auxiliary PID [0,1], leave zero */
@@ -1275,7 +679,7 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
            rightPoint.velocity = direction * rightVelocity * RobotMap.kMeterToFalconSenorUnit / 10.0; // Convert Meter/second to native unit per 100 ms
            rightPoint.arbFeedFwd = 0; /* you can add a constant offset to add to PID[0] output here */
 
-           rightPoint.auxiliaryPos = rightAngle * 10;// Constants.kTurnUnitsPerDeg;
+           rightPoint.auxiliaryPos = rightAngle * 22.755;// Constants.kTurnUnitsPerDeg;
            rightPoint.auxiliaryVel = 0;
            rightPoint.auxiliaryArbFeedFwd = 0;
            
@@ -1288,5 +692,229 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
            _rightBufferedStream.Write(rightPoint);
        }
    }
+
+   public void configureArcFXDrive() {
+    leftFrontTalon.configFactoryDefault();
+    leftBackTalon.configFactoryDefault();
+    rightFrontTalon.configFactoryDefault();
+    rightBackTalon.configFactoryDefault();
+   
+    
+    leftFrontTalon.set(ControlMode.PercentOutput, 0);
+    rightFrontTalon.set(ControlMode.PercentOutput, 0);
+    
+    leftFrontTalon.configNeutralDeadband(0.05,30);
+    rightFrontTalon.configNeutralDeadband(0.05,30);
+    leftBackTalon.configNeutralDeadband(0.0,30);
+    rightBackTalon.configNeutralDeadband(0.0,30);
+    
+    leftBackTalon.follow(leftFrontTalon);
+    rightBackTalon.follow(rightFrontTalon);
+
+    leftFrontTalon.configClosedloopRamp(1);
+    rightFrontTalon.configClosedloopRamp(1);
+    rightFrontTalon.configOpenloopRamp(1);
+    leftFrontTalon.configOpenloopRamp(1);
+    
+    rightFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, RobotMap.pidLoopTimeout);//0 is the primary PID index
+    leftFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, RobotMap.pidLoopTimeout);
+
+    leftFrontTalon.selectProfileSlot(0,0);
+    rightFrontTalon.selectProfileSlot(0,0);
+
+    leftFrontTalon.config_kF(0,0.0455,30);
+    leftFrontTalon.config_kP(0,0.095,30);
+    leftFrontTalon.config_kI(0,0,30);
+    leftFrontTalon.config_kD(0,0,30);
+
+    rightFrontTalon.config_kF(0,0.0455,30);
+    rightFrontTalon.config_kP(0,0.095,30);
+    rightFrontTalon.config_kI(0,0,30);
+    rightFrontTalon.config_kD(0,0,30);
+    
+
+    // copied from Arc setup
+
+
+
+    
+    //  sensor:  integrated and remote
+ 
+    //leftFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,  RobotMap.PID_PRIMARY, RobotMap.pidLoopTimeout);
+    leftFrontTalon.configSelectedFeedbackCoefficient(1, 	RobotMap.PID_PRIMARY,	RobotMap.pidLoopTimeout);
+
+    leftFrontTalon.configRemoteFeedbackFilter(0,	RemoteSensorSource.Off, RobotMap.REMOTE_0,	RobotMap.pidLoopTimeout);
+
+    leftFrontTalon.configRemoteFeedbackFilter(pigeonVinnie.getDeviceID(),	RemoteSensorSource.GadgeteerPigeon_Yaw, RobotMap.REMOTE_1,	RobotMap.pidLoopTimeout);
+
+    leftFrontTalon.configSelectedFeedbackSensor(	FeedbackDevice.RemoteSensor1, RobotMap.PID_TURN,  RobotMap.pidLoopTimeout);
+    // Coefficient has HUGE impact on the PID:   difference x Coefficient,  3600/8192,  so if coefficient is 1, it will be 22.7 sensor unit / degree ==> more aggressive PID correction, if x (3600/8194), ==> sensor unit is 10 unit/degree
+    leftFrontTalon.configSelectedFeedbackCoefficient(	_pigeonRemoteSensoreScaleFactor, RobotMap.PID_TURN, RobotMap.pidLoopTimeout);
+
+
+
+    rightFrontTalon.configRemoteFeedbackFilter(leftFrontTalon.getDeviceID(),	RemoteSensorSource.TalonFX_SelectedSensor,	RobotMap.REMOTE_0,	RobotMap.kTimeoutMs);	
+    rightFrontTalon.configRemoteFeedbackFilter(pigeonVinnie.getDeviceID(),RemoteSensorSource.GadgeteerPigeon_Yaw,RobotMap.REMOTE_1,RobotMap.kTimeoutMs);
+    rightFrontTalon.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor0, RobotMap.pidLoopTimeout);			
+    rightFrontTalon.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.IntegratedSensor, RobotMap.pidLoopTimeout);
+
+    rightFrontTalon.configSelectedFeedbackSensor(	FeedbackDevice.IntegratedSensor, RobotMap.PID_PRIMARY, RobotMap.pidLoopTimeout);
+    rightFrontTalon.configSelectedFeedbackCoefficient(1, 	RobotMap.PID_PRIMARY,	RobotMap.pidLoopTimeout);
+
+    rightFrontTalon.configSelectedFeedbackSensor(	FeedbackDevice.RemoteSensor1,  RobotMap.PID_TURN,   RobotMap.pidLoopTimeout);
+    rightFrontTalon.configSelectedFeedbackCoefficient(	_pigeonRemoteSensoreScaleFactor, RobotMap.PID_TURN, RobotMap.pidLoopTimeout);
+
+
+    //drive     PIDF  kSlotIDx = 0
+    //leftFrontTalon.config_kF(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kF, RobotMap.pidLoopTimeout);	    
+    //leftFrontTalon.config_kP(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kP, RobotMap.pidLoopTimeout);	    
+    //leftFrontTalon.config_kI(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kI, RobotMap.pidLoopTimeout);	    
+    //leftFrontTalon.config_kD(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kD, RobotMap.pidLoopTimeout);	    
+
+
+
+    leftFrontTalon.config_IntegralZone(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
+    leftFrontTalon.configClosedLoopPeakOutput(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
+    leftFrontTalon.configAllowableClosedloopError(RobotMap.kSlotIDx, 0, RobotMap.pidLoopTimeout);
+
+   // rightFrontTalon.config_kF(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kF, RobotMap.pidLoopTimeout);	   
+   // rightFrontTalon.config_kP(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kP, RobotMap.pidLoopTimeout);	    
+   // rightFrontTalon.config_kI(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kI, RobotMap.pidLoopTimeout);	    
+   // rightFrontTalon.config_kD(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kD, RobotMap.pidLoopTimeout);	   
+
+
+    rightFrontTalon.config_IntegralZone(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
+    rightFrontTalon.configClosedLoopPeakOutput(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
+    rightFrontTalon.configAllowableClosedloopError(RobotMap.kSlotIDx, 0, RobotMap.pidLoopTimeout);
+
+    //turning   PIDF  kTurnAutonomousSlotIDx = 1
+    leftFrontTalon.config_kF(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kF);
+    leftFrontTalon.config_kP(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kP);
+    leftFrontTalon.config_kI(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kI);
+    leftFrontTalon.config_kD(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kD);
+
+    leftFrontTalon.config_IntegralZone(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
+    leftFrontTalon.configClosedLoopPeakOutput(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
+    leftFrontTalon.configAllowableClosedloopError(RobotMap.kTurnAutonomousSlotIDx, 0, RobotMap.pidLoopTimeout);
+
+
+    rightFrontTalon.config_kF(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kF);
+    rightFrontTalon.config_kP(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kP);
+    rightFrontTalon.config_kI(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kI);
+    rightFrontTalon.config_kD(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kD);
+
+    rightFrontTalon.config_IntegralZone(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
+    rightFrontTalon.configClosedLoopPeakOutput(RobotMap.kTurnAutonomousSlotIDx, RobotMap.turnGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
+    rightFrontTalon.configAllowableClosedloopError(RobotMap.kTurnAutonomousSlotIDx, 0, RobotMap.pidLoopTimeout);
+
+
+    // frame status  speed up the target polling for PID[0] and PID-aux[1]
+
+    pigeonVinnie.setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_9_SixDeg_YPR, 5, RobotMap.pidLoopTimeout);
+
+
+    rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, RobotMap.pidLoopTimeout);
+		rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10, RobotMap.pidLoopTimeout);
+		rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, RobotMap.pidLoopTimeout);
+		// Status_10_Targets is for motion magic only
+		rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, RobotMap.pidLoopTimeout);
+    rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_10_Targets, 10);
+    rightFrontTalon.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 20);//?
+
+
+     leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, RobotMap.pidLoopTimeout);
+     leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10, RobotMap.pidLoopTimeout);
+     leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, RobotMap.pidLoopTimeout);
+		// Status_10_Targets is for motion magic only
+		leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, RobotMap.pidLoopTimeout);
+    leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_10_Targets, 10);
+    leftFrontTalon.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 20);//?
+
+    
+    leftFrontTalon.setSelectedSensorPosition(0, RobotMap.kSlotIDx, RobotMap.pidLoopTimeout);
+		rightFrontTalon.setSelectedSensorPosition(0, RobotMap.kSlotIDx, RobotMap.pidLoopTimeout);
+
+    int closedLoopTimeMs = 1;
+		rightFrontTalon.configClosedLoopPeriod(RobotMap.kSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
+		rightFrontTalon.configClosedLoopPeriod(RobotMap.kTurnAutonomousSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
+
+		leftFrontTalon.configClosedLoopPeriod(RobotMap.kSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
+		leftFrontTalon.configClosedLoopPeriod(RobotMap.kTurnAutonomousSlotIDx, closedLoopTimeMs, RobotMap.pidLoopTimeout);
+
+
+   // end of Arc setup copy
+
+
+
+
+    //leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
+    //leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 30);
+
+    //rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
+    //rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 30);
+
+
+
+
+    leftFrontTalon.setInverted(false);
+    rightFrontTalon.setInverted(true);
+
+    leftBackTalon.setInverted(InvertType.FollowMaster);
+    rightBackTalon.setInverted(InvertType.FollowMaster);
+
+    rightFrontTalon.setSensorPhase(false);
+    leftFrontTalon.setSensorPhase(false);
+    rightBackTalon.setSensorPhase(false);
+    leftBackTalon.setSensorPhase(false);
+
+    rightFrontTalon.setNeutralMode(NeutralMode.Brake);
+    leftFrontTalon.setNeutralMode(NeutralMode.Brake);
+    rightBackTalon.setNeutralMode(NeutralMode.Brake);
+    leftBackTalon.setNeutralMode(NeutralMode.Brake);
+    
+    leftFrontTalon.configNominalOutputForward(0, 30);
+    leftFrontTalon.configNominalOutputReverse(0, 30);
+    leftFrontTalon.configPeakOutputForward(1, 30);
+    leftFrontTalon.configPeakOutputReverse(-1, 30);
+
+    rightFrontTalon.configNominalOutputForward(0, 30);
+    rightFrontTalon.configNominalOutputReverse(0, 30);
+    rightFrontTalon.configPeakOutputForward(1, 30);
+    rightFrontTalon.configPeakOutputReverse(-1, 30);
+  
+
+
+    leftFrontTalon.configMotionCruiseVelocity(4000, 30); // decreased from 8000 which is about 1.7 m/s
+    leftFrontTalon.configMotionAcceleration(4000, 30);
+
+    rightFrontTalon.configMotionCruiseVelocity(4000, 30);
+    rightFrontTalon.configMotionAcceleration(4000, 30);
+
+
+   
+    // copy from Arc setup for configAuxPIDPolarity and Profile Slot  ????
+    //rightFrontTalon.configAuxPIDPolarity(false, RobotMap.pidLoopTimeout);
+		//leftFrontTalon.configAuxPIDPolarity(true, RobotMap.pidLoopTimeout); // left is independent, need flip the polarityb??  not sure for FX, sample code has not polarity setting
+
+
+
+   // rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
+   // leftFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
+
+
+    // the following two are from regular one
+    leftFrontTalon.selectProfileSlot(RobotMap.kSlotIDx, RobotMap.PID_PRIMARY); // not kPIDLoopIDx (=0)
+    rightFrontTalon.selectProfileSlot(RobotMap.kSlotIDx, RobotMap.PID_PRIMARY);
+
+    // the following are new for Arc setup
+    leftFrontTalon.selectProfileSlot(RobotMap.kTurnAutonomousSlotIDx, RobotMap.PID_TURN);
+    rightFrontTalon.selectProfileSlot(RobotMap.kTurnAutonomousSlotIDx, RobotMap.PID_TURN);
+
+
+
+
+
+    zeroSensors();
+}
 
 }

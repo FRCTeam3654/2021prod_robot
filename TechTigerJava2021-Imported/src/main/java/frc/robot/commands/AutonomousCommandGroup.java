@@ -67,9 +67,9 @@ public class AutonomousCommandGroup extends CommandGroup {
         } else if (autonomous == 1){ //CenterDeploy
 
       
-          addSequential(new AutonomousDriveBackwardsCommand());
+          //addSequential(new AutonomousDriveBackwardsCommand());
           //addSequential(new WaitCommand(2.0));// to replace it by ballshooter
-          addSequential(new BallShooterCommand(1));
+          //addSequential(new BallShooterCommand(1));
           addSequential(new AutonomousDriveCommand());
 
 
