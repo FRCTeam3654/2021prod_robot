@@ -171,28 +171,18 @@ public class TankArc {
 						
 
 
-						/*
+						
 						//Slalom Path
 						new Waypoint(0, 0, 0),
-						new Waypoint(1.524, 0,Pathfinder.d2r(0)),
-						new Waypoint(1.829, 0.762,Pathfinder.d2r(90)),
-						new Waypoint(2.286, 1.524,Pathfinder.d2r(45)),
-						new Waypoint(3.81, 2.286,Pathfinder.d2r(0)),
-						new Waypoint(5.486, 1.524,Pathfinder.d2r(-45)),
+						new Waypoint(1.829, 0.762,Pathfinder.d2r(60)),
+						new Waypoint(6.096, 0.762,Pathfinder.d2r(-60)),
 						new Waypoint(6.858, 0,Pathfinder.d2r(0)),
-						new Waypoint(8.382, 0.762,Pathfinder.d2r(90)),
+						new Waypoint(7.620, 0.762,Pathfinder.d2r(90)),
 						new Waypoint(6.858, 1.524,Pathfinder.d2r(180)),
-						new Waypoint(6.096, 0.762,Pathfinder.d2r(235)),
-						new Waypoint(5.334, 0,Pathfinder.d2r(180)),
-						new Waypoint(3.81, 0,Pathfinder.d2r(180)),
-						new Waypoint(2.286, 0,Pathfinder.d2r(135)),
+						new Waypoint(6.096, 0.762,Pathfinder.d2r(250)),
+						new Waypoint(1.829, 0.762,Pathfinder.d2r(120)),
 						new Waypoint(0, 1.524,Pathfinder.d2r(180))
-						*/
 						
-
-
-
-
 				
 
 						//begin of Bounce Path 1
@@ -200,25 +190,9 @@ public class TankArc {
 						//new Waypoint(1.52, 0.762, Pathfinder.d2r(90)),
 						//new Waypoint(1.52, 1.52, Pathfinder.d2r(90))
 						//begin
+						
+
 						/*
-						1.523925632	0.761962816	90
-						2.285888449	-0.761962816	135
-						3.047851265	-1.523925632	180
-						3.809814081	-0.761962816	270
-						3.809814081	1.523925632	270
-		
-						3.809814081	-0.761962816	270
-						4.571776897	-1.523925632	360
-						5.333739714	-1.523925632	360
-						6.09570253	0	450
-						6.09570253	1.523925632	450
-		
-						7.619628162	0	540 */
-
-
-
-
-
 						//Galactic Search Path A 
 						//red 
 						new Waypoint(0, 0, 0),
@@ -226,7 +200,7 @@ public class TankArc {
 						new Waypoint(3.429, -0.762,Pathfinder.d2r(0)),
 						new Waypoint(4.191, 1.524,Pathfinder.d2r(30)),
 						new Waypoint(8.382, 1.524,Pathfinder.d2r(0))
-						
+						*/
 					
 						/*
 						//blue
