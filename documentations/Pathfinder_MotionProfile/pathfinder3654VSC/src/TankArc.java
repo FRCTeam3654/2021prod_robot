@@ -171,18 +171,20 @@ public class TankArc {
 						
 
 
-						/*
+						
 						//Slalom Path
 						new Waypoint(0, 0, 0),
-						new Waypoint(1.829, 0.762,Pathfinder.d2r(60)),
-						new Waypoint(6.096, 0.762,Pathfinder.d2r(-60)),
+						new Waypoint(1.524, 0.762,Pathfinder.d2r(45)),
+						new Waypoint(3.810, 2.286,Pathfinder.d2r(0)),
+						new Waypoint(6.096, 0.762,Pathfinder.d2r(-45)),
 						new Waypoint(6.858, 0,Pathfinder.d2r(0)),
 						new Waypoint(7.620, 0.762,Pathfinder.d2r(90)),
 						new Waypoint(6.858, 1.524,Pathfinder.d2r(180)),
-						new Waypoint(6.096, 0.762,Pathfinder.d2r(250)),
-						new Waypoint(1.829, 0.762,Pathfinder.d2r(120)),
+						new Waypoint(6.096, 0.762,Pathfinder.d2r(225)),
+						new Waypoint(3.810, 0,Pathfinder.d2r(180)),
+						new Waypoint(1.524, 0.762,Pathfinder.d2r(135)),
 						new Waypoint(0, 1.524,Pathfinder.d2r(180))
-						*/
+						
 				
 
 						//begin of Bounce Path 1
@@ -192,7 +194,7 @@ public class TankArc {
 						//begin
 						
 
-						
+						/*
 						//Galactic Search Path A 
 						//red 
 						new Waypoint(0, 0, 0),
@@ -200,7 +202,7 @@ public class TankArc {
 						new Waypoint(3.429, -0.762,Pathfinder.d2r(0)),
 						new Waypoint(4.191, 1.524,Pathfinder.d2r(30)),
 						new Waypoint(8.382, 1.524,Pathfinder.d2r(0))
-						
+						*/
 					
 						/*
 						//blue
