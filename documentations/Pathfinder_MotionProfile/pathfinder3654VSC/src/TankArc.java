@@ -195,16 +195,21 @@ public class TankArc {
 						new Waypoint(0, 0, 0),
 						new Waypoint(1.295, 0.762, Pathfinder.d2r(65)),
 						new Waypoint(1.524, 1.524, Pathfinder.d2r(90))
-						*/
+						*//*
 						//Bounce Path Sequence 2
 						new Waypoint(0, 0, 0),						
 						new Waypoint(2.286, 0.762, Pathfinder.d2r(30)),
 						new Waypoint(3.048, 1.524, Pathfinder.d2r(90)),
 						new Waypoint(2.286, 2.286, Pathfinder.d2r(180)),
 						new Waypoint(0, 2.286, Pathfinder.d2r(180))
-						
+						*/
 						//Bounce Path Sequence 3
-
+						new Waypoint(0, 0, 0),						
+						new Waypoint(2.286, 0.076, Pathfinder.d2r(15)),
+						new Waypoint(3.048, 0.762, Pathfinder.d2r(90)),
+						new Waypoint(3.048, 1.524, Pathfinder.d2r(90)),
+						new Waypoint(2.286, 2.210, Pathfinder.d2r(165)),
+						new Waypoint(0, 2.286, Pathfinder.d2r(180))
 
 
 
