@@ -71,10 +71,7 @@ public class TankArc {
 	    	//int wait_in_ms = 3000;
 	    	
 	    	int wait_in_ms = 0;
-			
-			int leftJumpDirection = 0; // -1: current Jaci's angel -360 ==> real correct value;   +1: current Jaci's angel+360 ==> real correct value, 0 no jump so far
-	    	int rightJumpDirection = 0; // -1: current Jaci's angel -360 ==> real correct value;   +1: current Jaci's angel+360 ==> real correct value, 0 no jump so far
-			double MAX_TURN_RATE_IN_20_MS = 20.0;
+	    	
 	    	
 	    	//if(useRotationAsUnit  == false) {
 	    	//	FILENAME = "C:\\Pathfinder\\mp_20ms_in_meter.csv";
@@ -177,51 +174,51 @@ public class TankArc {
 						/*
 						//Slalom Path
 						new Waypoint(0, 0, 0),
-						new Waypoint(1.524, 0,Pathfinder.d2r(0)),
-						new Waypoint(1.829, 0.762,Pathfinder.d2r(90)),
-						new Waypoint(2.286, 1.524,Pathfinder.d2r(45)),
-						new Waypoint(3.81, 2.286,Pathfinder.d2r(0)),
-						new Waypoint(5.486, 1.524,Pathfinder.d2r(-45)),
+						new Waypoint(1.524, 0.762,Pathfinder.d2r(45)),
+						new Waypoint(3.810, 2.286,Pathfinder.d2r(0)),
+						new Waypoint(6.096, 0.762,Pathfinder.d2r(-45)),
 						new Waypoint(6.858, 0,Pathfinder.d2r(0)),
-						new Waypoint(8.382, 0.762,Pathfinder.d2r(90)),
+						new Waypoint(7.620, 0.762,Pathfinder.d2r(90)),
 						new Waypoint(6.858, 1.524,Pathfinder.d2r(180)),
-						new Waypoint(6.096, 0.762,Pathfinder.d2r(235)),
-						new Waypoint(5.334, 0,Pathfinder.d2r(180)),
-						new Waypoint(3.81, 0,Pathfinder.d2r(180)),
-						new Waypoint(2.286, 0,Pathfinder.d2r(135)),
+						new Waypoint(6.096, 0.762,Pathfinder.d2r(225)),
+						new Waypoint(3.810, 0,Pathfinder.d2r(180)),
+						new Waypoint(1.524, 0.762,Pathfinder.d2r(135)),
 						new Waypoint(0, 1.524,Pathfinder.d2r(180))
 						*/
+					 
 						
 
 
 
-
-				
-
-						//begin of Bounce Path 1
-						//new Waypoint(0, 0, 0),
-						//new Waypoint(1.52, 0.762, Pathfinder.d2r(90)),
-						//new Waypoint(1.52, 1.52, Pathfinder.d2r(90))
-						//begin
 						/*
-						1.523925632	0.761962816	90
-						2.285888449	-0.761962816	135
-						3.047851265	-1.523925632	180
-						3.809814081	-0.761962816	270
-						3.809814081	1.523925632	270
-		
-						3.809814081	-0.761962816	270
-						4.571776897	-1.523925632	360
-						5.333739714	-1.523925632	360
-						6.09570253	0	450
-						6.09570253	1.523925632	450
-		
-						7.619628162	0	540 */
+						//Bounce Path Sequence 1
+						new Waypoint(0, 0, 0),
+						new Waypoint(1.295, 0.762, Pathfinder.d2r(65)),
+						new Waypoint(1.524, 1.524, Pathfinder.d2r(90))
+						*//*
+						//Bounce Path Sequence 2
+						new Waypoint(0, 0, 0),						
+						new Waypoint(2.286, 0.762, Pathfinder.d2r(30)),
+						new Waypoint(3.048, 1.524, Pathfinder.d2r(90)),
+						new Waypoint(2.286, 2.286, Pathfinder.d2r(180)),
+						new Waypoint(0, 2.286, Pathfinder.d2r(180))
+						*//*
+						//Bounce Path Sequence 3
+						new Waypoint(0, 0, 0),						
+						new Waypoint(2.286, 0.076, Pathfinder.d2r(15)),
+						new Waypoint(3.048, 0.762, Pathfinder.d2r(90)),
+						new Waypoint(3.048, 1.524, Pathfinder.d2r(90)),
+						new Waypoint(2.286, 2.210, Pathfinder.d2r(165)),
+						new Waypoint(0, 2.286, Pathfinder.d2r(180))
+						*//*
+						//Bounce Path Sequence 4
+						new Waypoint(0, 0, 0),
+						new Waypoint(1.524, 1.524, Pathfinder.d2r(90))
+						*/
 
 
 
-
-						
+						/*
 						//Galactic Search Path A 
 						//red 
 						new Waypoint(0, 0, 0),
@@ -229,23 +226,37 @@ public class TankArc {
 						new Waypoint(3.429, -0.762,Pathfinder.d2r(0)),
 						new Waypoint(4.191, 1.524,Pathfinder.d2r(30)),
 						new Waypoint(8.382, 1.524,Pathfinder.d2r(0))
-						
+						*/
 					
 						/*
 						//blue
 						new Waypoint(0, 0, 0),
-						new Waypoint(6.096, 0,Pathfinder.d2r(-90)),
-						new Waypoint(6.096, -1.524,Pathfinder.d2r(-180)),
-						new Waypoint(3.810, -1.524,Pathfinder.d2r(90)),
-						new Waypoint(3.810, 0.762,Pathfinder.d2r(0)),
-						new Waypoint(4.572, 0.762,Pathfinder.d2r(0)),
-						new Waypoint(7.620, 0.762,Pathfinder.d2r(0))
+						new Waypoint(4.191, -1.524, 0),
+						new Waypoint(4.953, -0.762, Pathfinder.d2r(90)),
+						new Waypoint(4.953, 0.762, Pathfinder.d2r(45)),
+						new Waypoint(5.715, 1.143, 0),
+						new Waypoint(6.477, 0,Pathfinder.d2r(-60)),
+						new Waypoint(8.382, -0.762, 0)
 						*/
 
 
 
-
+						/*
 						//Galactic Search Path B
+						//red
+						new Waypoint(0, 0, 0),
+						new Waypoint(1.905, 0, 0),						
+						new Waypoint(3.429, -1.524, 0),
+						new Waypoint(4.953, 0, 0),
+						new Waypoint(8.382, 0, 0)
+						*//*
+						//blue
+						new Waypoint(0, 0, 0),
+						new Waypoint(4.191, -1.524, 0),						
+						new Waypoint(5.715, 0, 0),
+						new Waypoint(7.239, -1.524, 0),
+						new Waypoint(8.382, -1.524, 0)
+						*/
 
 
 
@@ -318,10 +329,7 @@ public class TankArc {
 				0.020000,0.000000,0.000000,0.000060,0.003600,0.120000,3.000000,6.283164
 	         * 
 	         */
-			double turnDegree = 0.00;
-			double previousLeftturnDegree = 0.00;
-			double previousRightturnDegree = 0.00;
-			
+	        double turnDegree = 0.00;
 	        for (int i = 0; i < trajectory.length(); i++) {
 	               right_seg = right.get(i);
 	               left_seg = left.get(i);
@@ -357,73 +365,12 @@ public class TankArc {
 	            	
 	            	
 	            	turnDegree = r2d(left_seg.heading);
-					turnDegree = boundHalfDegrees(turnDegree);
-					
-					// Handle the issue of Angle generated by Jaci's algorithm:  when angle cross +- 180, there is a jump in angle about +- 360 degree. 
-	            	// Encountered in 2021 challenge's barrel path which has three full circles
-	            	if( Math.abs(turnDegree - previousLeftturnDegree) > MAX_TURN_RATE_IN_20_MS ) {
-	            		// means Jaci's code has issue with angle, need correct it. Normally it is over +-180, need +- 360 to fix it
-	            		if( previousLeftturnDegree < -170 && turnDegree > 170  && leftJumpDirection == 0) {
-	            			//turnDegree = turnDegree - 360;
-	            			leftJumpDirection = -1;
-	            		}
-	            		else if( previousLeftturnDegree > 170 && turnDegree < -170  ) {
-	            			//turnDegree = turnDegree ; // not doing anything on negative value when from postive to negative jump
-	            			if(  leftJumpDirection == -1) {
-	            				leftJumpDirection = 0; // next round will not jump, turn it off
-	            			}
-	            			else if( leftJumpDirection == 0) {
-	            				leftJumpDirection = 1;
-	            			}
-	            		}
-	            	}
-	            	            	
-	            	previousLeftturnDegree = turnDegree;
-	            	
-	            	if(leftJumpDirection == -1) {
-	            		turnDegree = turnDegree - 360;
-	            	}
-	            	else if(leftJumpDirection == 1) {
-	            		turnDegree = turnDegree + 360;
-					}
-					
+	            	turnDegree = boundHalfDegrees(turnDegree);
 	            	sb.append(String.format("%.2f", turnDegree));
 	            	sb.append(",");
-					
-					
-
-
-	            	turnDegree = r2d(right_seg.heading);
-					turnDegree = boundHalfDegrees(turnDegree);
-					
-					// Handle the issue of Angle generated by Jaci's algorithm:  when angle cross +- 180, there is a jump in angle about +- 360 degree. 
-	            	// Encountered in 2021 challenge's barrel path which has three full circles
-	            	if( Math.abs(turnDegree - previousRightturnDegree) > MAX_TURN_RATE_IN_20_MS ) {
-	            		// means Jaci's code has issue with angle, need correct it. Normally it is over +-180, need +- 360 to fix it
-	            		if( previousRightturnDegree < -170 && turnDegree > 170  && rightJumpDirection == 0) {
-	            			//turnDegree = turnDegree - 360;
-	            			rightJumpDirection = -1;
-	            		}
-	            		else if( previousRightturnDegree > 170 && turnDegree < -170  ) {
-	            			//turnDegree = turnDegree ; // not doing anything on negative value when from postive to negative jump
-	            			if(  rightJumpDirection == -1) {
-	            				rightJumpDirection = 0; // next round will not jump, turn it off
-	            			}
-	            			else if( rightJumpDirection == 0) {
-	            				rightJumpDirection = 1;
-	            			}
-	            		}
-	            	}
 	            	
-	            	previousRightturnDegree = turnDegree;
-
-	            	if(rightJumpDirection == -1) {
-	            		turnDegree = turnDegree - 360;
-	            	}
-	            	else if(rightJumpDirection == 1) {
-	            		turnDegree = turnDegree + 360;
-	            	}
-					
+	            	turnDegree = r2d(right_seg.heading);
+	            	turnDegree = boundHalfDegrees(turnDegree);
 	            	sb.append(String.format("%.2f", turnDegree));
 	            	sb.append(",");
 	            	
