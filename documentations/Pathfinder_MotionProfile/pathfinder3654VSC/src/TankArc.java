@@ -210,10 +210,13 @@ public class TankArc {
 						new Waypoint(3.048, 1.524, Pathfinder.d2r(90)),
 						new Waypoint(2.286, 2.210, Pathfinder.d2r(165)),
 						new Waypoint(0, 2.286, Pathfinder.d2r(180))
-						*/
+						*//*
 						//Bounce Path Sequence 4
 						new Waypoint(0, 0, 0),
 						new Waypoint(1.524, 1.524, Pathfinder.d2r(90))
+						*/
+
+
 
 						/*
 						//Galactic Search Path A 
@@ -238,8 +241,22 @@ public class TankArc {
 
 
 
-
+						/*
 						//Galactic Search Path B
+						//red
+						new Waypoint(0, 0, 0),
+						new Waypoint(1.905, 0, 0),						
+						new Waypoint(3.429, -1.524, 0),
+						new Waypoint(4.953, 0, 0),
+						new Waypoint(8.382, 0, 0)
+						*//*
+						//blue
+						new Waypoint(0, 0, 0),
+						new Waypoint(4.191, -1.524, 0),						
+						new Waypoint(5.715, 0, 0),
+						new Waypoint(7.239, -1.524, 0),
+						new Waypoint(8.382, -1.524, 0)
+						*/
 
 
 
