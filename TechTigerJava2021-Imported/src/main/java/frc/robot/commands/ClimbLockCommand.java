@@ -14,7 +14,7 @@ public class ClimbLockCommand extends Command {
   public ClimbLockCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.climbLock);
+    requires(Robot.ballPickUp);
   }
 
   // Called just before this Command runs the first time
@@ -26,17 +26,17 @@ public class ClimbLockCommand extends Command {
   @Override
   protected void execute() {
     if (Robot.oi.climbLockLeftButton.get()){
-      Robot.climbLock.climbLockLeftSolenoid(false);
+      Robot.ballPickUp.climbLockLeftSolenoid(false);
     
     }
     if (Robot.oi.climbUnlockLeftButton.get()){
-      Robot.climbLock.climbLockLeftSolenoid(true);
+      Robot.ballPickUp.climbLockLeftSolenoid(true);
     }
     if (Robot.oi.climbLockRightButton.get()){
-      Robot.climbLock.climbLockRightSolenoid(false);
+      Robot.ballPickUp.climbLockRightSolenoid(false);
     }
     if (Robot.oi.climbUnlockRightButton.get()){
-      Robot.climbLock.climbLockRightSolenoid(true);
+      Robot.ballPickUp.climbLockRightSolenoid(true);
     }
   }
 
