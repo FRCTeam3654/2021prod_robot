@@ -176,6 +176,7 @@ public static final int kPickUpArmSlotIDx = 1;
 public static final int kClimbSlotIDx = 2;
 public static final int kShooterSlotIDx = 3;
 public static final int kTurnAutonomousSlotIDx = 1;
+public static final boolean kUseMotionProfileArc = false;
 
 public final static int PID_PRIMARY = 0;
 public final static int PID_TURN = 1;
@@ -187,7 +188,7 @@ public final static int REMOTE_1 = 1;
 *                                                         kP,  kI,  kD,    kF,  Iz,  PeakOutput*/
 //public final static Gains driveGainsVelocity = new Gains( 0.25, 0.0, 0.0, 1.015, 400, 1);
 //public final static Gains driveGainsVelocity = new Gains( 0.095, 0.0, 0.0, 0.0451, 100, 1);
-public final static Gains turnGainsVelocity = new Gains( 0.095, 0.0, 0.0, 0.0451, 100, 1);
+public final static Gains turnGainsVelocity = new Gains( 1, 0.0, 0.0, 0.0451, 100, 1);
 //public final static Gains climbGainsVelocity = new Gains( 0.25, 0.0, 0.0, 1.015, 400, 1);
 //public final static Gains shooterGainsVelocity = new Gains( 0.03, 0.0, 0, 0.0451, 0, 0.5);
 //public final static Gains kGains_MotProf = new Gains( 0.1, 0.0,  0.0, 0.0455,  400,  0.5 );

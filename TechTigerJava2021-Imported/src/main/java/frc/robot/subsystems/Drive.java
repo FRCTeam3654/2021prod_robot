@@ -13,6 +13,7 @@ import frc.robot.commands.ManualDriveCommand;
 import frc.robot.Robot;
 
 // import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
@@ -117,17 +118,22 @@ public class Drive extends Subsystem {
 
    public Drive() {
     
-     readMPFile(false ); // false ==> not use Arc or pigeon
-       // readMPFile(true ); // false ==> not use Arc or pigeon
+      //readMPFile(false ); // false ==> not use Arc or pigeon
+      readMPFile(RobotMap.kUseMotionProfileArc ); 
+
 
       pigeonVinnie.configFactoryDefault();
       pigeonVinnie.setYaw(0.0);
       pigeonVinnie.setFusedHeading(0.0);
-    
-      configureDrive();
-      // or 
 
-      //configureArcFXDrive();
+
+     if( RobotMap.kUseMotionProfileArc == false) {
+        configureDrive();
+     }
+     else {
+      configureArcFXDrive();
+     }
+
   }
 
   
@@ -335,18 +341,37 @@ public class Drive extends Subsystem {
       rightFrontTalon.setSelectedSensorPosition(0, RobotMap.kPIDLoopIDx, RobotMap.pidLoopTimeout);
 
       if (pathNumber == 1){
-        leftFrontTalon.startMotionProfile(_leftBufferedStream1, 10, ControlMode.MotionProfile);
-        rightFrontTalon.startMotionProfile(_rightBufferedStream1, 10, ControlMode.MotionProfile);
-      } else if (pathNumber == 2){
-        leftFrontTalon.startMotionProfile(_leftBufferedStream2, 10, ControlMode.MotionProfile);
-        rightFrontTalon.startMotionProfile(_rightBufferedStream2, 10, ControlMode.MotionProfile);
+        if( RobotMap.kUseMotionProfileArc == false) {
+          leftFrontTalon.startMotionProfile(_leftBufferedStream1, 10, ControlMode.MotionProfile);
+          rightFrontTalon.startMotionProfile(_rightBufferedStream1, 10, ControlMode.MotionProfile);
+        }
+        else {
+          leftFrontTalon.startMotionProfile(_leftBufferedStream1, 10, TalonFXControlMode.MotionProfileArc.toControlMode());
+          rightFrontTalon.startMotionProfile(_leftBufferedStream1, 10, TalonFXControlMode.MotionProfileArc.toControlMode());
+        }
+      } else if (pathNumber == 2){     
+        if( RobotMap.kUseMotionProfileArc == false) {
+          leftFrontTalon.startMotionProfile(_leftBufferedStream2, 10, ControlMode.MotionProfile);
+          rightFrontTalon.startMotionProfile(_rightBufferedStream2, 10, ControlMode.MotionProfile);
+        }
+        else {
+          leftFrontTalon.startMotionProfile(_leftBufferedStream2, 10, TalonFXControlMode.MotionProfileArc.toControlMode());
+          rightFrontTalon.startMotionProfile(_leftBufferedStream2, 10, TalonFXControlMode.MotionProfileArc.toControlMode());
+        }
       }
       else if (pathNumber == 3){
-        leftFrontTalon.startMotionProfile(_leftBufferedStream3, 10, ControlMode.MotionProfile);
-        rightFrontTalon.startMotionProfile(_rightBufferedStream3, 10, ControlMode.MotionProfile);
+        if( RobotMap.kUseMotionProfileArc == false) {
+          leftFrontTalon.startMotionProfile(_leftBufferedStream3, 10, ControlMode.MotionProfile);
+          rightFrontTalon.startMotionProfile(_rightBufferedStream3, 10, ControlMode.MotionProfile);
+        }
+        else {
+          leftFrontTalon.startMotionProfile(_leftBufferedStream3, 10, TalonFXControlMode.MotionProfileArc.toControlMode());
+          rightFrontTalon.startMotionProfile(_leftBufferedStream3, 10, TalonFXControlMode.MotionProfileArc.toControlMode());
+        }
       }
     }
   }
+
 
   public void setPositionClosedLoop(double targetPosition){
     double leftNewPosition = leftFrontTalon.getSelectedSensorPosition(0) + targetPosition;
@@ -723,12 +748,12 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
     rightFrontTalon.selectProfileSlot(0,0);
 
     leftFrontTalon.config_kF(0,0.0455,30);
-    leftFrontTalon.config_kP(0,0.095,30);
+    leftFrontTalon.config_kP(0,0.0095,30);
     leftFrontTalon.config_kI(0,0,30);
     leftFrontTalon.config_kD(0,0,30);
 
     rightFrontTalon.config_kF(0,0.0455,30);
-    rightFrontTalon.config_kP(0,0.095,30);
+    rightFrontTalon.config_kP(0,0.0095,30);
     rightFrontTalon.config_kI(0,0,30);
     rightFrontTalon.config_kD(0,0,30);
     
@@ -893,9 +918,8 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
 
    
     // copy from Arc setup for configAuxPIDPolarity and Profile Slot  ????
-    //rightFrontTalon.configAuxPIDPolarity(false, RobotMap.pidLoopTimeout);
-		//leftFrontTalon.configAuxPIDPolarity(true, RobotMap.pidLoopTimeout); // left is independent, need flip the polarityb??  not sure for FX, sample code has not polarity setting
-
+    rightFrontTalon.configAuxPIDPolarity(false, RobotMap.pidLoopTimeout);
+	 	leftFrontTalon.configAuxPIDPolarity(true, RobotMap.pidLoopTimeout); // left is independent, need flip the polarityb??  not sure for FX, sample code has not polarity setting
 
 
    // rightFrontTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_Targets, 10);
