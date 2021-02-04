@@ -176,11 +176,11 @@ public class TankArc {
 						new Waypoint(0, 0, 0),
 						new Waypoint(1.829, 0.762,Pathfinder.d2r(60)),
 						new Waypoint(3.810,	1.524,Pathfinder.d2r(0)),
-						new Waypoint(6.096, 0.762,Pathfinder.d2r(-60)),
+						new Waypoint(6.096, 0.762,Pathfinder.d2r(-45)),
 						new Waypoint(6.858, 0,Pathfinder.d2r(0)),
 						new Waypoint(7.620, 0.762,Pathfinder.d2r(90)),
 						new Waypoint(6.858, 1.524,Pathfinder.d2r(180)),
-						new Waypoint(6.096, 0.762,Pathfinder.d2r(250)),
+						new Waypoint(6.096, 0.762,Pathfinder.d2r(235)),
 						new Waypoint(3.810,	0.000, Pathfinder.d2r(180)),
 						new Waypoint(1.829, 0.762,Pathfinder.d2r(120)),
 						new Waypoint(0, 1.524,Pathfinder.d2r(180))

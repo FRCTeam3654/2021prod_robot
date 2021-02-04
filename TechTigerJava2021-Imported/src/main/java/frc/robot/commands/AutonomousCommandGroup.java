@@ -57,23 +57,27 @@ public class AutonomousCommandGroup extends CommandGroup {
        
      // autonomous = 8;
 
-        if (autonomous == 0 ) {  //DriveStraight
+        if (autonomous == 0 ) {  //GalacticA
+          addSequential(new AutonomousDriveCommand(1));
+          /*  
           addSequential(new AutonomousDriveBackwardsCommand());
           //addSequential(new WaitCommand(2.0));// to replace it by ballshooter
           addSequential(new BallShooterCommand(1));
           addSequential(new AutonomousDriveCommand());
           //addSequential(new BallPickUpCommand(1));
+          */
          
-        } else if (autonomous == 1){ //CenterDeploy
-
+        } else if (autonomous == 1){ //GalacticB
+          addSequential(new AutonomousDriveCommand(1));
       
           //addSequential(new AutonomousDriveBackwardsCommand());
           //addSequential(new WaitCommand(2.0));// to replace it by ballshooter
           //addSequential(new BallShooterCommand(1));
-          addSequential(new AutonomousDriveCommand());
+         // addSequential(new AutonomousDriveCommand());
 
 
-        } else if (autonomous == 2){ //RightDeploy
+        } else if (autonomous == 2){ //Bounce Path
+          addSequential(new AutonomousDriveCommand(1));
 /*
           addSequential(new AutonomousDriveBackwardsCommand());
           addSequential(new WaitCommand(2.0));// to replace it by ballshooter
@@ -81,9 +85,11 @@ public class AutonomousCommandGroup extends CommandGroup {
           addSequential(new BallPickUpCommand(1));
 */
          // addSequential(new MotionMagicDriveCommand(1.2, true));
-         addSequential(new AutonomousDriveBackwardsCommand()); // test path
-        } else if (autonomous == 3){ //LeftDeploy
-/*
+         //addSequential(new AutonomousDriveBackwardsCommand()); // test path
+
+        } else if (autonomous == 3){ //Slalom
+        addSequential(new AutonomousDriveCommand(1)); 
+          /*
           addParallel(new BallPickUpCommand(1));
           addSequential(new MotionMagicDriveCommand(2.629));
           addSequential(new MotionMagicDriveCommand(3.5434));
@@ -96,17 +102,19 @@ public class AutonomousCommandGroup extends CommandGroup {
           addParallel(new BallPickUpCommand(1));
           addSequential(new MotionMagicDriveCommand(4.438));
           
-*/
-          addSequential(new MotionMagicDriveCommand(1.2, true));
           
-        } else if (autonomous == 4){ //Complicated Autonomous
-          addSequential(new AutonomousDriveBackwardsCommand(1)); //first motion profile path of mode 4
+          addSequential(new MotionMagicDriveCommand(1.2, true));
+          */
+        } else if (autonomous == 4){ //Barrel
+          addSequential(new AutonomousDriveCommand(1));
+         /* addSequential(new AutonomousDriveBackwardsCommand(1)); //first motion profile path of mode 4
           addSequential(new BallShooterCommand(1)); //1 means autonomous mode
           //addSequential(new WaitCommand(2.0));// to replace it by ballshooter
           //addParallel(new BallPickUpCommand(1));
           addSequential(new AutonomousDriveCommand(2)); //second motion profile path of mode 4
           addSequential(new MotionMagicDriveCommand(0.91, true));
           addSequential(new MotionMagicDriveCommand(0.91, true));
+          */
           //addSequential(new AutonomousDriveBackwardsCommand(3)); //third motion profile path of mode 4
           //addSequential(new BallShooterCommand(1));
  /*       

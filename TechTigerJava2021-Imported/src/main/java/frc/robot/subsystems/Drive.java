@@ -447,22 +447,22 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
     int autonomous = (int) Math.round(SmartDashboard.getNumber("Autonomous", 1.0)); 
     //autonomous = "LeftTurn";
     //if (autonomous.equals("DriveStraight") || autonomous.equals("Default")){
-    if (autonomous == 0 ) {  //DriveStraight      
-      path1FileName = "/home/lvuser/mp_20ms_in_meter_arc_2_1.csv";
-      path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_2_2.csv";
-    } else if (autonomous == 1){ //CenterDeploy
-       path1FileName = "/home/lvuser/mp_20ms_in_meter_arc_1_1.csv";
-       path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_1_2.csv";
-    } else if (autonomous == 2){ //RightDeploy
-      path1FileName = "/home/lvuser/mp_20ms_in_meter_arc_3_1.csv";
-      path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_3_2.csv";
-    } else if (autonomous == 3){ //LeftDeploy
-      path1FileName = "/home/lvuser/mp_20ms_in_meter_arc_3_1.csv";
+    if (autonomous == 0 ) {  //GalacticA     
+      path1FileName = "/home/lvuser/GalacticA/mp_20ms_in_meter_arc_galacticA.csv";
+      //path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_2_2.csv";
+    } else if (autonomous == 1){ //GalacticB
+       path1FileName = "/home/lvuser/GalacticB/mp_20ms_in_meter_arc_galacticB.csv";
+       //path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_1_2.csv";
+    } else if (autonomous == 2){ //Bounce
+      path1FileName = "/home/lvuser/Bounce/mp_20ms_in_meter_arc_bounce.csv";
       //path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_3_2.csv";
-    } else if (autonomous == 4){ //LeftTurn
-      path1FileName = "/home/lvuser/mp_20ms_in_meter_arc_4_1.csv";
-      path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_4_2.csv";
-      path3FileName = "/home/lvuser/mp_20ms_in_meter_arc_4_3.csv";
+    } else if (autonomous == 3){ //Slalom
+      path1FileName = "/home/lvuser/Slalom/mp_20ms_in_meter_arc_Slalom.csv";
+      //path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_3_2.csv";
+    } else if (autonomous == 4){ //Barrel
+      path1FileName = "/home/lvuser/Barrel/mp_20ms_in_meter_arc_barrel.csv";
+     // path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_4_2.csv";
+      //path3FileName = "/home/lvuser/mp_20ms_in_meter_arc_4_3.csv";
     } else if (autonomous == 5){ //CenterTurn
       path1FileName = "/home/lvuser/mp_20ms_in_meter_arc_5_1.csv";    
     } else if (autonomous == 6){ //RightTurn
