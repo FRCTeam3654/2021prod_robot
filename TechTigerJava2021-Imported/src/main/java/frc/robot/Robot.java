@@ -19,7 +19,6 @@ import frc.robot.commands.AutonomousDriveCommand;
 import frc.robot.commands.AutonomousCommandGroup;
 import frc.robot.subsystems.ColorWheel;
 import frc.robot.subsystems.BallPickUp;
-import frc.robot.subsystems.ClimbLock;
 import frc.robot.subsystems.BallShooter;
 import frc.robot.subsystems.BallStorage;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -40,7 +39,6 @@ public class Robot extends TimedRobot {
   public static BallPickUp ballPickUp;
   public static BallShooter ballShooter;
   public static BallStorage ballStorage;
-  public static ClimbLock climbLock;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -59,7 +57,6 @@ public class Robot extends TimedRobot {
     ballPickUp = new BallPickUp();
     ballShooter = new BallShooter();
     ballStorage = new BallStorage();
-    climbLock = new ClimbLock();
     oi = new OI();  // need be after drive object
 
     m_chooser.setDefaultOption("Mercy Auto", new AutonomousCommandGroup());

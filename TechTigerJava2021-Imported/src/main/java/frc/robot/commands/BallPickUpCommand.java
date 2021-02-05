@@ -17,13 +17,11 @@ import frc.robot.RobotMap;
 public class BallPickUpCommand extends Command {
   private AtomicInteger _mode = new AtomicInteger(0); //mode = 0 means regular teleop; mode = 1 means autonomous mode
   private double startTimeAutonomous = 0;
-  private double armSensorResetTimeout = 0;
   private boolean ballPickUpAutonomousFlag = false;
   private double _ballPickUpNewTimeout = RobotMap.autonomousBallPickUpTimeOut;
 
   private boolean isButtonPressed = false;
   private boolean armDown = false;
-  private boolean armSensorReset = false;
   public BallPickUpCommand() {
     requires(Robot.ballPickUp);
     _mode.set(0);
@@ -48,18 +46,8 @@ public class BallPickUpCommand extends Command {
   protected void execute() {
     //Robot.ballPickUp.moveArm(true);
     //SmartDashboard.putNumber("BallPickUpFlag", 1);
-    if (!armSensorReset){     // true if the arm tic is not reset
-      if (!Robot.ballPickUp.armStatusData()){   // true if arm in home position
-        armSensorReset = true;  // says its true
-        Robot.ballPickUp.zeroSensor();   // reset tic counter to zero
-        Robot.ballPickUp.manualPickUpArmMove(0);    //tells it to not move, stops it
-      }
-      else {
-        Robot.ballPickUp.manualPickUpArmMove(0.05);   //moves it to home position
-      }
-    }
 
-    else {
+    
         if ((Robot.oi.ballPickUpButton.get() && !isButtonPressed) || _mode.get() == 1){
           isButtonPressed = true;
           if (!armDown){
@@ -82,7 +70,6 @@ public class BallPickUpCommand extends Command {
         if (!Robot.oi.ballPickUpButton.get()){
           isButtonPressed = false;
         }
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
