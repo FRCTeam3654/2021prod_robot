@@ -71,6 +71,13 @@ public class TankArc {
 	    	//int wait_in_ms = 3000;
 	    	
 	    	int wait_in_ms = 0;
+			
+			
+	    	int leftJumpDirection = 0; // -1: current Jaci's angel -360 ==> real correct value;   +1: current Jaci's angel+360 ==> real correct value, 0 no jump so far
+	    	int rightJumpDirection = 0; // -1: current Jaci's angel -360 ==> real correct value;   +1: current Jaci's angel+360 ==> real correct value, 0 no jump so far
+	    	
+	    	
+	    	double MAX_TURN_RATE_IN_20_MS = 20.0;
 	    	
 	    	
 	    	//if(useRotationAsUnit  == false) {
@@ -151,7 +158,7 @@ public class TankArc {
 						*/
 
 						// Barrel Path full path
-						/*
+						
 						new Waypoint(0, 0, 0),
 	        		    new Waypoint( 3.05, 0, Pathfinder.d2r(0) ),
 	        		    new Waypoint(3.81, -0.762, Pathfinder.d2r(-90)) ,
@@ -167,11 +174,11 @@ public class TankArc {
 						new Waypoint(6.86, 0, Pathfinder.d2r(180)),
 						new Waypoint(0, 0,Pathfinder.d2r(180))
 						// end of working Barrel Path
-						*/
+						
 						
 
 
-						
+						/*
 						//Slalom Path
 						new Waypoint(0, 0, 0),
 						new Waypoint(1.829, 0.762,Pathfinder.d2r(60)),
@@ -184,7 +191,7 @@ public class TankArc {
 						new Waypoint(3.810,	0.000, Pathfinder.d2r(180)),
 						new Waypoint(1.829, 0.762,Pathfinder.d2r(120)),
 						new Waypoint(0, 1.524,Pathfinder.d2r(180))
-						
+						*/
 				
 
 						//begin of Bounce Path 1
@@ -291,59 +298,127 @@ public class TankArc {
 				0.020000,0.000000,0.000000,0.000060,0.003600,0.120000,3.000000,6.283164
 	         * 
 	         */
-	        double turnDegree = 0.00;
+			double turnDegree = 0.00;
+			double previousLeftturnDegree = 0.00;
+	        double previousRightturnDegree = 0.00;
 	        for (int i = 0; i < trajectory.length(); i++) {
-	               right_seg = right.get(i);
-	               left_seg = left.get(i);
-	               // NOTE:  left, right may need swap if the motor output is inverted
-	            
-	               // using meter as unit: linecount, right position, right velocity, left position, left velocity, time_step 
-	            
-	               //2,000196,0.019565,0.000196,0.019565,20
-	            	//sb.append((i+1));
-	               
-	               // WITH Pigeon, no need swap the direction, but Navx is the opposite to the Pathfind's heading's sign
-	               
-	               // PATH finder heading:  CCW is positive, CW is negative,  Forward is positive X
-	            	
-	            	sb.append((i+wait_cycle+1));
-	            	sb.append(",");
-	            	sb.append(String.format("%.3f",  left_seg.position));
-	            	sb.append(",");
-	            	sb.append(String.format("%.3f",  left_seg.velocity));
-	            	sb.append(",");
-	            	sb.append(String.format("%.3f",  right_seg.position));// don't swap left and right position for Pigeon, do it for Navx
-	            	sb.append(",");
-	            	sb.append(String.format("%.3f",  right_seg.velocity));
-	            	sb.append(",");     
-	            	
-	            	//***** IMPORTANT:   heading in pathfinder output is radian, need convert it to degree
-	            	
-	            	//****  BUG in software:  beginning and ending heading often WRONG,  need manually correct it !!!!!!!!!!
-	            	
-	            	//****  ANOTHER Mis-match with our breadboard:  LEFT and RIGHT are SWITCHed in our config
-	            	
-	            	//****  THIRD issue:  pigeon use continuous angle +-23040, jaci's angle output has issue once over t +-180 (jaci's program only good at <180 and >-180 heading range), or even the first non-value can be 358 instead of -2
-	            	
-	            	
-	            	turnDegree = r2d(left_seg.heading);
-	            	turnDegree = boundHalfDegrees(turnDegree);
-	            	sb.append(String.format("%.2f", turnDegree));
-	            	sb.append(",");
-	            	
-	            	turnDegree = r2d(right_seg.heading);
-	            	turnDegree = boundHalfDegrees(turnDegree);
-	            	sb.append(String.format("%.2f", turnDegree));
-	            	sb.append(",");
-	            	
-	            	sb.append(time_step_ms);
-	            	if( i < (trajectory.length()  - 1 )) {
-	            		sb.append("\n");
-	            	}
-	            
-	           
-	        }
-	        
+				right_seg = right.get(i);
+				left_seg = left.get(i);
+				// NOTE:  left, right may need swap if the motor output is inverted
+			 
+				// using meter as unit: linecount, right position, right velocity, left position, left velocity, time_step 
+			 
+				//2,000196,0.019565,0.000196,0.019565,20
+				 //sb.append((i+1));
+				
+				// WITH Pigeon, no need swap the direction, but Navx is the opposite to the Pathfind's heading's sign
+				
+				// PATH finder heading:  CCW is positive, CW is negative,  Forward is positive X
+				 
+				 sb.append((i+wait_cycle+1));
+				 sb.append(",");
+				 sb.append(String.format("%.3f",  left_seg.position));
+				 sb.append(",");
+				 sb.append(String.format("%.3f",  left_seg.velocity));
+				 sb.append(",");
+				 sb.append(String.format("%.3f",  right_seg.position));// don't swap left and right position for Pigeon, do it for Navx
+				 sb.append(",");
+				 sb.append(String.format("%.3f",  right_seg.velocity));
+				 sb.append(",");     
+				 
+				 //***** IMPORTANT:   heading in pathfinder output is radian, need convert it to degree
+				 
+				 //****  BUG in software:  beginning and ending heading often WRONG,  need manually correct it !!!!!!!!!!
+				 
+				 //****  ANOTHER Mis-match with our breadboard:  LEFT and RIGHT are SWITCHed in our config
+				 
+				 //****  THIRD issue:  pigeon use continuous angle ±23040, jaci's angle output has issue once over t ±180 (jaci's program only good at <180 and >-180 heading range), or even the first non-value can be 358 instead of -2
+				 
+				 
+				 turnDegree = r2d(left_seg.heading);
+				 turnDegree = boundHalfDegrees(turnDegree);
+				 
+				 
+				 // Handle the issue of Angle generated by Jaci's algorithm:  when angle cross +- 180, there is a jump in angle about +- 360 degree. 
+				 // Encountered in 2021 challenge's barrel path which has three full circles
+				 if( Math.abs(turnDegree - previousLeftturnDegree) > MAX_TURN_RATE_IN_20_MS ) {
+					 // means Jaci's code has issue with angle, need correct it. Normally it is over +-180, need +- 360 to fix it
+					 if( previousLeftturnDegree < -170 && turnDegree > 170  && leftJumpDirection == 0) {
+						 //turnDegree = turnDegree - 360;
+						 leftJumpDirection = -1;
+					 }
+					 else if( previousLeftturnDegree > 170 && turnDegree < -170  ) {
+						 //turnDegree = turnDegree ; // not doing anything on negative value when from postive to negative jump
+						 if(  leftJumpDirection == -1) {
+							 leftJumpDirection = 0; // next round will not jump, turn it off
+						 }
+						 else if( leftJumpDirection == 0) {
+							 leftJumpDirection = 1;
+						 }
+					 }
+				 }
+								 
+				 previousLeftturnDegree = turnDegree;
+				 
+				 
+				 if(leftJumpDirection == -1) {
+					 turnDegree = turnDegree - 360;
+				 }
+				 else if(leftJumpDirection == 1) {
+					 turnDegree = turnDegree + 360;
+				 }
+				 
+				 sb.append(String.format("%.2f", turnDegree));
+				 sb.append(",");
+				 
+						 
+				 
+				 turnDegree = r2d(right_seg.heading);
+				 turnDegree = boundHalfDegrees(turnDegree);
+				 
+				 
+				 
+				 // Handle the issue of Angle generated by Jaci's algorithm:  when angle cross +- 180, there is a jump in angle about +- 360 degree. 
+				 // Encountered in 2021 challenge's barrel path which has three full circles
+				 if( Math.abs(turnDegree - previousRightturnDegree) > MAX_TURN_RATE_IN_20_MS ) {
+					 // means Jaci's code has issue with angle, need correct it. Normally it is over +-180, need +- 360 to fix it
+					 if( previousRightturnDegree < -170 && turnDegree > 170  && rightJumpDirection == 0) {
+						 //turnDegree = turnDegree - 360;
+						 rightJumpDirection = -1;
+					 }
+					 else if( previousRightturnDegree > 170 && turnDegree < -170  ) {
+						 //turnDegree = turnDegree ; // not doing anything on negative value when from postive to negative jump
+						 if(  rightJumpDirection == -1) {
+							 rightJumpDirection = 0; // next round will not jump, turn it off
+						 }
+						 else if( rightJumpDirection == 0) {
+							 rightJumpDirection = 1;
+						 }
+					 }
+				 }
+				 
+				 previousRightturnDegree = turnDegree;
+
+				 if(rightJumpDirection == -1) {
+					 turnDegree = turnDegree - 360;
+				 }
+				 else if(rightJumpDirection == 1) {
+					 turnDegree = turnDegree + 360;
+				 }
+				 
+				 sb.append(String.format("%.2f", turnDegree));
+				 sb.append(",");
+				 
+		   
+				 
+				 sb.append(time_step_ms);
+				 if( i < (trajectory.length()  - 1 )) {
+					 sb.append("\n");
+				 }
+			 
+			
+		 }
+
 	        // Write the String data into a file
 	        BufferedWriter bw = null;
 			FileWriter fw = null;
