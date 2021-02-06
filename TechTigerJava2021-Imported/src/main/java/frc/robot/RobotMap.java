@@ -188,7 +188,7 @@ public final static int REMOTE_1 = 1;
 *                                                         kP,  kI,  kD,    kF,  Iz,  PeakOutput*/
 //public final static Gains driveGainsVelocity = new Gains( 0.25, 0.0, 0.0, 1.015, 400, 1);
 //public final static Gains driveGainsVelocity = new Gains( 0.095, 0.0, 0.0, 0.0451, 100, 1);
-public final static Gains turnGainsVelocity = new Gains( 1, 0.0, 0.0, 0.0451, 100, 1);
+public final static Gains turnGainsVelocity = new Gains( 0.1, 0.0, 0.0, 0.00451, 100, 0.5);
 //public final static Gains climbGainsVelocity = new Gains( 0.25, 0.0, 0.0, 1.015, 400, 1);
 //public final static Gains shooterGainsVelocity = new Gains( 0.03, 0.0, 0, 0.0451, 0, 0.5);
 //public final static Gains kGains_MotProf = new Gains( 0.1, 0.0,  0.0, 0.0455,  400,  0.5 );

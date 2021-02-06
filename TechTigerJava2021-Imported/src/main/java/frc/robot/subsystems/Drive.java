@@ -168,13 +168,13 @@ public class Drive extends Subsystem {
       leftFrontTalon.selectProfileSlot(0,0);
       rightFrontTalon.selectProfileSlot(0,0);
 
-      leftFrontTalon.config_kF(0,0.09,30);// 0.045
-      leftFrontTalon.config_kP(0,0.1,30); //0.095
+      leftFrontTalon.config_kF(0,0.045,30);// 0.045
+      leftFrontTalon.config_kP(0,0.049,30); //0.095
       leftFrontTalon.config_kI(0,0,30);
       leftFrontTalon.config_kD(0,0,30);
 
-      rightFrontTalon.config_kF(0,0.09,30); // 0.045
-      rightFrontTalon.config_kP(0,0.1,30); //0.095
+      rightFrontTalon.config_kF(0,0.045,30); // 0.045
+      rightFrontTalon.config_kP(0,0.049,30); //0.095
       rightFrontTalon.config_kI(0,0,30);
       rightFrontTalon.config_kD(0,0,30);
       
@@ -471,21 +471,23 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
     //String autonomous = SmartDashboard.getString("Autonomous", "Default");
     int autonomous = (int) Math.round(SmartDashboard.getNumber("Autonomous", 1.0)); 
     //autonomous = "LeftTurn";
+    autonomous = 4;
     //if (autonomous.equals("DriveStraight") || autonomous.equals("Default")){
     if (autonomous == 0 ) {  //GalacticA     
-      path1FileName = "/home/lvuser/GalacticA/mp_20ms_in_meter_arc_galacticA.csv";
+      path2FileName = "/home/lvuser/GalacticA/mp_20ms_in_meter_arc_galacticA.csv";
       //path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_2_2.csv";
     } else if (autonomous == 1){ //GalacticB
-       path1FileName = "/home/lvuser/GalacticB/mp_20ms_in_meter_arc_galacticB.csv";
+      path2FileName = "/home/lvuser/Barrel/mp_20ms_in_meter_arc_barrel.csv";
+      //path2FileName = "/home/lvuser/GalacticB/mp_20ms_in_meter_arc_galacticB.csv";
        //path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_1_2.csv";
     } else if (autonomous == 2){ //Bounce
-      path1FileName = "/home/lvuser/Bounce/mp_20ms_in_meter_arc_bounce.csv";
+      path2FileName = "/home/lvuser/Bounce/mp_20ms_in_meter_arc_bounce.csv";
       //path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_3_2.csv";
     } else if (autonomous == 3){ //Slalom
-      path1FileName = "/home/lvuser/Slalom/mp_20ms_in_meter_arc_Slalom.csv";
+      path2FileName = "/home/lvuser/Slalom/mp_20ms_in_meter_arc_Slalom.csv";
       //path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_3_2.csv";
     } else if (autonomous == 4){ //Barrel
-      path1FileName = "/home/lvuser/Barrel/mp_20ms_in_meter_arc_barrel.csv";
+      path2FileName = "/home/lvuser/Barrel/mp_20ms_in_meter_arc_barrel.csv";
      // path2FileName = "/home/lvuser/mp_20ms_in_meter_arc_4_2.csv";
       //path3FileName = "/home/lvuser/mp_20ms_in_meter_arc_4_3.csv";
     } else if (autonomous == 5){ //CenterTurn

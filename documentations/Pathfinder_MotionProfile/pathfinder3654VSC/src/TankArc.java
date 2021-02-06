@@ -57,9 +57,9 @@ public class TankArc {
 	    	
 	    	long starttime = System.nanoTime();
 	    	
-	    	int time_step_ms = 20;
+	    	int time_step_ms = 80;
 	    	
-	    	double wheelbaseinmeter = 0.64;//0.652;// 0.635;//0.7;// 0.8; 0.55245 is 2021 robot
+	    	double wheelbaseinmeter =0.64;//0.652;// 0.635;//0.7;// 0.8; 0.55245 is 2021 robot
 	    	
 	    	
 	    	//boolean useRotationAsUnit = false;
@@ -77,7 +77,7 @@ public class TankArc {
 	    	int rightJumpDirection = 0; // -1: current Jaci's angel -360 ==> real correct value;   +1: current Jaci's angel+360 ==> real correct value, 0 no jump so far
 	    	
 	    	
-	    	double MAX_TURN_RATE_IN_20_MS = 20.0;
+	    	double MAX_TURN_RATE_IN_20_MS = 80.0;
 	    	
 	    	
 	    	//if(useRotationAsUnit  == false) {
@@ -107,8 +107,8 @@ public class TankArc {
 	    	// test  
 	    	//Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 0.7, 1, 12.0); 
 	       
-	    	
-	    	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 1.3, 1.3, 30.0); 
+	    
+	    	Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 1.7, 1.7, 30.0); 
 		       
 	    	//Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, time_step, 0.6, 1.2, 20.0); 
 		    
@@ -167,7 +167,8 @@ public class TankArc {
 						new Waypoint(3.05, 0, Pathfinder.d2r(-360)),
 	        		    new Waypoint(5.33, 0, Pathfinder.d2r(-360)),
 	        		    new Waypoint(6.1, 0.762, Pathfinder.d2r(-270)),
-	        		    new Waypoint(5.33, 1.524, Pathfinder.d2r(-180)),
+						new Waypoint(5.33, 1.524, Pathfinder.d2r(-180))
+						
 	        		    new Waypoint(4.57, 0.762, Pathfinder.d2r(-90)),
 	        		    new Waypoint(6.86, -1.524, Pathfinder.d2r(0)),
 	        		    new Waypoint(7.62, -0.762, Pathfinder.d2r(90)) ,
@@ -176,9 +177,27 @@ public class TankArc {
 						// end of working Barrel Path
 						*/
 						
+							
+					// test
+						new Waypoint(0, 0, 0),
+	        		    new Waypoint( 1.05, 0, Pathfinder.d2r(0) ),
+	        		    new Waypoint(1.81, -0.762, Pathfinder.d2r(-90)) ,
+	        		    new Waypoint(1.05, -1.524, Pathfinder.d2r(-180)),
+	        		    new Waypoint(0.286, -0.762, Pathfinder.d2r(-270)) ,
+						new Waypoint(1.05, 0, Pathfinder.d2r(-360)),
+	        		    new Waypoint(3.33, 0, Pathfinder.d2r(-360)),
+	        		    new Waypoint(4.1, 0.762, Pathfinder.d2r(-270)),
+						new Waypoint(3.33, 1.524, Pathfinder.d2r(-180))
+						/*new Waypoint(2.57, 0.762, Pathfinder.d2r(-90)),
+	        		    new Waypoint(4.86, -1.524, Pathfinder.d2r(0)),
+	        		    new Waypoint(5.62, -0.762, Pathfinder.d2r(90)) ,
+						new Waypoint(4.86, 0, Pathfinder.d2r(180)),
+						new Waypoint(0, 0,Pathfinder.d2r(180))
+						*/
 
 
-						
+
+						/*
 						//Slalom Path
 						new Waypoint(0, 0, 0),
 						new Waypoint(1.829, 0.762,Pathfinder.d2r(60)),
@@ -191,7 +210,7 @@ public class TankArc {
 						new Waypoint(3.810,	0.000, Pathfinder.d2r(180)),
 						new Waypoint(1.829, 0.762,Pathfinder.d2r(120)),
 						new Waypoint(0, 1.524,Pathfinder.d2r(180))
-						
+						*/
 				
 
 						/*
