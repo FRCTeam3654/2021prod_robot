@@ -40,6 +40,10 @@ public class AutonomousDriveCommand extends Command {
     if (!autonomousFlag){
       startTimeAutonomous = Timer.getFPGATimestamp();
       autonomousFlag = true;
+      if( RobotMap.kUseMotionProfileArc == false) {
+        Robot.drive.configureDrive(); // make sure it is correct even after motion magic uses auxPID
+      }
+
       Robot.drive.setMotionProfile(_pathNumber.get());
       //Robot.drive.setMotionMagic(RobotMap.autonomousTargetPos, 8000, 4000); // not use AuxPID
     }

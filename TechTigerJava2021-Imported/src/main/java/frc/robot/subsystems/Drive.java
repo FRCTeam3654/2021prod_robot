@@ -12,6 +12,8 @@ import frc.robot.RobotMap;
 import frc.robot.commands.ManualDriveCommand;
 import frc.robot.Robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 // import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -35,7 +37,9 @@ import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.sensors.PigeonIMU_StatusFrame;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 
-
+import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import java.io.*;
@@ -82,8 +86,8 @@ public class Drive extends Subsystem {
   public double Kp = -0.1;
   public double min_command = 0.05;
  
-  double _pigeonRemoteSensoreScaleFactor = 1;
-  //double _pigeonRemoteSensoreScaleFactor = (((double) (3600)) / 8192)  ; // the remote sensor reading is 0.1 degree each value
+  //double _pigeonRemoteSensoreScaleFactor = 1;
+  double _pigeonRemoteSensoreScaleFactor = (((double) (3600)) / 8192)  ; // the remote sensor reading is 0.1 degree each value
 
 
   BufferedTrajectoryPointStream _leftBufferedStream1 = new BufferedTrajectoryPointStream();
@@ -236,6 +240,21 @@ public class Drive extends Subsystem {
       return ret;
   }
 
+  public double getRemote1SensorReading(){
+    double sensor1Position = (leftFrontTalon.getSelectedSensorPosition(1) + rightFrontTalon.getSelectedSensorPosition(1))/2.0;
+    
+    SmartDashboard.putNumber("Sensor1pigenPos", sensor1Position);
+    return sensor1Position;
+  }
+
+
+//  public void setRightTalonFXInvert(boolean invertDirection) {
+ //   rightFrontTalon.setInverted(invertDirection);
+ // }
+  public void setLeftTalonFXInvert(boolean invertDirection) {
+    leftFrontTalon.setInverted(invertDirection);
+  }
+
   public void setPower(double leftPower, double rightPower) {
       leftFrontTalon.set(ControlMode.PercentOutput, leftPower);
       rightFrontTalon.set(ControlMode.PercentOutput, rightPower);
@@ -306,6 +325,12 @@ public class Drive extends Subsystem {
       rightFrontTalon.set(ControlMode.MotionMagic, distance);
     }
     else {
+
+    // the following are new for Arc setup
+    leftFrontTalon.selectProfileSlot(RobotMap.kTurnAutonomousSlotIDx, RobotMap.PID_TURN);
+    rightFrontTalon.selectProfileSlot(RobotMap.kTurnAutonomousSlotIDx, RobotMap.PID_TURN);
+
+
       rightFrontTalon.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, turn_angle);		
       leftFrontTalon.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, turn_angle);
     }
@@ -317,7 +342,7 @@ public class Drive extends Subsystem {
     double percentError = 100 * (targetDistanceInNativeUnit - sensorDistance)/targetDistanceInNativeUnit;
 
     // even though it is desired to achieve error < 1%, it depends on PID tuning, sometimes it is always achieable
-    if (percentError < 2.5){
+    if (percentError < 0.3 || percentError < 0 ){
       if( resetToPercentMode == true) {
         // do we need this ?
         leftFrontTalon.getSensorCollection().setIntegratedSensorPosition(0,  RobotMap.pidLoopTimeout);
@@ -328,6 +353,8 @@ public class Drive extends Subsystem {
       }
       return true;
     }
+
+    SmartDashboard.putNumber("SensorMMagicVel", leftFrontTalon.getSelectedSensorVelocity(0));
     return ret;
   }
 
@@ -409,6 +436,9 @@ public class Drive extends Subsystem {
         System.out.println("finished mp");
         SmartDashboard.putNumber("mp_status",12); 
       }
+
+      SmartDashboard.putNumber("SensorMFVel", rightFrontTalon.getSelectedSensorVelocity(0));
+
       return ret;
   }
 
@@ -684,7 +714,7 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
            leftPoint.velocity = direction * leftVelocity * RobotMap.kMeterToFalconSenorUnit / 10.0; // Convert Meter/second to native unit per 100 ms
            leftPoint.arbFeedFwd = 0; /* you can add a constant offset to add to PID[0] output here */
 
-           leftPoint.auxiliaryPos = leftAngle  * 22.755; //Constants.kTurnUnitsPerDeg;
+           leftPoint.auxiliaryPos =  leftAngle  * 22.755; //Constants.kTurnUnitsPerDeg;
            leftPoint.auxiliaryVel = 0;
            //leftPoint.profileSlotSelect0 = RobotMap.kSlotIDx; /* which set of gains would you like to use [0,3]? */
            //leftPoint.profileSlotSelect1 = 0; /* auxiliary PID [0,1], leave zero */
@@ -720,7 +750,12 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
        }
    }
 
+
+
    public void configureArcFXDrive() {
+    configureArcFXDrive(true);
+   }
+   public void configureArcFXDrive(boolean resetSensor) {
     leftFrontTalon.configFactoryDefault();
     leftBackTalon.configFactoryDefault();
     rightFrontTalon.configFactoryDefault();
@@ -738,27 +773,16 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
     leftBackTalon.follow(leftFrontTalon);
     rightBackTalon.follow(rightFrontTalon);
 
-    leftFrontTalon.configClosedloopRamp(1);
-    rightFrontTalon.configClosedloopRamp(1);
-    rightFrontTalon.configOpenloopRamp(1);
-    leftFrontTalon.configOpenloopRamp(1);
+    leftFrontTalon.configClosedloopRamp(RobotMap.talonDriveAccelerationRate );
+    rightFrontTalon.configClosedloopRamp(RobotMap.talonDriveAccelerationRate );
+    rightFrontTalon.configOpenloopRamp(RobotMap.talonDriveAccelerationRate );
+    leftFrontTalon.configOpenloopRamp(RobotMap.talonDriveAccelerationRate );
     
     rightFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, RobotMap.pidLoopTimeout);//0 is the primary PID index
     leftFrontTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, RobotMap.pidLoopTimeout);
 
     leftFrontTalon.selectProfileSlot(0,0);
     rightFrontTalon.selectProfileSlot(0,0);
-
-    leftFrontTalon.config_kF(0,0.0455,30);
-    leftFrontTalon.config_kP(0,0.0095,30);
-    leftFrontTalon.config_kI(0,0,30);
-    leftFrontTalon.config_kD(0,0,30);
-
-    rightFrontTalon.config_kF(0,0.0455,30);
-    rightFrontTalon.config_kP(0,0.0095,30);
-    rightFrontTalon.config_kI(0,0,30);
-    rightFrontTalon.config_kD(0,0,30);
-    
 
     // copied from Arc setup
 
@@ -793,10 +817,10 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
 
 
     //drive     PIDF  kSlotIDx = 0
-    //leftFrontTalon.config_kF(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kF, RobotMap.pidLoopTimeout);	    
-    //leftFrontTalon.config_kP(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kP, RobotMap.pidLoopTimeout);	    
-    //leftFrontTalon.config_kI(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kI, RobotMap.pidLoopTimeout);	    
-    //leftFrontTalon.config_kD(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kD, RobotMap.pidLoopTimeout);	    
+    leftFrontTalon.config_kF(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kF, RobotMap.pidLoopTimeout);	    
+    leftFrontTalon.config_kP(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kP, RobotMap.pidLoopTimeout);	    
+    leftFrontTalon.config_kI(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kI, RobotMap.pidLoopTimeout);	    
+    leftFrontTalon.config_kD(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kD, RobotMap.pidLoopTimeout);	    
 
 
 
@@ -804,10 +828,10 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
     leftFrontTalon.configClosedLoopPeakOutput(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kPeakOutput, RobotMap.pidLoopTimeout);
     leftFrontTalon.configAllowableClosedloopError(RobotMap.kSlotIDx, 0, RobotMap.pidLoopTimeout);
 
-   // rightFrontTalon.config_kF(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kF, RobotMap.pidLoopTimeout);	   
-   // rightFrontTalon.config_kP(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kP, RobotMap.pidLoopTimeout);	    
-   // rightFrontTalon.config_kI(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kI, RobotMap.pidLoopTimeout);	    
-   // rightFrontTalon.config_kD(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kD, RobotMap.pidLoopTimeout);	   
+    rightFrontTalon.config_kF(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kF, RobotMap.pidLoopTimeout);	   
+    rightFrontTalon.config_kP(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kP, RobotMap.pidLoopTimeout);	    
+    rightFrontTalon.config_kI(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kI, RobotMap.pidLoopTimeout);	    
+    rightFrontTalon.config_kD(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kD, RobotMap.pidLoopTimeout);	   
 
 
     rightFrontTalon.config_IntegralZone(RobotMap.kSlotIDx, RobotMap.driveGainsVelocity.kIzone, RobotMap.pidLoopTimeout);
@@ -936,11 +960,10 @@ public void mercyArcadeDrive(double joystickX, double joystickY) {
     leftFrontTalon.selectProfileSlot(RobotMap.kTurnAutonomousSlotIDx, RobotMap.PID_TURN);
     rightFrontTalon.selectProfileSlot(RobotMap.kTurnAutonomousSlotIDx, RobotMap.PID_TURN);
 
+    if (resetSensor) {
+      zeroSensors();
+    }
+ }
 
-
-
-
-    zeroSensors();
-}
 
 }

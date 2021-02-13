@@ -1,76 +1,78 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-
-import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.Timer;
 
-public class MotionMagicDriveCommand extends Command {
-  private double _distanceInMeters=0; 
+public class TurnSmallDegreeCommand extends Command {
+
+  double _angleToTurn = 0.0; // in Degree
+
+  // use MotionMagic to turn small angle, so copy most code from MotionMagicCommand
+  private double _distanceInMeters=0;
   private boolean _resetToPercentMode = true;
-  private boolean _useAuxPID = false;
   private double startTimeAutonomous = 0;
   private boolean motionMagicAutonomousFlag = false;
   private double startTimeEndStage = 0;
   private boolean motionMagicEndStageFlag = false;
 
-  public MotionMagicDriveCommand(double distanceInMeters) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+  public TurnSmallDegreeCommand() {;
     requires(Robot.drive);
-    _distanceInMeters = distanceInMeters;
-    _resetToPercentMode = true; 
   }
 
-  public MotionMagicDriveCommand(double distanceInMeters, boolean resetToPercentMode) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+  public TurnSmallDegreeCommand(double angleToTurn, boolean resetToPercentMode) {
     requires(Robot.drive);
-    _distanceInMeters = distanceInMeters;
-    _resetToPercentMode  = resetToPercentMode ;
-  }
-
-  public MotionMagicDriveCommand(double distanceInMeters, boolean resetToPercentMode, boolean useAuxPID) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.drive);
-    _distanceInMeters = distanceInMeters;
-    _useAuxPID = useAuxPID;
+    _angleToTurn = angleToTurn;
     _resetToPercentMode  = resetToPercentMode ;
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
-  }
+  protected void initialize() {}
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double distanceInNativeUnit = _distanceInMeters * RobotMap.kMeterToFalconSenorUnit; 
-    //Robot.drive.setMotionMagic(distanceInNativeUnit, 8000, 4000);
-
     if (!motionMagicAutonomousFlag){
       startTimeAutonomous = Timer.getFPGATimestamp();
       motionMagicAutonomousFlag = true;
-      if( _useAuxPID == false ) {
-        Robot.drive.setMotionMagic(distanceInNativeUnit, 4000, 4000); 
-      }
-      else {
-        Robot.drive.configureArcFXDrive(false);
-        
-        Robot.drive.setMotionMagic(distanceInNativeUnit, Robot.drive.getRemote1SensorReading(), 4000,  4000, true);
-      }
-    }
-  }
 
+      _distanceInMeters  = Math.abs(3.14156 * RobotMap.effectiveTurnWheelWidth * _angleToTurn / 360.0);
+     
+      //setOppositeTurn(true);
+      //Robot.drive.setRightTalonFXInvert(false);
+      Robot.drive.setLeftTalonFXInvert(true);
+      
+      Robot.drive.setMotionMagic(_distanceInMeters, 1000, 1000); 
+      
+    }
+
+  }
+ /*
+  public void setOppositeTurn(boolean oppositeTurn) {
+        if( oppositeTurn == true) {
+          if(_angleToTurn > 0 )
+          {
+            Robot.drive.setRightTalonFXInvert(true);
+            Robot.drive.setLeftTalonFXInvert(true);
+          }
+          else {
+            // need flip the right FX from true to false, after done, restore back
+            Robot.drive.setRightTalonFXInvert(false);
+            Robot.drive.setLeftTalonFXInvert(false);
+          }
+        }
+        else {
+          
+            Robot.drive.setRightTalonFXInvert(true);
+            Robot.drive.setLeftTalonFXInvert(false);
+        }
+  }
+  */
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
@@ -80,6 +82,8 @@ public class MotionMagicDriveCommand extends Command {
           return false;
       } else if(Robot.drive.isMotionMagicDone(_distanceInMeters * RobotMap.kMeterToFalconSenorUnit, _resetToPercentMode)){
         motionMagicAutonomousFlag = false; 
+        //setOppositeTurn(false); // must restore back
+        Robot.drive.setLeftTalonFXInvert(false);
         return true;
       }
       // enforce timeout in case MP is stucked or running too long
@@ -88,6 +92,8 @@ public class MotionMagicDriveCommand extends Command {
           if( _resetToPercentMode == true) {
              Robot.drive.resetToPercentAndzeroDistance();
           }
+          //setOppositeTurn(false); // must restore back
+          Robot.drive.setLeftTalonFXInvert(false);
            return true;
       }
       else {
@@ -114,6 +120,8 @@ public class MotionMagicDriveCommand extends Command {
                     if( _resetToPercentMode == true) {
                       Robot.drive.resetToPercentAndzeroDistance();
                     }
+                    //setOppositeTurn(false); // must restore back
+                    Robot.drive.setLeftTalonFXInvert(false);
                     return true;
                  }
               }
@@ -127,12 +135,10 @@ public class MotionMagicDriveCommand extends Command {
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
-  }
+  protected void end() {}
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted() {
-  }
+  protected void interrupted() {}
 }
