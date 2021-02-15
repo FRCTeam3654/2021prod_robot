@@ -34,6 +34,7 @@ public static double autonomousVelocity = 0.5;
 public static double leftOverRightCompensation = .98;
 public static double talonDriveAccelerationRate = 0.3654;
 public static double ballStorageSpeed = 0.6;
+public static double effectiveTurnWheelWidth = 0.64; // meter, measured by turning the robot
 
 // ^^^ Must be experimentally derived
 
@@ -110,10 +111,14 @@ public static int analogDistanceSensorPort4 = 3;
 public static int digitalDistanceSensorPort5 = 4; //oh yeah
 
 public static double joystickDeadBand = 0.08;
-public static double autonomousTimeOut = 7;
+
+public static double autonomousTimeOut = 40; // used to be 7 second in normal auto mode but 2021 is different
+
 public static double autonomousBallShooterTimeOut = 3;
 public static double autonomousBallPickUpTimeOut = 4;
-public static double motionMagicTimeOut = 4;
+
+public static double motionMagicTimeOut = 40;// in regular, it should time out in 4 seconds
+
 //falcon maximum velocity in native unit 
 public static int maximumVelocityFalcon = 21000;
 public static double radianConversionToDegree = 57.2958;
@@ -190,16 +195,18 @@ public final static int REMOTE_1 = 1;
 *                                                         kP,  kI,  kD,    kF,  Iz,  PeakOutput*/
 //public final static Gains driveGainsVelocity = new Gains( 0.25, 0.0, 0.0, 1.015, 400, 1);
 //public final static Gains driveGainsVelocity = new Gains( 0.095, 0.0, 0.0, 0.0451, 100, 1);
-public final static Gains turnGainsVelocity = new Gains( 0.1, 0.0, 0.0, 0.00451, 100, 0.5);
+public final static Gains turnGainsVelocity = new Gains( 1.5, 0.0, 0.0, 0.000, 100, 1);
 //public final static Gains climbGainsVelocity = new Gains( 0.25, 0.0, 0.0, 1.015, 400, 1);
 //public final static Gains shooterGainsVelocity = new Gains( 0.03, 0.0, 0, 0.0451, 0, 0.5);
 //public final static Gains kGains_MotProf = new Gains( 0.1, 0.0,  0.0, 0.0455,  400,  0.5 );
 //public static int pidLoopTimeout = 30;
 
-public final static Gains driveGainsVelocity = new Gains( 0.3, 0.0, 0.0, 0.0451, 100, 1);
+//public final static Gains driveGainsVelocity = new Gains( 0.0095, 0.0, 0.0, 0.0451, 100, 1); //0.3 used by motion profile as position loop
+public final static Gains driveGainsVelocity = new Gains( 0.1, 0.0, 0.0, 0.0451, 100, 1); //0.3 used by motion profile as position loop
+
 public final static Gains climbGainsVelocity = new Gains( 0.3, 0.0, 0.0, 0.0451, 400, 1);
 public final static Gains shooterGainsVelocity = new Gains( 0.03, 0.0, 0, 0.0451, 0, 0.5);
-public final static Gains kGains_MotProf = new Gains( 0.1, 0.0,  0.0, 0.0455,  400,  0.5 );
+public final static Gains kGains_MotProf = new Gains( 0.001, 0.0,  0.0, 0.0451,  100,  1.0 );// p=0.00095
 //static final Gains kGains = new Gains(0.03, 0.0, 0, 0.0451, 0, 0.5);
 public static int pidLoopTimeout = 30;
 

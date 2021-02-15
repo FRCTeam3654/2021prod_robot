@@ -107,6 +107,17 @@ public class AutonomousCommandGroup extends CommandGroup {
           */
         } else if (autonomous == 4){ //Barrel
           addSequential(new AutonomousDriveCommand(2));
+
+        // addSequential(new MotionMagicDriveCommand(2.0, false, false));
+         //addSequential(new MotionMagicDriveCommand(2.0, false, true));
+         
+        // addSequential(new WaitCommand(1.0)); // test
+        // addSequential(new TurnSmallDegreeCommand(10.0, true));
+        // Robot.drive.setRightTalonFXInvert(true);
+        // Robot.drive.setLeftTalonFXInvert(false);
+        
+
+
          /* addSequential(new AutonomousDriveBackwardsCommand(1)); //first motion profile path of mode 4
           addSequential(new BallShooterCommand(1)); //1 means autonomous mode
           //addSequential(new WaitCommand(2.0));// to replace it by ballshooter
