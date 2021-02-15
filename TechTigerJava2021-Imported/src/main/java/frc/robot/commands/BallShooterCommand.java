@@ -29,7 +29,7 @@ public class BallShooterCommand extends Command {
   public BallShooterCommand(int mode) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    //requires(Robot.ballShooter);
+    requires(Robot.ballShooter);
     requires(Robot.ballStorage);
     _mode.set(mode);
   }
@@ -43,7 +43,7 @@ public class BallShooterCommand extends Command {
   protected void execute() {
     if (Robot.oi.ballShooterButton.get() || _mode.get() == 1)
     {
-      //Robot.ballShooter.shoot(true);
+      Robot.ballShooter.shoot(true);
       Robot.ballStorage.ballCounter = 0;
       Robot.ballStorage.driveBallStorage4(1.0);
 
@@ -59,7 +59,7 @@ public class BallShooterCommand extends Command {
     }
     else
     {
-     // Robot.ballShooter.shoot(false);      
+      Robot.ballShooter.shoot(false);      
       //Robot.ballShooter.shoot(true);    
       Robot.ballStorage.driveBallStorage4(0);
 

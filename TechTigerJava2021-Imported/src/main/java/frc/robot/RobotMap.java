@@ -86,6 +86,7 @@ public static int climbLeftTalonID = 11;
 public static int climbRightTalonID = 12;
 public static int BallPickUpID = 6;
 public static int BallShooterID = 8;
+public static int BallShooterSlaveID = 5;
 public static int pickUpArmTalonID = 13;
 
 // Digital IO for the ballpickup sensor
@@ -121,7 +122,8 @@ public static double radianConversionToDegree = 57.2958;
 public static double ballPickUpSpeed = 0.5;// used to 0.4
 public static int solenoidIn = 3;
 public static int solenoidOut = 2;
-public static double shooterSpeed_nativeUnit = 4000; 
+public static double shooterSpeed_nativeUnit = 10240; //3000 rpm
+//^^ calculated by (desired rpm * 2048 / 60sec / 10)
 
 //COLOR WHEEL!
 /**4096 * 25

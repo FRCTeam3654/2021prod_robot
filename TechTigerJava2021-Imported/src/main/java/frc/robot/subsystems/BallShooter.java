@@ -25,15 +25,20 @@ import edu.wpi.first.wpilibj.MotorSafety;
 
 public class BallShooter extends Subsystem {
   private TalonFX ballShooterTalon = new TalonFX (RobotMap.BallShooterID);
+  private TalonFX ballShooterSlaveTalon = new TalonFX (RobotMap.BallShooterSlaveID);
   public BallShooter() {
     
     ballShooterTalon.configFactoryDefault();
+    ballShooterSlaveTalon.configFactoryDefault();
     
-    //ballShooterTalon.setInverted(false);
+    //ballShooterSlaveTalon.setInverted(true);
+    ballShooterSlaveTalon.follow(ballShooterTalon);
+    ballShooterSlaveTalon.setInverted(InvertType.InvertMotorOutput);
    
     ballShooterTalon.setSensorPhase(true);
     
     ballShooterTalon.setNeutralMode(NeutralMode.Coast);
+    ballShooterSlaveTalon.setNeutralMode(NeutralMode.Coast);
     ballShooterTalon.configNeutralDeadband(0.001, RobotMap.pidLoopTimeout);
     
     ballShooterTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, RobotMap.pidLoopTimeout);
