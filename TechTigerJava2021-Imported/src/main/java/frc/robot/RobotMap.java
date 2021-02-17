@@ -205,7 +205,7 @@ public final static Gains turnGainsVelocity = new Gains( 1.5, 0.0, 0.0, 0.000, 1
 public final static Gains driveGainsVelocity = new Gains( 0.1, 0.0, 0.0, 0.0451, 100, 1); //0.3 used by motion profile as position loop
 
 public final static Gains climbGainsVelocity = new Gains( 0.3, 0.0, 0.0, 0.0451, 400, 1);
-public final static Gains shooterGainsVelocity = new Gains( 0.03, 0.0, 0, 0.0451, 0, 0.5);
+public final static Gains shooterGainsVelocity = new Gains( 0.03, 0.0, 0, 0.0451, 0, 1);
 public final static Gains kGains_MotProf = new Gains( 0.001, 0.0,  0.0, 0.0451,  100,  1.0 );// p=0.00095
 //static final Gains kGains = new Gains(0.03, 0.0, 0, 0.0451, 0, 0.5);
 public static int pidLoopTimeout = 30;

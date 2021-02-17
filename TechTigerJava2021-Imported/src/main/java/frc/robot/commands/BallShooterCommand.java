@@ -22,6 +22,7 @@ public class BallShooterCommand extends Command {
   public BallShooterCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.ballStorage);
     requires(Robot.ballShooter);
     _mode.set(0);
   }
@@ -36,6 +37,7 @@ public class BallShooterCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    startTimeAutonomous = Timer.getFPGATimestamp();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -49,18 +51,13 @@ public class BallShooterCommand extends Command {
 
 
       if (!ballShooterAutonomousFlag){
-   
-        startTimeAutonomous = Timer.getFPGATimestamp();
         ballShooterAutonomousFlag = true;
         _mode.set(1);
-  
-        
       }
     }
     else
     {
-      Robot.ballShooter.shoot(false);      
-      //Robot.ballShooter.shoot(true);    
+      Robot.ballShooter.shoot(false);  
       Robot.ballStorage.driveBallStorage4(0);
 
     }
@@ -90,6 +87,9 @@ public class BallShooterCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    ballShooterAutonomousFlag = false;
+    Robot.ballShooter.shoot(false);  
+    Robot.ballStorage.driveBallStorage4(0); 
   }
 
   // Called when another command which requires one or more of the same
