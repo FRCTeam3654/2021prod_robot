@@ -6,8 +6,14 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.InvertType; 
 import com.ctre.phoenix.motorcontrol.ControlMode; 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 
 /** Add your docs here. */
 public class Turret extends Subsystem {
@@ -16,6 +22,42 @@ public class Turret extends Subsystem {
 
   private TalonFX turretTurningTalon = new TalonFX (RobotMap.turretTurningID);
 
+  public Turret(){
+    turretTurningTalon.configFactoryDefault();
+    
+    
+    
+    turretTurningTalon.setNeutralMode(NeutralMode.Coast);
+    turretTurningTalon.configNeutralDeadband(0.01, RobotMap.pidLoopTimeout); //during testing was 0.001
+    
+    turretTurningTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, RobotMap.pidLoopTimeout);
+
+    /* Set relevant frame periods to be at least as fast as periodic rate */
+		turretTurningTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, RobotMap.pidLoopTimeout);
+		//ballShooterTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.pidLoopTimeout);
+
+		/* Set the peak and nominal outputs */
+		turretTurningTalon.configNominalOutputForward(0, RobotMap.pidLoopTimeout);
+		turretTurningTalon.configNominalOutputReverse(0, RobotMap.pidLoopTimeout);
+		turretTurningTalon.configPeakOutputForward(1, RobotMap.pidLoopTimeout);
+		turretTurningTalon.configPeakOutputReverse(-1, RobotMap.pidLoopTimeout);
+
+		/* Set gains in slot0 - see documentation */
+    turretTurningTalon.selectProfileSlot(RobotMap.kShooterSlotIDx, RobotMap.kPIDLoopIDx);
+		turretTurningTalon.config_kF(RobotMap.kShooterSlotIDx, RobotMap.turretGainsVelocity.kF, RobotMap.pidLoopTimeout);
+		turretTurningTalon.config_kP(RobotMap.kShooterSlotIDx, RobotMap.turretGainsVelocity.kP, RobotMap.pidLoopTimeout);
+		turretTurningTalon.config_kI(RobotMap.kShooterSlotIDx, RobotMap.turretGainsVelocity.kI, RobotMap.pidLoopTimeout);
+		turretTurningTalon.config_kD(RobotMap.kShooterSlotIDx, RobotMap.turretGainsVelocity.kD, RobotMap.pidLoopTimeout);
+
+		/* Set acceleration and vcruise velocity - see documentation */
+		turretTurningTalon.configMotionCruiseVelocity(500, RobotMap.pidLoopTimeout);
+		turretTurningTalon.configMotionAcceleration(500, RobotMap.pidLoopTimeout);
+
+		/* Zero the sensor once on robot boot up */
+		turretTurningTalon.setSelectedSensorPosition(0, RobotMap.kPIDLoopIDx, RobotMap.pidLoopTimeout);
+    
+    zeroSensor();
+  }
   public void zeroSensor() {
     turretTurningTalon.setSelectedSensorPosition(0, RobotMap.kPIDLoopIDx, RobotMap.kTimeoutMs);
     System.out.println("Turret Turning Sensor is 0");
