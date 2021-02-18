@@ -26,15 +26,14 @@ public class Turret extends Subsystem {
     turretTurningTalon.configFactoryDefault();
     
     
-    
-    turretTurningTalon.setNeutralMode(NeutralMode.Coast);
+    turretTurningTalon.setNeutralMode(NeutralMode.Brake);
     turretTurningTalon.configNeutralDeadband(0.01, RobotMap.pidLoopTimeout); //during testing was 0.001
     
     turretTurningTalon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, RobotMap.pidLoopTimeout);
 
     /* Set relevant frame periods to be at least as fast as periodic rate */
 		turretTurningTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, RobotMap.pidLoopTimeout);
-		//ballShooterTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.pidLoopTimeout);
+		turretTurningTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.pidLoopTimeout);
 
 		/* Set the peak and nominal outputs */
 		turretTurningTalon.configNominalOutputForward(0, RobotMap.pidLoopTimeout);
@@ -58,6 +57,7 @@ public class Turret extends Subsystem {
     
     zeroSensor();
   }
+  
   public void zeroSensor() {
     turretTurningTalon.setSelectedSensorPosition(0, RobotMap.kPIDLoopIDx, RobotMap.kTimeoutMs);
     System.out.println("Turret Turning Sensor is 0");
