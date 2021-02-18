@@ -89,6 +89,7 @@ public static int BallPickUpID = 6;
 public static int BallShooterID = 8;
 public static int BallShooterSlaveID = 5;
 public static int pickUpArmTalonID = 13;
+public static int turretTurningID = 17;
 
 // Digital IO for the ballpickup sensor
 public static int ArmStatusID = 0;

@@ -21,6 +21,7 @@ import frc.robot.subsystems.ColorWheel;
 import frc.robot.subsystems.BallPickUp;
 import frc.robot.subsystems.BallShooter;
 import frc.robot.subsystems.BallStorage;
+import frc.robot.subsystems.Turret;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -39,6 +40,7 @@ public class Robot extends TimedRobot {
   public static BallPickUp ballPickUp;
   public static BallShooter ballShooter;
   public static BallStorage ballStorage;
+  public static Turret turret;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -58,6 +60,7 @@ public class Robot extends TimedRobot {
     ballShooter = new BallShooter();
     ballStorage = new BallStorage();
     oi = new OI();  // need be after drive object
+    turret = new Turret();
 
     m_chooser.setDefaultOption("Mercy Auto", new AutonomousCommandGroup());
     //m_chooser.setDefaultOption("Mercy Auto", new AutonomousDriveCommand());
