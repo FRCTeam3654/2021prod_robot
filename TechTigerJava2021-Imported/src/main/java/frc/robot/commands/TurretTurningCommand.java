@@ -16,21 +16,34 @@ public class TurretTurningCommand extends Command {
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {}
+  protected void initialize() {
+    Robot.turret.zeroSensor();
+  }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {}
+  protected void execute() {
+    Robot.turret.turretTurning(RobotMap.turretTickAmount);
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    if (Robot.turret.turretTickCount() >= RobotMap.turretTickAmount){
+      Robot.turret.zeroSensor();
+      return true;
+    }
     return false;
   }
+    
+  
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {}
+  protected void end() {
+    Robot.turret.manualTurret(0.0);
+    Robot.turret.zeroSensor();
+  }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run

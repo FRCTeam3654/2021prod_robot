@@ -74,6 +74,7 @@ public static int ballFlushButtonNumber = 2;
 public static int colorSensorButtonNumber = 10; 
 public static int pickUpButtonNumber = 1;
 public static int ballShooterButtonNumber = 4; 
+public static int turretButtonNumber = 3;
 
 //TALONS/TALON ID NUMBERS!
 public static int leftTalonMaster = 1;
@@ -135,6 +136,7 @@ public static double shooterSpeed_nativeUnit = 10240; //3000 rpm
 /**4096 * 25
 *25 is minimum times small wheel should turn for big wheel turning 3 times
 **/
+public static int turretTickAmount = 20000; //82,944 ticks 1:81 gear ratio for half turn
 public static int colorWheelSpinTickAmount = 102400;
 public static int colorWheelCruiseVelocity = 4000;
 public static int colorWheelAcceleration = 4000;

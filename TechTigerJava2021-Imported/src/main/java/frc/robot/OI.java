@@ -18,6 +18,7 @@ import frc.robot.commands.BallShooterCommand;
 import frc.robot.commands.DriveTargetCommand;
 import frc.robot.commands.BallFlushCommand;
 import frc.robot.commands.ClimbLockCommand;
+import frc.robot.commands.TurretTurningCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -48,6 +49,7 @@ public class OI {
   public JoystickButton climbLockRightButton;
   public JoystickButton climbUnlockLeftButton;
   public JoystickButton climbUnlockRightButton;
+  public JoystickButton turretButton;
 
   public OI(){
 
@@ -67,6 +69,7 @@ public class OI {
   climbLockRightButton = new JoystickButton(operatorStick, RobotMap.climbLockRightButtonNumber);
   climbUnlockLeftButton = new JoystickButton(operatorStick, RobotMap.climbUnlockLeftButtonNumber);
   climbUnlockRightButton = new JoystickButton(operatorStick, RobotMap.climbUnlockRightButtonNumber);
+  turretButton = new JoystickButton(operatorStick, RobotMap.turretButtonNumber);
 
   turnLeft90Button.whenPressed(new Turn90DegreesCommand());
   turnRight90Button.whenPressed(new Turn90DegreesCommand());
@@ -82,6 +85,7 @@ public class OI {
   climbLockRightButton.whenPressed(new ClimbLockCommand());
   climbUnlockLeftButton.whenPressed(new ClimbLockCommand());
   climbUnlockRightButton.whenPressed(new ClimbLockCommand());
+  turretButton.whenPressed(new TurretTurningCommand());
   }
   
 }
