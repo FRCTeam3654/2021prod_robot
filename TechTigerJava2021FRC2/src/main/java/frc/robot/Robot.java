@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableInstance;
-
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
 
     m_robotContainer = new RobotContainer();
 
+    LiveWindow.disableAllTelemetry();
     CameraServer.getInstance().startAutomaticCapture(0);
     //CameraServer.getInstance().startAutomaticCapture(1);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1); //3 is force off
