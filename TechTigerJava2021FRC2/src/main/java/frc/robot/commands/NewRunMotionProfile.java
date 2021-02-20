@@ -86,7 +86,7 @@ public class NewRunMotionProfile extends CommandBase {
       List<Object> waypointData, double endVelocity, boolean reversed, boolean relative,
       List<TrajectoryConstraint> extraConstraints) {
     updateConstants();
-    this.waypointPoses = processWaypointData(waypointData);
+    this.waypointPoses = processWaypointData(waypointData, reversed);
     Pose2d initialPosition = this.waypointPoses.remove(0);
     useQuintic = true;
 
@@ -203,7 +203,7 @@ public class NewRunMotionProfile extends CommandBase {
   public NewRunMotionProfile(Drive driveTrain, RobotOdometry odometry, List<Object> waypointData,
       double endVelocity, boolean reversed, boolean relative, List<TrajectoryConstraint> extraConstraints) {
     updateConstants();
-    this.waypointPoses = processWaypointData(waypointData);
+    this.waypointPoses = processWaypointData(waypointData, reversed);
     useQuintic = true;
     setup(driveTrain, odometry, null, null, endVelocity, reversed, relative, extraConstraints);
   }
@@ -363,7 +363,8 @@ public class NewRunMotionProfile extends CommandBase {
     allConstraints.add(centripetalAccelerationConstraint);
     allConstraints.addAll(extraConstraints);
     for (int i = 0; i < circlePaths.size(); i++) {
-      config.addConstraint(circlePaths.get(i).getConstraint(driveKinematics, maxVelocity, extraConstraints));
+      //config.addConstraint(circlePaths.get(i).getConstraint(driveKinematics, maxVelocity, extraConstraints));
+      config.addConstraint(circlePaths.get(i).getConstraint(driveKinematics, maxVelocity, allConstraints));
     }
     if (relative) {
       relativeTrajectory = true;
@@ -584,13 +585,32 @@ public class NewRunMotionProfile extends CommandBase {
    * Processes a list of Pose2d and CirclePath objects into only Pose2d objects,
    * including saving circle path objects. Converts from inches to meters.
    */
-  public List<Pose2d> processWaypointData(List<Object> waypointData) {
+  public List<Pose2d> processWaypointData2(List<Object> waypointData) {
     List<Pose2d> outputPoses = new ArrayList<>();
     for (int i = 0; i < waypointData.size(); i++) {
       if (waypointData.get(i).getClass() == Pose2d.class) {
         outputPoses.add((Pose2d) waypointData.get(i));
       } else if (waypointData.get(i).getClass() == CirclePath.class) {
         CirclePath circle = (CirclePath) waypointData.get(i);
+        outputPoses.addAll(circle.calcPoses());
+        circlePaths.add(circle);
+      }
+    }
+    return outputPoses;
+  }
+
+  /**
+   * Processes a list of Pose2d and CirclePath objects into only Pose2d objects,
+   * including saving circle path objects. Converts from inches to meters.
+   */
+  public List<Pose2d> processWaypointData(List<Object> waypointData, boolean reversed) {
+    List<Pose2d> outputPoses = new ArrayList<>();
+    for (int i = 0; i < waypointData.size(); i++) {
+      if (waypointData.get(i).getClass() == Pose2d.class) {
+        outputPoses.add((Pose2d) waypointData.get(i));
+      } else if (waypointData.get(i).getClass() == CirclePath.class) {
+        CirclePath circle = (CirclePath) waypointData.get(i);
+        circle.reversed = reversed;
         outputPoses.addAll(circle.calcPoses());
         circlePaths.add(circle);
       }
@@ -624,6 +644,7 @@ public class NewRunMotionProfile extends CommandBase {
     public final Rotation2d startingRotation;
     public final Rotation2d endingRotation;
     public final boolean clockwise;
+    public boolean reversed = false;
 
     /**
      * Creates a circular path with the given properties
@@ -666,7 +687,8 @@ public class NewRunMotionProfile extends CommandBase {
       while (true) {
         // Calculate new pose for current rotation
         Transform2d transform = new Transform2d(new Translation2d(radius, 0),
-            Rotation2d.fromDegrees(clockwise ? -90 : 90));
+             Rotation2d.fromDegrees((clockwise ? -90 : 90) * (reversed ? -1 : 1)));
+            //Rotation2d.fromDegrees(clockwise ? -90 : 90));
         outputPoses.add(new Pose2d(center, currentRotation).transformBy(transform));
         if (clockwise) {
           currentRotation = currentRotation.minus(separationAngle);
@@ -719,7 +741,8 @@ public class NewRunMotionProfile extends CommandBase {
      * @return Curvature in radians per unit along the circumference
      */
     public double getCurvature() {
-      return (1 / radius) * (clockwise ? -1 : 1);
+      //return (1 / radius) * (clockwise ? -1 : 1);
+      return (1 / radius) * (clockwise ? -1 : 1) * (reversed ? -1 : 1);
     }
 
     /**
@@ -730,7 +753,9 @@ public class NewRunMotionProfile extends CommandBase {
         Translation2d centerToCurrent = testPosition.getTranslation().minus(center);
         Rotation2d rotationFromCenter = new Rotation2d(Math.atan2(centerToCurrent.getY(), centerToCurrent.getX()));
 
-        Rotation2d expectedRotation = rotationFromCenter.plus(Rotation2d.fromDegrees(clockwise ? -90 : 90));
+        //Rotation2d expectedRotation = rotationFromCenter.plus(Rotation2d.fromDegrees(clockwise ? -90 : 90));
+        Rotation2d expectedRotation = rotationFromCenter.plus(Rotation2d.fromDegrees((clockwise ? -90 : 90) * (reversed ? -1 : 1)));
+        
         if (Math.abs(testPosition.getRotation().minus(expectedRotation).getDegrees()) < 0.02) {
           double relativeCurrentDegrees = rotationFromCenter.minus(startingRotation).getDegrees();
           double relativeEndingDegrees = endingRotation.minus(startingRotation).getDegrees();
