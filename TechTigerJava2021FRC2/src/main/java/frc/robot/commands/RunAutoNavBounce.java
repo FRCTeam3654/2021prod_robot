@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 
 import java.util.List;
-
+import frc.robot.commands.NewRunMotionProfile.CirclePath;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -28,25 +28,27 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
     /** Creates a new RunAutoNavBounce. */
     public RunAutoNavBounce(RobotOdometry odometry, Drive driveTrain) {
 
-        mp1 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(0.762, 2.286, new Rotation2d()), 0,
-                List.of(new Translation2d(1.778, 2.286)), new Pose2d(2.286, 3.81, Rotation2d.fromDegrees(90)), 0, false, false);
-       
-
-        /*
-        mp1 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(30, 90, new Rotation2d()), 0,
-                List.of(new Translation2d(70, 90)), new Pose2d(90, 150, Rotation2d.fromDegrees(90)), 0, false, false);
-       
         
-        mp2 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(90, 150, new Rotation2d(90)), 0,
-                List.of(new Translation2d(120, 60), new Translation2d(150, 30), new Translation2d(180, 60)),
-                new Pose2d(180, 150, Rotation2d.fromDegrees(-90)), 0, true, false);
-        mp3 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(180, 150, new Rotation2d(-90)), 0,
-                List.of(new Translation2d(180, 60), new Translation2d(200, 38), new Translation2d(270, 38)),
-                new Pose2d(280, 150, Rotation2d.fromDegrees(90)), 0, false, false);
-        mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(280, 150, new Rotation2d(90)), 0,
-                List.of(new Translation2d(290, 100)), new Pose2d(330, 100, Rotation2d.fromDegrees(180)), 0, true,
-                false);
-        */
+        mp1 = new NewRunMotionProfile(driveTrain, odometry, 0,
+        List.of(new Pose2d(0.76, 2.286, new Rotation2d()), new Pose2d(2.286, 3.558, Rotation2d.fromDegrees(90))), 0, false,
+        false);
+
+        mp2 = new NewRunMotionProfile(driveTrain, odometry, 0,
+                List.of(new Pose2d(2.286, 3.556, Rotation2d.fromDegrees(90)),
+                    new CirclePath(new Translation2d(3.81, 1.524), 0.762, Rotation2d.fromDegrees(-160), new Rotation2d(), false),
+                    new Pose2d(4.572, 3.556, Rotation2d.fromDegrees(-90))),
+                0, true, false);
+        mp3 = new NewRunMotionProfile(driveTrain, odometry, 0,
+                List.of(new Pose2d(4.572, 3.556, Rotation2d.fromDegrees(-90)), new Pose2d(4.572, 1.52, Rotation2d.fromDegrees(-90)),
+                    new Pose2d(6.858, 1.524, Rotation2d.fromDegrees(90)), new Pose2d(6.858, 3.556, Rotation2d.fromDegrees(90))),
+                0, false, false);
+        mp4 = new NewRunMotionProfile(driveTrain, odometry, 0,
+                List.of(new Pose2d(6.858, 3.556, Rotation2d.fromDegrees(90)), new Pose2d(7.62, 2.286, Rotation2d.fromDegrees(145))),
+                Double.MAX_VALUE, true, false);
+
+
+
+        
         // Add your addCommands(new FooCommand(), new BarCommand());
         //addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(30, 90, new Rotation2d()))), mp1, mp2, mp3, mp4);
         addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(0.762, 2.286, new Rotation2d()))), mp1);

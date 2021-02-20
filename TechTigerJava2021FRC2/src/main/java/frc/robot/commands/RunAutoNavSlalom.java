@@ -40,10 +40,10 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
     mp = new NewRunMotionProfile(driveTrain, odometry, 0.0,
         List.of(new Pose2d(0.762, 0.762, new Rotation2d()), new Pose2d(2.286, 1.524, Rotation2d.fromDegrees(45.0)),
             new Pose2d(4.572, 2.286, new Rotation2d())),
-            //new CirclePath(new Translation2d(300, 60), 30, Rotation2d.fromDegrees(-160), Rotation2d.fromDegrees(160),false),
-            //new Pose2d(180.0, 30.0, Rotation2d.fromDegrees(-180.0)),
-            //new Pose2d(90.0, 60.0, Rotation2d.fromDegrees(90.0 + 45.0)),
-            //new Pose2d(60.0, 90.0, Rotation2d.fromDegrees(90.0 + 45.0))),
+            //new CirclePath(new Translation2d(7.62, 1.524), 0.762, Rotation2d.fromDegrees(-160), Rotation2d.fromDegrees(160),false),
+            //new Pose2d(4.572, 0.762, Rotation2d.fromDegrees(-180.0)),
+            //new Pose2d(2.286, 1.524, Rotation2d.fromDegrees(90.0 + 45.0)),
+            //new Pose2d(1.524, 2.286, Rotation2d.fromDegrees(90.0 + 45.0))),
         0.0, false, false);
 
     // Add your addCommands(new FooCommand(), new BarCommand());
