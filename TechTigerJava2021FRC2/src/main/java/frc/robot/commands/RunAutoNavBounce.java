@@ -35,6 +35,7 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
     public RunAutoNavBounce(RobotOdometry odometry, Drive driveTrain) {
        
     // test
+    /*
     mp1 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()), 0,
         List.of(), new Pose2d(Units.inchesToMeters(75), Units.inchesToMeters(90), Rotation2d.fromDegrees(0)), 0, false, false);
         
@@ -46,34 +47,38 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
        
     mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(75), Units.inchesToMeters(90),  Rotation2d.fromDegrees(0)), 0,
         List.of(), new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), Rotation2d.fromDegrees(0)), 0, true, false);
+    */
 
-
-    /*
+    
     mp1 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()), 0,
                List.of(new Translation2d(Units.inchesToMeters(70), Units.inchesToMeters(90))), new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(150), Rotation2d.fromDegrees(90)), 0, false, false);
    
+    // note: final -90 , could be Pigeon's 270
     mp2 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(150), Rotation2d.fromDegrees(90)), 0,
                 List.of(new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(30)), new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(60))),
                 new Pose2d(Units.inchesToMeters(180), Units.inchesToMeters(150), Rotation2d.fromDegrees(-90)), 0, true, false);
-     */
+     
 
-    /*
-                mp3 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(180), Units.inchesToMeters(150), new Rotation2d(-90)), 0,
+    //note: final +90 could be 360+90 = 450 in Pigeon
+    mp3 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(180), Units.inchesToMeters(150), new Rotation2d(-90)), 0,
                 List.of(new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(30)), new Translation2d(Units.inchesToMeters(240), Units.inchesToMeters(30)),  new Translation2d(Units.inchesToMeters(270), Units.inchesToMeters(60))),
                 new Pose2d(Units.inchesToMeters(270), Units.inchesToMeters(150), Rotation2d.fromDegrees(90)), 0, false, false);
     
      
-
-        mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(280), Units.inchesToMeters(150), new Rotation2d(90)), 0,
+    
+    mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(280), Units.inchesToMeters(150), new Rotation2d(90)), 0,
                 List.of(new Translation2d(Units.inchesToMeters(290), Units.inchesToMeters(100))), new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(100), Rotation2d.fromDegrees(180)), 0, true,
                 false);
-     */
+    
 
-        /// mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(280), Units.inchesToMeters(150), new Rotation2d(0)), 0,
-         //       List.of(new Translation2d(Units.inchesToMeters(290), Units.inchesToMeters(100))), new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(100), Rotation2d.fromDegrees(90)), 0, true,
-         //       false);
+    /*
+    // testing
+     mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(280), Units.inchesToMeters(150), new Rotation2d(-180)), 0,
+               List.of(new Translation2d(Units.inchesToMeters(290), Units.inchesToMeters(100))), new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(100), Rotation2d.fromDegrees(-180)), 0, true,
+                false);
+    */
      
-  
+        /*
         addCommands(
             new ParallelDeadlineGroup(
                 new SequentialCommandGroup(
@@ -83,22 +88,34 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
                 , 
             new StartStopTimer())
         );
+        */
+
+        addCommands(
+                    new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()))), 
+                    mp1 , mp2       
+        );
     }
 
     public static void main(String[] args) {
         RunAutoNavBounce cmd = new RunAutoNavBounce(null, null);
         //cmd.mp1.visualize(80, List.of());
-        // List.of(new Translation2d(90, 150), new Translation2d(180, 150), new
-        // Translation2d(270, 150),
-        // new Translation2d(30, 120), new Translation2d(60, 120), new
-        // Translation2d(120, 120),
-        // new Translation2d(150, 120), new Translation2d(210, 120), new
-        // Translation2d(240, 120),
-        // new Translation2d(300, 120), new Translation2d(330, 120), new
-        // Translation2d(30, 60), new Translation2d(60, 60),
-        // new Translation2d(90, 60), new Translation2d(150, 60), new Translation2d(210,
-        // 60), new Translation2d(240, 60),
-        // new Translation2d(300, 60), new Translation2d(330, 60), new Translation2d(90,
-        // 30))
+        cmd.mp4.visualize(80, List.of());
+
+        /*
+        cmd.mp1.visualize(80, 
+         List.of(new Translation2d(90, 150), new Translation2d(180, 150), new
+         Translation2d(270, 150),
+         new Translation2d(30, 120), new Translation2d(60, 120), new
+         Translation2d(120, 120),
+         new Translation2d(150, 120), new Translation2d(210, 120), new
+         Translation2d(240, 120),
+         new Translation2d(300, 120), new Translation2d(330, 120), new
+         Translation2d(30, 60), new Translation2d(60, 60),
+         new Translation2d(90, 60), new Translation2d(150, 60), new Translation2d(210,
+         60), new Translation2d(240, 60),
+         new Translation2d(300, 60), new Translation2d(330, 60), new Translation2d(90,
+         30)
+        ));
+        */
     }
 }

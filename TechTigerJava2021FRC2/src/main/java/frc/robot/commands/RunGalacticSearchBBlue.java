@@ -42,6 +42,6 @@ public class RunGalacticSearchBBlue extends SequentialCommandGroup {
 
   public static void main(String[] args) {
     RunGalacticSearchBBlue cmd = new RunGalacticSearchBBlue(null, null);
-    //cmd.mp.visualize(2.0, List.of(new Translation2d(180, 60), new Translation2d(240, 120), new Translation2d(300, 60)));
+    cmd.mp.visualize(80, List.of(new Translation2d(180, 60), new Translation2d(240, 120), new Translation2d(300, 60)));
   }
 }

@@ -57,6 +57,7 @@ public final class Constants {
     // Shuffleboard constants
     public static String SBTabDriverDisplay = "Driver Display";
 
+    public static final boolean tuningMode = false;
     
   }
 

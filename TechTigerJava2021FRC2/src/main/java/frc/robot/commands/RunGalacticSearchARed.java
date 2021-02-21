@@ -42,6 +42,6 @@ public class RunGalacticSearchARed extends SequentialCommandGroup {
   public static void main(String[] args) {
 
     RunGalacticSearchARed cmd = new RunGalacticSearchARed(null, null);
-    //cmd.mp.visualize(2.0, List.of(new Translation2d(90, 90), new Translation2d(150, 60), new Translation2d(180, 150)));
+    cmd.mp.visualize(80, List.of(new Translation2d(90, 90), new Translation2d(150, 60), new Translation2d(180, 150)));
   }
 }

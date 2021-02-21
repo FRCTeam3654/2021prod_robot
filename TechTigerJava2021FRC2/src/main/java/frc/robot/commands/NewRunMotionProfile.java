@@ -29,8 +29,10 @@ import frc.robot.subsystems.RobotOdometry;
 import frc.robot.subsystems.Drive;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
-//import frckit.tools.pathview.TrajectoryVisualizer;
-//import frckit.util.GeomUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frckit.tools.pathview.TrajectoryVisualizer;
+import frckit.util.GeomUtil;
+
 
 public class NewRunMotionProfile extends CommandBase {
 
@@ -400,6 +402,15 @@ public class NewRunMotionProfile extends CommandBase {
       startProfile();
     }
 
+    if (DriveConstants.tuningMode && followerStarted) {
+      Pose2d pose = getCurrentPoseMeters();
+      Pose2d currentPose = trajectory.sample(Timer.getFPGATimestamp() - startTime).poseMeters;
+      Translation2d currentTranslation = currentPose.getTranslation();
+      SmartDashboard.putNumber("MP/PosError", pose.getTranslation().getDistance(currentTranslation));
+      SmartDashboard.putNumber("MP/PoseXError", pose.getTranslation().getX() - currentTranslation.getX());
+      SmartDashboard.putNumber("MP/PoseYError", pose.getTranslation().getY() - currentTranslation.getY());
+      SmartDashboard.putNumber("MP/AngleError", pose.getRotation().minus(currentPose.getRotation()).getDegrees());
+    }
   }
 
 
@@ -533,15 +544,15 @@ public class NewRunMotionProfile extends CommandBase {
    * there is no real robot in the visualization, a fake initial robot position
    * must be provided
    * 
-   * @param ppi                  The number of pixels which should represent one
-   *                             inch. 2.5 is a good starting value
+   * @param ppm                  The number of pixels which should represent one
+   *                             meter. 80 is a good starting value
    * @param markers              A list of positions to draw "markers" (7 inch
    *                             magenta circles) on.
    * @param initialRobotPosition The starting position of the robot to test with
    */
-  public void visualize(double ppi, List<Translation2d> markers, Pose2d initialRobotPosition) {
+  public void visualize(double ppm, List<Translation2d> markers, Pose2d initialRobotPosition) {
     if (initialRobotPosition != null) {
-      startGeneration(initialRobotPosition, 0.0);
+      startGeneration(GeomUtil.inchesToMeters(initialRobotPosition), 0.0);
     }
     // Busy-wait for trajectory to finish generating
     Trajectory t = null;
@@ -554,8 +565,8 @@ public class NewRunMotionProfile extends CommandBase {
       t = generator.getTrajectory(); // Attempt to grab new path
     }
     t = adjustCircleTrajectories(t);
-    //TrajectoryVisualizer viz = new TrajectoryVisualizer(ppi, t, trackWidth, convertTranslationListToMeters(markers));
-    //viz.start();
+    TrajectoryVisualizer viz = new TrajectoryVisualizer(ppm, t, trackWidth, convertTranslationListToMeters(markers));
+    viz.start();
   }
 
   /**
@@ -568,14 +579,16 @@ public class NewRunMotionProfile extends CommandBase {
    * This version of the method should be used for profiles that have a defined
    * starting position, i.e. not in dynamic mode.
    * 
-   * @param ppi     The number of pixels which should represent one inch. 2.5 is a
+   * @param ppm     The number of pixels which should represent one meter. 80 is a
    *                good starting value
    * @param markers A list of positions to draw "markers" (7 inch magenta circles)
    *                on.
    */
-  public void visualize(double ppi, List<Translation2d> markers) {
-    visualize(ppi, markers, null);
+  public void visualize(double ppm, List<Translation2d> markers) {
+    visualize(ppm, markers, null);
   }
+
+
 
   /**
    * Converts a list of poses in inches to meters
