@@ -12,6 +12,7 @@ import frc.robot.commands.NewRunMotionProfile.CirclePath;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.RobotOdometry;
 import edu.wpi.first.wpilibj.util.Units;
@@ -38,7 +39,13 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
         List.of(), new Pose2d(Units.inchesToMeters(75), Units.inchesToMeters(90), Rotation2d.fromDegrees(0)), 0, false, false);
         
     mp2 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(75), Units.inchesToMeters(90),  Rotation2d.fromDegrees(0)), 0,
-        List.of(), new Pose2d(Units.inchesToMeters(120), Units.inchesToMeters(120), Rotation2d.fromDegrees(90)), 0, false, false);
+        List.of(), new Pose2d(Units.inchesToMeters(120), Units.inchesToMeters(130), Rotation2d.fromDegrees(90)), 0, false, false);
+
+    mp3 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(120), Units.inchesToMeters(130),  Rotation2d.fromDegrees(90)), 0,
+        List.of(), new Pose2d(Units.inchesToMeters(75), Units.inchesToMeters(90), Rotation2d.fromDegrees(0)), 0, true, false);
+       
+    mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(75), Units.inchesToMeters(90),  Rotation2d.fromDegrees(0)), 0,
+        List.of(), new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), Rotation2d.fromDegrees(0)), 0, true, false);
 
 
     /*
@@ -66,31 +73,16 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
          //       List.of(new Translation2d(Units.inchesToMeters(290), Units.inchesToMeters(100))), new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(100), Rotation2d.fromDegrees(90)), 0, true,
          //       false);
      
-       
-
-        
-        // Add your addCommands(new FooCommand(), new BarCommand());
-        //addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(30, 90, new Rotation2d()))), mp1, mp2, mp3, mp4);
-        //addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()))), mp1, mp2);
-
-        //addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(180), Units.inchesToMeters(150), new Rotation2d(-90)))),  mp3);
-
+  
         addCommands(
-            //new MotionMagicDriveCommand(1.2, true),
-            new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()))), 
-            mp1 ,
-           // new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(150), Rotation2d.fromDegrees(90)))), 
-            mp2
-
-            //new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(280), Units.inchesToMeters(150), new Rotation2d(0)))), 
-            //mp4
-
-            //new MotionMagicDriveCommand(1.2, true)
-            //new MotionMagicDriveCommand(2.2, true)
+            new ParallelDeadlineGroup(
+                new SequentialCommandGroup(
+                    new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()))), 
+                    mp1 , mp2, mp3, mp4
+                )
+                , 
+            new StartStopTimer())
         );
-
-
-
     }
 
     public static void main(String[] args) {
