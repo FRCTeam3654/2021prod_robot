@@ -402,6 +402,7 @@ public class NewRunMotionProfile extends CommandBase {
 
   }
 
+
   @Override
   public boolean isFinished() {
     return followerStarted && followerCommand.isFinished();
@@ -462,7 +463,9 @@ public class NewRunMotionProfile extends CommandBase {
       //    new RamseteController(kRamseteB, kRamseteZeta), driveKinematics, this::driveMetersPerSecond);
 
       // use different constructor to get around to find the speed
+      // can create a subclass of RamseteCommand to add function like time out
 
+      /*
       followerCommand = new RamseteCommand(trajectory, this::getCurrentPoseMeters,
           new RamseteController(kRamseteB, kRamseteZeta), new SimpleMotorFeedforward(
             DriveConstants.ksVolts,
@@ -473,10 +476,14 @@ public class NewRunMotionProfile extends CommandBase {
           // RamseteCommand passes volts to the callback
           driveTrain::tankDriveVolts,
           driveTrain);
+      */
+
+      followerCommand = new RamseteCommand(trajectory, this::getCurrentPoseMeters,
+      new RamseteController(kRamseteB, kRamseteZeta), driveKinematics, this::driveMetersPerSecond);
 
 
     }
-    followerCommand.schedule();
+    followerCommand.schedule();// vs CommandScheduler.getInstance().schedule(followerCommand)
     followerStarted = true;
     startTime = Timer.getFPGATimestamp();
   }
@@ -490,13 +497,30 @@ public class NewRunMotionProfile extends CommandBase {
 
   /**
    * Drives at meters per second (converts meters to inches)
+   * outputMetersPerSecond - A function that consumes the computed left and right wheel speeds.
    */
-  /*
+  private double calcActualVelocity(double input) {
+    double minVelocity = 0.2;  // m/s
+    double minNonZero = 0.02; // m/s
+  
+    if (input > minNonZero * -1 && input < minNonZero) {
+      // deadband like
+      return 0;
+    } else if (input >= minNonZero && input < minVelocity) {
+      // account for friction/deadband
+      return minVelocity;
+    } else if (input <= minNonZero * -1 && input > minVelocity * -1) {
+      return minVelocity * -1;
+    } else {
+      return input;
+    }
+  }
+
   private void driveMetersPerSecond(double left, double right) {
     //driveTrain.driveInchesPerSec(Units.metersToInches(left), Units.metersToInches(right));
-    driveTrain.driveInchesPerSec(Units.metersToInches(left), Units.metersToInches(right));
+    driveTrain.driveMetersPerSecond(calcActualVelocity(left), calcActualVelocity(right));
   }
-  */
+  
   /**
    * Runs the trajectory visualizer on this command. This should not be called
    * from robot code, but instead used only when testing on development machines.

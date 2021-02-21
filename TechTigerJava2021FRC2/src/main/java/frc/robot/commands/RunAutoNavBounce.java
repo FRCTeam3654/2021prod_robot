@@ -19,6 +19,10 @@ import edu.wpi.first.wpilibj.util.Units;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+
+// The reversed property simply represents whether the robot is traveling backward. If you specify four waypoints, a, b, c, and d, the robot will still travel in the same order through the waypoints when the reversed flag is set to true. This also means that you must account for the direction of the robot when providing the waypoints. For example, if your robot is facing your alliance station wall and travels backwards to some field element, the starting waypoint should have a rotation of 180 degrees.
+
+
 public class RunAutoNavBounce extends SequentialCommandGroup {
 
     NewRunMotionProfile mp1;
@@ -29,11 +33,18 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
     /** Creates a new RunAutoNavBounce. */
     public RunAutoNavBounce(RobotOdometry odometry, Drive driveTrain) {
        
+    // test
+    mp1 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()), 0,
+        List.of(), new Pose2d(Units.inchesToMeters(75), Units.inchesToMeters(90), Rotation2d.fromDegrees(0)), 0, false, false);
+        
+    mp2 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(75), Units.inchesToMeters(90),  Rotation2d.fromDegrees(0)), 0,
+        List.of(), new Pose2d(Units.inchesToMeters(120), Units.inchesToMeters(120), Rotation2d.fromDegrees(90)), 0, false, false);
 
-    
+
+    /*
     mp1 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()), 0,
                List.of(new Translation2d(Units.inchesToMeters(70), Units.inchesToMeters(90))), new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(150), Rotation2d.fromDegrees(90)), 0, false, false);
-   /*
+   
     mp2 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(150), Rotation2d.fromDegrees(90)), 0,
                 List.of(new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(30)), new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(60))),
                 new Pose2d(Units.inchesToMeters(180), Units.inchesToMeters(150), Rotation2d.fromDegrees(-90)), 0, true, false);
@@ -65,11 +76,11 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
         //addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(180), Units.inchesToMeters(150), new Rotation2d(-90)))),  mp3);
 
         addCommands(
-            //new MotionMagicDriveCommand(1.2, false),
+            //new MotionMagicDriveCommand(1.2, true),
             new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()))), 
-            mp1 
+            mp1 ,
            // new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(150), Rotation2d.fromDegrees(90)))), 
-            //mp2
+            mp2
 
             //new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(280), Units.inchesToMeters(150), new Rotation2d(0)))), 
             //mp4

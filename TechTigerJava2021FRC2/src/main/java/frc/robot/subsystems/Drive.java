@@ -414,7 +414,14 @@ public class Drive extends SubsystemBase {
     m_drive.feed();
   }
 
-
+  public void driveMetersPerSecond(double left, double right) {
+    // drive left and right volecity in meter per second --- either velocityclosed loop or open loop
+    //closed loop,  need consider gear ratio 10.71
+    double targetVelocity_UnitsPer100ms_left = ((left / Constants.DriveConstants.kWheelCircumferenceMeter ) / Constants.DriveConstants.gearRatio) * Constants.DriveConstants.encoderTicksPerRev * 0.1 ; // ticks per 100 ms
+    double targetVelocity_UnitsPer100ms_right = ((right / Constants.DriveConstants.kWheelCircumferenceMeter ) / Constants.DriveConstants.gearRatio) * Constants.DriveConstants.encoderTicksPerRev * 0.1 ; // ticks per 100 ms
+    leftFrontTalon.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms_left);
+    rightFrontTalon.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms_right); 
+  }
   
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     leftFrontTalon.setVoltage(leftVolts);
