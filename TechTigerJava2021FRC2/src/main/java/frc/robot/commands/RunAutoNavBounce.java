@@ -35,21 +35,24 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
     public RunAutoNavBounce(RobotOdometry odometry, Drive driveTrain) {
        
     // test
-    /*
-    mp1 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()), 0,
-        List.of(), new Pose2d(Units.inchesToMeters(75), Units.inchesToMeters(90), Rotation2d.fromDegrees(0)), 0, false, false);
-        
-    mp2 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(75), Units.inchesToMeters(90),  Rotation2d.fromDegrees(0)), 0,
-        List.of(), new Pose2d(Units.inchesToMeters(120), Units.inchesToMeters(130), Rotation2d.fromDegrees(90)), 0, false, false);
-
-    mp3 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(120), Units.inchesToMeters(130),  Rotation2d.fromDegrees(90)), 0,
-        List.of(), new Pose2d(Units.inchesToMeters(75), Units.inchesToMeters(90), Rotation2d.fromDegrees(0)), 0, true, false);
-       
-    mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(75), Units.inchesToMeters(90),  Rotation2d.fromDegrees(0)), 0,
-        List.of(), new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), Rotation2d.fromDegrees(0)), 0, true, false);
-    */
-
     
+    mp1 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()), 0,
+        List.of(), new Pose2d(Units.inchesToMeters(60), Units.inchesToMeters(120), Rotation2d.fromDegrees(90)), 0, false, false);
+        
+    mp2 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(60), Units.inchesToMeters(120),  Rotation2d.fromDegrees(90)), 0,
+       List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(90))), 
+       new Pose2d(Units.inchesToMeters(120), Units.inchesToMeters(120), Rotation2d.fromDegrees(270)), 0, true, false);
+
+    mp3 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(120), Units.inchesToMeters(120), Rotation2d.fromDegrees(270)), 0,
+       List.of(), new Pose2d(Units.inchesToMeters(150), Units.inchesToMeters(90), Rotation2d.fromDegrees(360)), 0, false, false);
+       
+
+    mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(150), Units.inchesToMeters(90),  Rotation2d.fromDegrees(360)), 0,
+        List.of(), new Pose2d(Units.inchesToMeters(120), Units.inchesToMeters(120), Rotation2d.fromDegrees(270)), 0, true, false);
+    
+    
+    /*
+    // real path
     mp1 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()), 0,
                List.of(new Translation2d(Units.inchesToMeters(70), Units.inchesToMeters(90))), new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(150), Rotation2d.fromDegrees(90)), 0, false, false);
    
@@ -69,14 +72,9 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
     mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(280), Units.inchesToMeters(150), Rotation2d.fromDegrees(450)), 0,
                 List.of(new Translation2d(Units.inchesToMeters(290), Units.inchesToMeters(100))), new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(100), Rotation2d.fromDegrees(540)), 0, true,
                 false);
-    
-
-    /*
-    // testing
-     mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(280), Units.inchesToMeters(150), new Rotation2d(-180)), 0,
-               List.of(new Translation2d(Units.inchesToMeters(290), Units.inchesToMeters(100))), new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(100), Rotation2d.fromDegrees(-180)), 0, true,
-                false);
     */
+
+    
      
         /*
         addCommands(
@@ -92,7 +90,7 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
 
         addCommands(
                     new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()))), 
-                    mp1 , mp2       
+                    mp1 , mp2   , mp3    , mp4
         );
     }
 
