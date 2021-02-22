@@ -97,22 +97,22 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
     public static void main(String[] args) {
         RunAutoNavBounce cmd = new RunAutoNavBounce(null, null);
         //cmd.mp1.visualize(80, List.of());
-        cmd.mp4.visualize(80, List.of());
+       cmd.mp4.visualize(80, List.of());
 
         /*
         cmd.mp1.visualize(80, 
-         List.of(new Translation2d(90, 150), new Translation2d(180, 150), new
-         Translation2d(270, 150),
-         new Translation2d(30, 120), new Translation2d(60, 120), new
-         Translation2d(120, 120),
-         new Translation2d(150, 120), new Translation2d(210, 120), new
-         Translation2d(240, 120),
-         new Translation2d(300, 120), new Translation2d(330, 120), new
-         Translation2d(30, 60), new Translation2d(60, 60),
-         new Translation2d(90, 60), new Translation2d(150, 60), new Translation2d(210,
-         60), new Translation2d(240, 60),
-         new Translation2d(300, 60), new Translation2d(330, 60), new Translation2d(90,
-         30)
+         List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(150)), new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(150)), new
+         Translation2d(Units.inchesToMeters(270), Units.inchesToMeters(150)),
+         new Translation2d(Units.inchesToMeters(30), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(60), Units.inchesToMeters(120)), new
+         Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(120)),
+         new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(120)), new
+         Translation2d(Units.inchesToMeters(240), Units.inchesToMeters(120)),
+         new Translation2d(Units.inchesToMeters(300), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(330), Units.inchesToMeters(120)), new
+         Translation2d(Units.inchesToMeters(30), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(60), Units.inchesToMeters(60)),
+         new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(210),
+         Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(240), Units.inchesToMeters(60)),
+         new Translation2d(Units.inchesToMeters(300), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(330), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(90),
+         Units.inchesToMeters(30))
         ));
         */
     }
