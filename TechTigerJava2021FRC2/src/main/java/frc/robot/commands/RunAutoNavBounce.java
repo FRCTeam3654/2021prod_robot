@@ -76,22 +76,24 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
 
     
      
-        /*
+        
         addCommands(
             new ParallelDeadlineGroup(
                 new SequentialCommandGroup(
                     new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()))), 
-                    mp1 , mp2, mp3, mp4
+                    mp1 
                 )
                 , 
             new StartStopTimer())
         );
-        */
+        
 
+        /*
         addCommands(
                     new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()))), 
                     mp1 , mp2   , mp3    , mp4
         );
+        */
     }
 
     public static void main(String[] args) {

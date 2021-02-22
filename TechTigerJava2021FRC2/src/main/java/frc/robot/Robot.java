@@ -22,6 +22,8 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  public static long m_auto_starttime = 0l;
+
   //SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /**
@@ -67,6 +69,9 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+
+    m_auto_starttime = System.currentTimeMillis();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     /*
