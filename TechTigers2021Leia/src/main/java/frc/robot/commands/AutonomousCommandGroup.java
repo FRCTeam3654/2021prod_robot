@@ -7,13 +7,13 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.Robot;
 
-public class AutonomousCommandGroup extends CommandGroup {
+public class AutonomousCommandGroup extends SequentialCommandGroup {
   /**
    * Add your docs here.
    */
@@ -58,7 +58,7 @@ public class AutonomousCommandGroup extends CommandGroup {
      autonomous = 4;
 
         if (autonomous == 0 ) {  //GalacticA
-          addSequential(new AutonomousDriveCommand(2));
+          addCommands(new AutonomousDriveCommand(2));
           /*  
           addSequential(new AutonomousDriveBackwardsCommand());
           //addSequential(new WaitCommand(2.0));// to replace it by ballshooter
@@ -68,7 +68,7 @@ public class AutonomousCommandGroup extends CommandGroup {
           */
          
         } else if (autonomous == 1){ //GalacticB
-          addSequential(new AutonomousDriveCommand(2));
+          addCommands(new AutonomousDriveCommand(2));
       
           //addSequential(new AutonomousDriveBackwardsCommand());
           //addSequential(new WaitCommand(2.0));// to replace it by ballshooter
@@ -77,7 +77,7 @@ public class AutonomousCommandGroup extends CommandGroup {
 
 
         } else if (autonomous == 2){ //Bounce Path
-          addSequential(new AutonomousDriveCommand(2));
+          addCommands(new AutonomousDriveCommand(2));
 /*
           addSequential(new AutonomousDriveBackwardsCommand());
           addSequential(new WaitCommand(2.0));// to replace it by ballshooter
@@ -88,7 +88,7 @@ public class AutonomousCommandGroup extends CommandGroup {
          //addSequential(new AutonomousDriveBackwardsCommand()); // test path
 
         } else if (autonomous == 3){ //Slalom
-        addSequential(new AutonomousDriveCommand(2)); 
+          addCommands(new AutonomousDriveCommand(2)); 
           /*
           addParallel(new BallPickUpCommand(1));
           addSequential(new MotionMagicDriveCommand(2.629));
@@ -106,7 +106,7 @@ public class AutonomousCommandGroup extends CommandGroup {
           addSequential(new MotionMagicDriveCommand(1.2, true));
           */
         } else if (autonomous == 4){ //Barrel
-          addSequential(new AutonomousDriveCommand(2));
+          addCommands(new AutonomousDriveCommand(2));
 
         // addSequential(new MotionMagicDriveCommand(2.0, false, false));
          //addSequential(new MotionMagicDriveCommand(2.0, false, true));
@@ -145,7 +145,7 @@ public class AutonomousCommandGroup extends CommandGroup {
           //addParallel(new BallPickUpCommand(2, 1.0));
           //addSequential(new MotionMagicDriveCommand(0.762));
           //addSequential(new MotionMagicDriveCommand(1.2, true));
-          addSequential(new AutonomousDriveBackwardsCommand()); // test path
+          addCommands(new AutonomousDriveBackwardsCommand()); // test path
         } else if (autonomous == 6){ //RightTurn
           //addParallel(new BallPickUpCommand(1));
           //addSequential(new MotionMagicDriveCommand(2.8254));
@@ -153,14 +153,14 @@ public class AutonomousCommandGroup extends CommandGroup {
           //addParallel(new BallPickUpCommand(2, 1.0));
           //addSequential(new MotionMagicDriveCommand(1.884));
          // addSequential(new MotionMagicDriveCommand(1.2, true));
-         addSequential(new AutonomousDriveBackwardsCommand()); // test path
+         addCommands(new AutonomousDriveBackwardsCommand()); // test path
         } else if (autonomous == 7){ //Def30
           //addSequential(new AutonomousDriveCommand());
          // addSequential(new MotionMagicDriveCommand(1.2, true));
-         addSequential(new AutonomousDriveBackwardsCommand()); // test path
+         addCommands(new AutonomousDriveBackwardsCommand()); // test path
         }else if (autonomous == 8){ //Def90
           //addSequential(new AutonomousDriveCommand());
-          addSequential(new MotionMagicDriveCommand(1.2, true));
+          //addSequential(new MotionMagicDriveCommand(1.2, true));
         }
      
     } 

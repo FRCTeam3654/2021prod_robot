@@ -8,44 +8,45 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.RobotContainer;
 
-public class ManualDriveCommand extends Command {
+public class ManualDriveCommand extends CommandBase {
   private boolean driveStraightFlag = false;
   private double driveStraightAngle = 0;
   public ManualDriveCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.drive);
+    addRequirements(RobotContainer.drive);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
+  public void initialize() {
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  public void execute() {
     double joystickX;
     double joystickY;
     double [] yawPitchRollArray;
     yawPitchRollArray = new double [3];
-    joystickX = (Robot.oi.driverStick.getX() * -1);
-    joystickY = (Robot.oi.driverStick.getY() * -1);
+    joystickX = (RobotContainer.oi.driverStick.getX() * -1);
+    joystickY = (RobotContainer.oi.driverStick.getY() * -1);
     joystickX = handleDeadband(joystickX, RobotMap.joystickDeadBand);
     joystickY = handleDeadband(joystickY, RobotMap.joystickDeadBand);
     //This is to activate turbo mode. If the button is pressed, turbo mode is on
     
-    if (Robot.oi.turboButton.get()){
+    if (RobotContainer.oi.turboButton.get()){
     }
     else{
       joystickX = joystickX * RobotMap.nonTurboMultiplierTurn; 
       joystickY = joystickY * RobotMap.nonTurboMultiplierForward;
     }
-    Robot.drive.pigeonVinnie.getYawPitchRoll(yawPitchRollArray);
-    if (Robot.oi.driveStraightButton.get()){  
+    RobotContainer.drive.pigeonVinnie.getYawPitchRoll(yawPitchRollArray);
+    if (RobotContainer.oi.driveStraightButton.get()){  
       //joystickX = 0;
       if (!driveStraightFlag){
         driveStraightAngle = yawPitchRollArray[0];
@@ -60,13 +61,13 @@ public class ManualDriveCommand extends Command {
     }
 
     //System.out.println("X=" + joystickX + "Y=" + joystickY);
-    Robot.drive.setArcade(joystickX, joystickY);
+    RobotContainer.drive.setArcade(joystickX, joystickY);
 
     //Dashboard features for Joystick x and y values and right and left encoders
     SmartDashboard.putNumber("Joystick X: ", joystickX);
     SmartDashboard.putNumber("Joystick Y: ", joystickY);
-    SmartDashboard.putNumber("Left Encoder", Robot.drive.leftFrontTalon.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("Right Encoder", Robot.drive.rightFrontTalon.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("Left Encoder", RobotContainer.drive.leftFrontTalon.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("Right Encoder", RobotContainer.drive.rightFrontTalon.getSelectedSensorVelocity());
     SmartDashboard.putNumber("Yaw: ", yawPitchRollArray[0]);
   }
 
@@ -77,18 +78,14 @@ public class ManualDriveCommand extends Command {
   
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
+  public boolean isFinished() {
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
+  public void end(boolean interrupted) {
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
+
 }

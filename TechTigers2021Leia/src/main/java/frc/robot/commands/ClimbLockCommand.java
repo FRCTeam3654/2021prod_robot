@@ -7,53 +7,49 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
 
-public class ClimbLockCommand extends Command {
+public class ClimbLockCommand extends CommandBase {
   public ClimbLockCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.ballPickUp);
+    addRequirements(RobotContainer.ballPickUp);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
+  public void initialize() {
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-    if (Robot.oi.climbLockLeftButton.get()){
-      Robot.ballPickUp.climbLockLeftSolenoid(false);
+  public void execute() {
+    if (RobotContainer.oi.climbLockLeftButton.get()){
+      RobotContainer.ballPickUp.climbLockLeftSolenoid(false);
     
     }
-    if (Robot.oi.climbUnlockLeftButton.get()){
-      Robot.ballPickUp.climbLockLeftSolenoid(true);
+    if (RobotContainer.oi.climbUnlockLeftButton.get()){
+      RobotContainer.ballPickUp.climbLockLeftSolenoid(true);
     }
-    if (Robot.oi.climbLockRightButton.get()){
-      Robot.ballPickUp.climbLockRightSolenoid(false);
+    if (RobotContainer.oi.climbLockRightButton.get()){
+      RobotContainer.ballPickUp.climbLockRightSolenoid(false);
     }
-    if (Robot.oi.climbUnlockRightButton.get()){
-      Robot.ballPickUp.climbLockRightSolenoid(true);
+    if (RobotContainer.oi.climbUnlockRightButton.get()){
+      RobotContainer.ballPickUp.climbLockRightSolenoid(true);
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
+  public boolean isFinished() {
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
+  public void end(boolean interrupted) {
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
 }

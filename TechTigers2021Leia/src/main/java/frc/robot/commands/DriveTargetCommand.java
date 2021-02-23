@@ -7,7 +7,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -16,8 +16,9 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 //import jdk.internal.util.xml.impl.Input;
 import edu.wpi.first.wpilibj.Timer;
+import frc.robot.RobotContainer;
 
-public class DriveTargetCommand extends Command {
+public class DriveTargetCommand extends CommandBase {
   NetworkTable mercyLimelightTable = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry MercyLimelightx = mercyLimelightTable.getEntry("tx");
   NetworkTableEntry MercyLimelighty = mercyLimelightTable.getEntry("ty");
@@ -28,19 +29,19 @@ public class DriveTargetCommand extends Command {
   //private double startTimeLimelight = 0;
 
   public DriveTargetCommand() {
-    requires(Robot.drive);
+    addRequirements(RobotContainer.drive);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
+  public void initialize() {
     startTimeLimelight = Timer.getFPGATimestamp();
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3); //3 is force on
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  public void execute() {
     double turn90X;
     double turn90Y;
 
@@ -61,12 +62,12 @@ public class DriveTargetCommand extends Command {
     turn90Y = Math.min(0.3, turn90Y);
     turn90Y = Math.max(-0.3, turn90Y);
     SmartDashboard.putNumber("LimelightSpeed", turn90X);
-    Robot.drive.setArcade(turn90X, turn90Y);
+    RobotContainer.drive.setArcade(turn90X, turn90Y);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
+  public boolean isFinished() {
     if(startTimeLimelight + 0.25 < Timer.getFPGATimestamp()) {
       if(Math.abs(readJoeyX) < 2){
         return true;
@@ -77,7 +78,7 @@ public class DriveTargetCommand extends Command {
     if(startTimeLimelight + RobotMap.limeLightTimeout < Timer.getFPGATimestamp()) {   // to much time to turn to target
       return true;
     }
-    if(Robot.oi.turboButton.get()){ // pressing Turbo breaks this mode
+    if(RobotContainer.oi.turboButton.get()){ // pressing Turbo breaks this mode
       return true;
     } 
   return false;
@@ -85,11 +86,8 @@ public class DriveTargetCommand extends Command {
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
+  public void end(boolean interrupted) {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1); //1 is force off LED - required by FRC
   }
 
-  @Override
-  protected void interrupted() {
-  }
 }

@@ -5,10 +5,11 @@
 package frc.robot.commands;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Timer;
+import frc.robot.RobotContainer;
 
-public class TurnSmallDegreeCommand extends Command {
+public class TurnSmallDegreeCommand extends CommandBase {
 
   double _angleToTurn = 0.0; // in Degree
 
@@ -21,22 +22,22 @@ public class TurnSmallDegreeCommand extends Command {
   private boolean motionMagicEndStageFlag = false;
 
   public TurnSmallDegreeCommand() {;
-    requires(Robot.drive);
+    addRequirements(RobotContainer.drive);
   }
 
   public TurnSmallDegreeCommand(double angleToTurn, boolean resetToPercentMode) {
-    requires(Robot.drive);
+    addRequirements(RobotContainer.drive);
     _angleToTurn = angleToTurn;
     _resetToPercentMode  = resetToPercentMode ;
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {}
+  public void initialize() {}
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  public void execute() {
     if (!motionMagicAutonomousFlag){
       startTimeAutonomous = Timer.getFPGATimestamp();
       motionMagicAutonomousFlag = true;
@@ -45,9 +46,9 @@ public class TurnSmallDegreeCommand extends Command {
      
       //setOppositeTurn(true);
       //Robot.drive.setRightTalonFXInvert(false);
-      Robot.drive.setLeftTalonFXInvert(true);
+      RobotContainer.drive.setLeftTalonFXInvert(true);
       
-      Robot.drive.setMotionMagic(_distanceInMeters, 1000, 1000); 
+      RobotContainer.drive.setMotionMagic(_distanceInMeters, 1000, 1000); 
       
     }
 
@@ -75,30 +76,30 @@ public class TurnSmallDegreeCommand extends Command {
   */
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
+  public boolean isFinished() {
     if(motionMagicAutonomousFlag == true) {
       if( (startTimeAutonomous + 0.1) > Timer.getFPGATimestamp()) {
           // if autonomous started, let it run at least 100 ms
           return false;
-      } else if(Robot.drive.isMotionMagicDone(_distanceInMeters * RobotMap.kMeterToFalconSenorUnit, _resetToPercentMode)){
+      } else if(RobotContainer.drive.isMotionMagicDone(_distanceInMeters * RobotMap.kMeterToFalconSenorUnit, _resetToPercentMode)){
         motionMagicAutonomousFlag = false; 
         //setOppositeTurn(false); // must restore back
-        Robot.drive.setLeftTalonFXInvert(false);
+        RobotContainer.drive.setLeftTalonFXInvert(false);
         return true;
       }
       // enforce timeout in case MP is stucked or running too long
       else if(startTimeAutonomous + RobotMap.motionMagicTimeOut < Timer.getFPGATimestamp()) {
           motionMagicAutonomousFlag = false;  
           if( _resetToPercentMode == true) {
-             Robot.drive.resetToPercentAndzeroDistance();
+             RobotContainer.drive.resetToPercentAndzeroDistance();
           }
           //setOppositeTurn(false); // must restore back
-          Robot.drive.setLeftTalonFXInvert(false);
+          RobotContainer.drive.setLeftTalonFXInvert(false);
            return true;
       }
       else {
           // if reach here, drive code thinks MM is not done, not reach overal time out yet, but robot may not move at all if PID is not correctly set
-          double[] sensRawReading = Robot.drive.getTalonSensorRawReading();
+          double[] sensRawReading = RobotContainer.drive.getTalonSensorRawReading();
           double targetRawDistance = _distanceInMeters * RobotMap.kMeterToFalconSenorUnit;
           double leftErrorPercent = Math.abs(100.0 * (targetRawDistance - sensRawReading[0])/ targetRawDistance);
           double rightErrorPercent = Math.abs(100.0 * (targetRawDistance - sensRawReading[2])/ targetRawDistance);
@@ -118,10 +119,10 @@ public class TurnSmallDegreeCommand extends Command {
                     motionMagicAutonomousFlag = false;  
                     motionMagicEndStageFlag = false;
                     if( _resetToPercentMode == true) {
-                      Robot.drive.resetToPercentAndzeroDistance();
+                      RobotContainer.drive.resetToPercentAndzeroDistance();
                     }
                     //setOppositeTurn(false); // must restore back
-                    Robot.drive.setLeftTalonFXInvert(false);
+                    RobotContainer.drive.setLeftTalonFXInvert(false);
                     return true;
                  }
               }
@@ -129,16 +130,13 @@ public class TurnSmallDegreeCommand extends Command {
       }     
     }
 
-    Robot.drive.getRemote1SensorReading();
+    RobotContainer.drive.getRemote1SensorReading();
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {}
+  public void end(boolean interrupted) {}
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {}
+  
 }

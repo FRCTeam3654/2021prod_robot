@@ -7,41 +7,42 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.RobotContainer;
 
-public class ColorWheelCommand extends Command {
+public class ColorWheelCommand extends CommandBase {
 
   public ColorWheelCommand() {
-    requires(Robot.colorWheel);
+    addRequirements(RobotContainer.colorWheel);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.colorWheel.zeroSensor();
+    RobotContainer.colorWheel.zeroSensor();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.colorWheel.spinColorWheel(RobotMap.colorWheelSpinTickAmount);
+    RobotContainer.colorWheel.spinColorWheel(RobotMap.colorWheelSpinTickAmount);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  protected void end() {
-    Robot.colorWheel.manualColorWheelSpin(0.0);
-    Robot.colorWheel.zeroSensor();
-    Robot.drive.resetToPercentAndzeroDistance();
+  public void end(boolean interrupted) {
+    RobotContainer.colorWheel.manualColorWheelSpin(0.0);
+    RobotContainer.colorWheel.zeroSensor();
+    RobotContainer.drive.resetToPercentAndzeroDistance();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Robot.colorWheel.colorWheelTickCount() >= RobotMap.colorWheelSpinTickAmount){
-      Robot.colorWheel.zeroSensor();
+    if (RobotContainer.colorWheel.colorWheelTickCount() >= RobotMap.colorWheelSpinTickAmount){
+      RobotContainer.colorWheel.zeroSensor();
       return true;
     }
     return false;

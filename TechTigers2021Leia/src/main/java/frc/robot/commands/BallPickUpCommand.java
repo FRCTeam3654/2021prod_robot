@@ -7,14 +7,15 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import java.util.concurrent.atomic.AtomicInteger;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.RobotMap;
+import frc.robot.RobotContainer;
 
-public class BallPickUpCommand extends Command {
+public class BallPickUpCommand extends CommandBase {
   private AtomicInteger _mode = new AtomicInteger(0); //mode = 0 means regular teleop; mode = 1 means autonomous mode
   private double startTimeAutonomous = 0;
   private boolean ballPickUpAutonomousFlag = false;
@@ -23,32 +24,32 @@ public class BallPickUpCommand extends Command {
   private boolean isButtonPressed = false;
   private boolean armDown = false;
   public BallPickUpCommand() {
-    requires(Robot.ballPickUp);
+    addRequirements(RobotContainer.ballPickUp);
     _mode.set(0);
   }
 
   public BallPickUpCommand(int mode) {
-    requires(Robot.ballPickUp);
+    addRequirements(RobotContainer.ballPickUp);
     _mode.set(mode);
   }
 
   public BallPickUpCommand(int mode, double ballPickUpNewTimeout) {
-    requires(Robot.ballPickUp);
+    addRequirements(RobotContainer.ballPickUp);
     _mode.set(mode);
     _ballPickUpNewTimeout = ballPickUpNewTimeout;
   }
 
   @Override
-  protected void initialize() {
+  public void initialize() {
   }
 
    @Override
-  protected void execute() {
+  public void execute() {
     //Robot.ballPickUp.moveArm(true);
     //SmartDashboard.putNumber("BallPickUpFlag", 1);
 
     
-        if ((Robot.oi.ballPickUpButton.get() && !isButtonPressed) || _mode.get() == 1){
+        if ((RobotContainer.oi.ballPickUpButton.get() && !isButtonPressed) || _mode.get() == 1){
           isButtonPressed = true;
           if (!armDown){
             armDown = true;
@@ -58,23 +59,23 @@ public class BallPickUpCommand extends Command {
           }
         }
           if ((armDown && _mode.get() != 2)  || _mode.get() == 1){
-            Robot.ballPickUp.moveArm(true);
+            RobotContainer.ballPickUp.moveArm(true);
             if (!ballPickUpAutonomousFlag){
               startTimeAutonomous = Timer.getFPGATimestamp();
               ballPickUpAutonomousFlag = true;
             }
           }
           else {
-            Robot.ballPickUp.moveArm(false);
+            RobotContainer.ballPickUp.moveArm(false);
           }
-        if (!Robot.oi.ballPickUpButton.get()){
+        if (!RobotContainer.oi.ballPickUpButton.get()){
           isButtonPressed = false;
         }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
+  public boolean isFinished() {
     if(ballPickUpAutonomousFlag == true && _mode.get() == 1) {
       if( (startTimeAutonomous + 0.1) > Timer.getFPGATimestamp()) {
           // if autonomous started, let it run at least 100 ms
@@ -83,7 +84,7 @@ public class BallPickUpCommand extends Command {
       // enforce timeout in case MP is stucked or running too long
       else if(startTimeAutonomous + _ballPickUpNewTimeout < Timer.getFPGATimestamp()) {
           ballPickUpAutonomousFlag = false;
-          Robot.ballPickUp.moveArm(false);
+          RobotContainer.ballPickUp.moveArm(false);
           _mode.set(0);  
            return true;
       }
@@ -93,11 +94,8 @@ public class BallPickUpCommand extends Command {
   }
 
   @Override
-  protected void end() {
+  public void end(boolean interrupted) {
   }
 
-  @Override
-  protected void interrupted() {
-     armDown = false;
-  }
+  
 }

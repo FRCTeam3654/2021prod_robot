@@ -8,30 +8,31 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 //import frc.robot.RobotMap;
 import frc.robot.RobotMap;
+import frc.robot.RobotContainer;
 
-public class ClimbCommand extends Command {
+public class ClimbCommand extends CommandBase {
   public ClimbCommand() {
-    requires(Robot.climb);
+    addRequirements(RobotContainer.climb);
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
+  public void initialize() {
     //sets the z channel for climb on xbox joystick so it works
-    Robot.oi.operatorStick.setZChannel(3);
+    RobotContainer.oi.operatorStick.setZChannel(3);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  public void execute() {
     double joystickX;
     double joystickZ;
-    joystickX = (Robot.oi.operatorStick.getY());
-    joystickZ = (Robot.oi.operatorStick.getZ()); 
+    joystickX = (RobotContainer.oi.operatorStick.getY());
+    joystickZ = (RobotContainer.oi.operatorStick.getZ()); 
 
     //joystickX = handleDeadband(joystickX, RobotMap.joystickDeadBand);
     //joystickY = handleDeadband(joystickY, RobotMap.joystickDeadBand);
@@ -55,22 +56,19 @@ public class ClimbCommand extends Command {
     }
 
 
-    Robot.climb.karenaNotArcadeDrive(joystickZ, joystickX);
+    RobotContainer.climb.karenaNotArcadeDrive(joystickZ, joystickX);
      
     System.out.println("ElevatorX = " + joystickX + "ElevatorZ = " + joystickZ);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
+  public boolean isFinished() {
     return false;
   }
 
   @Override
-  protected void end() {
+  public void end(boolean interrupted) {
   }
 
-  @Override
-  protected void interrupted() {
-  }
 }
