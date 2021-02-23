@@ -49,9 +49,16 @@ public final class Constants {
     public static final double ksVolts = 0.618;
     public static final double kvVoltSecondsPerMeter = 2.31;// from 2.31,  1.2
     public static final double kaVoltSecondsSquaredPerMeter = 0.173;
-
+    
     // Example value only - as above, this must be tuned for your drive!
-    public static final double kPDriveVel = 2.2; // 7.0
+    public static final double kPDriveVel = 1.5; //2.2; // 7.0
+
+
+    // Shuffleboard constants
+    public static String SBTabDriverDisplay = "Driver Display";
+
+    public static final boolean tuningMode = false;
+    
   }
 
   public static final class OIConstants {
@@ -59,8 +66,8 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 1.3;  //3, 2.0 , 1.7
-    public static final double kMaxAccelerationMetersPerSecondSquared = 1.3; //3, 2.0 , 1.7
+    public static final double kMaxSpeedMetersPerSecond = 1.3;  //3, 2.0 , 1.7 , 1.3,  working max 3.0 with Acce at 1.7
+    public static final double kMaxAccelerationMetersPerSecondSquared = 1.3; //3, 2.0 , 1.7 , 1.3
     public static final double kMaxCentripetalAcceleration = 0.9 * kMaxAccelerationMetersPerSecondSquared;
 
     // Reasonable baseline values for a RAMSETE follower in units of meters and seconds

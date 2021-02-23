@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drive;
 import frc.robot.commands.NewRunMotionProfile.CirclePath;
 import frc.robot.subsystems.RobotOdometry;
+import edu.wpi.first.wpilibj.util.Units;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -37,6 +38,7 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
         130.0, false, false);
         */
  
+    /*
     mp = new NewRunMotionProfile(driveTrain, odometry, 0.0,
         List.of(new Pose2d(0.762, 0.762, new Rotation2d()), new Pose2d(2.286, 1.524, Rotation2d.fromDegrees(45.0)),
             new Pose2d(4.572, 2.286, new Rotation2d()),
@@ -45,22 +47,39 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
             new Pose2d(2.286, 1.524, Rotation2d.fromDegrees(90.0 + 45.0)),
             new Pose2d(1.524, 2.286, Rotation2d.fromDegrees(90.0 + 45.0))),
         0.0, false, false);
+    */
+
+    mp = new NewRunMotionProfile(driveTrain, odometry, 0.0,
+        List.of(new Pose2d(Units.inchesToMeters(30.0), Units.inchesToMeters(30.0), new Rotation2d()), new Pose2d(Units.inchesToMeters(90.0), Units.inchesToMeters(60.0), Rotation2d.fromDegrees(45.0)),
+            new Pose2d(Units.inchesToMeters(180.0), Units.inchesToMeters(90.0), new Rotation2d()),
+            new CirclePath(new Translation2d(Units.inchesToMeters(300), Units.inchesToMeters(60)), Units.inchesToMeters(30), Rotation2d.fromDegrees(-160), Rotation2d.fromDegrees(160),
+                false),
+            new Pose2d(Units.inchesToMeters(180.0), Units.inchesToMeters(30.0), Rotation2d.fromDegrees(-180.0)),
+            new Pose2d(Units.inchesToMeters(90.0), Units.inchesToMeters(60.0), Rotation2d.fromDegrees(90.0 + 45.0)),
+            new Pose2d(Units.inchesToMeters(60.0), Units.inchesToMeters(90.0), Rotation2d.fromDegrees(90.0 + 45.0))),
+        0, false, false);
+    
+
 
     // Add your addCommands(new FooCommand(), new BarCommand());
-   // addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(30, 30, new Rotation2d()))), mp, new InstantCommand(() -> driveTrain.stop()));
+    addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(30), new Rotation2d()))), mp, new InstantCommand(() -> driveTrain.stop()));
 
-    addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(0.762, 0.762, new Rotation2d()))), mp, new InstantCommand(() -> driveTrain.stop()));
+    //addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(0.762, 0.762, new Rotation2d()))), mp, new InstantCommand(() -> driveTrain.stop()));
 
   }
 
   public static void main(String[] args) {
     RunAutoNavSlalom cmd = new RunAutoNavSlalom(null, null);
     //cmd.mp.visualize(80, List.of());
-    // List.of(new Translation2d(30, 120), new Translation2d(60, 120), new
-    // Translation2d(30, 60),
-    // new Translation2d(60, 60), new Translation2d(120, 60), new Translation2d(150,
-    // 60), new Translation2d(180, 60),
-    // new Translation2d(210, 60), new Translation2d(240, 60), new
-    // Translation2d(300, 60))
+    cmd.mp.visualize(80, 
+     List.of(
+       
+     new Translation2d(Units.inchesToMeters(30), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(60), Units.inchesToMeters(120)), 
+     new Translation2d(Units.inchesToMeters(30), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(60), Units.inchesToMeters(60)), 
+     new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), 
+     new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(60)), 
+     new Translation2d(Units.inchesToMeters(240), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(300), Units.inchesToMeters(60))
+     
+    ));
   }
 }

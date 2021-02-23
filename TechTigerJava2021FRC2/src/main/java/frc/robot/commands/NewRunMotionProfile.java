@@ -29,8 +29,10 @@ import frc.robot.subsystems.RobotOdometry;
 import frc.robot.subsystems.Drive;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
-//import frckit.tools.pathview.TrajectoryVisualizer;
-//import frckit.util.GeomUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frckit.tools.pathview.TrajectoryVisualizer;
+import frckit.util.GeomUtil;
+
 
 public class NewRunMotionProfile extends CommandBase {
 
@@ -400,7 +402,17 @@ public class NewRunMotionProfile extends CommandBase {
       startProfile();
     }
 
+    if (DriveConstants.tuningMode && followerStarted) {
+      Pose2d pose = getCurrentPoseMeters();
+      Pose2d currentPose = trajectory.sample(Timer.getFPGATimestamp() - startTime).poseMeters;
+      Translation2d currentTranslation = currentPose.getTranslation();
+      SmartDashboard.putNumber("MP/PosError", pose.getTranslation().getDistance(currentTranslation));
+      SmartDashboard.putNumber("MP/PoseXError", pose.getTranslation().getX() - currentTranslation.getX());
+      SmartDashboard.putNumber("MP/PoseYError", pose.getTranslation().getY() - currentTranslation.getY());
+      SmartDashboard.putNumber("MP/AngleError", pose.getRotation().minus(currentPose.getRotation()).getDegrees());
+    }
   }
+
 
   @Override
   public boolean isFinished() {
@@ -462,7 +474,9 @@ public class NewRunMotionProfile extends CommandBase {
       //    new RamseteController(kRamseteB, kRamseteZeta), driveKinematics, this::driveMetersPerSecond);
 
       // use different constructor to get around to find the speed
+      // can create a subclass of RamseteCommand to add function like time out
 
+      /*
       followerCommand = new RamseteCommand(trajectory, this::getCurrentPoseMeters,
           new RamseteController(kRamseteB, kRamseteZeta), new SimpleMotorFeedforward(
             DriveConstants.ksVolts,
@@ -473,10 +487,14 @@ public class NewRunMotionProfile extends CommandBase {
           // RamseteCommand passes volts to the callback
           driveTrain::tankDriveVolts,
           driveTrain);
+      */
+
+      followerCommand = new RamseteCommand(trajectory, this::getCurrentPoseMeters,
+      new RamseteController(kRamseteB, kRamseteZeta), driveKinematics, this::driveMetersPerSecond);
 
 
     }
-    followerCommand.schedule();
+    followerCommand.schedule();// vs CommandScheduler.getInstance().schedule(followerCommand)
     followerStarted = true;
     startTime = Timer.getFPGATimestamp();
   }
@@ -490,13 +508,30 @@ public class NewRunMotionProfile extends CommandBase {
 
   /**
    * Drives at meters per second (converts meters to inches)
+   * outputMetersPerSecond - A function that consumes the computed left and right wheel speeds.
    */
-  /*
+  private double calcActualVelocity(double input) {
+    double minVelocity = 0.2;  // m/s
+    double minNonZero = 0.02; // m/s
+  
+    if (input > minNonZero * -1 && input < minNonZero) {
+      // deadband like
+      return 0;
+    } else if (input >= minNonZero && input < minVelocity) {
+      // account for friction/deadband
+      return minVelocity;
+    } else if (input <= minNonZero * -1 && input > minVelocity * -1) {
+      return minVelocity * -1;
+    } else {
+      return input;
+    }
+  }
+
   private void driveMetersPerSecond(double left, double right) {
     //driveTrain.driveInchesPerSec(Units.metersToInches(left), Units.metersToInches(right));
-    driveTrain.driveInchesPerSec(Units.metersToInches(left), Units.metersToInches(right));
+    driveTrain.driveMetersPerSecond(calcActualVelocity(left), calcActualVelocity(right));
   }
-  */
+  
   /**
    * Runs the trajectory visualizer on this command. This should not be called
    * from robot code, but instead used only when testing on development machines.
@@ -509,15 +544,15 @@ public class NewRunMotionProfile extends CommandBase {
    * there is no real robot in the visualization, a fake initial robot position
    * must be provided
    * 
-   * @param ppi                  The number of pixels which should represent one
-   *                             inch. 2.5 is a good starting value
+   * @param ppm                  The number of pixels which should represent one
+   *                             meter. 80 is a good starting value
    * @param markers              A list of positions to draw "markers" (7 inch
    *                             magenta circles) on.
    * @param initialRobotPosition The starting position of the robot to test with
    */
-  public void visualize(double ppi, List<Translation2d> markers, Pose2d initialRobotPosition) {
+  public void visualize(double ppm, List<Translation2d> markers, Pose2d initialRobotPosition) {
     if (initialRobotPosition != null) {
-      startGeneration(initialRobotPosition, 0.0);
+      startGeneration(GeomUtil.inchesToMeters(initialRobotPosition), 0.0);
     }
     // Busy-wait for trajectory to finish generating
     Trajectory t = null;
@@ -530,8 +565,8 @@ public class NewRunMotionProfile extends CommandBase {
       t = generator.getTrajectory(); // Attempt to grab new path
     }
     t = adjustCircleTrajectories(t);
-    //TrajectoryVisualizer viz = new TrajectoryVisualizer(ppi, t, trackWidth, convertTranslationListToMeters(markers));
-    //viz.start();
+    TrajectoryVisualizer viz = new TrajectoryVisualizer(ppm, t, trackWidth, convertTranslationListToMeters(markers));
+    viz.start();
   }
 
   /**
@@ -544,14 +579,16 @@ public class NewRunMotionProfile extends CommandBase {
    * This version of the method should be used for profiles that have a defined
    * starting position, i.e. not in dynamic mode.
    * 
-   * @param ppi     The number of pixels which should represent one inch. 2.5 is a
+   * @param ppm     The number of pixels which should represent one meter. 80 is a
    *                good starting value
    * @param markers A list of positions to draw "markers" (7 inch magenta circles)
    *                on.
    */
-  public void visualize(double ppi, List<Translation2d> markers) {
-    visualize(ppi, markers, null);
+  public void visualize(double ppm, List<Translation2d> markers) {
+    visualize(ppm, markers, null);
   }
+
+
 
   /**
    * Converts a list of poses in inches to meters

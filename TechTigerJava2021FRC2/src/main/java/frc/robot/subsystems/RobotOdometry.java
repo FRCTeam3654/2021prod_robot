@@ -209,5 +209,7 @@ public Rotation2d getHeading() {
     driveOdometry.resetPosition(pose, getHeading());
   }
 
-  
+  //Resets the robot's position on the field.
+  //You NEED to reset your encoders (to zero) when calling this method.
+  //The gyroscope angle does not need to be reset here on the user's robot code. The library automatically takes care of offsetting the gyro angle.
 }

@@ -47,7 +47,6 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 
 
 
-
 /**
  * Add your docs here.
  */
@@ -414,7 +413,27 @@ public class Drive extends SubsystemBase {
     m_drive.feed();
   }
 
-
+  public void driveMetersPerSecond(double left, double right) {
+    // drive left and right volecity in meter per second --- either velocityclosed loop or open loop
+    //closed loop,  need consider gear ratio 10.71
+    double targetVelocity_UnitsPer100ms_left = ((left / Constants.DriveConstants.kWheelCircumferenceMeter ) / Constants.DriveConstants.gearRatio) * Constants.DriveConstants.encoderTicksPerRev * 0.1 ; // ticks per 100 ms
+    double targetVelocity_UnitsPer100ms_right = ((right / Constants.DriveConstants.kWheelCircumferenceMeter ) / Constants.DriveConstants.gearRatio) * Constants.DriveConstants.encoderTicksPerRev * 0.1 ; // ticks per 100 ms
+    
+    // OPTION #1:  use Talon Velocity PIDF without kS, kV and kA 
+    leftFrontTalon.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms_left);
+    rightFrontTalon.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms_right); 
+  
+    // IF  motor config has only PID, no F (feedforward term), you can use the following way to mimic Feedforward term
+    // OPTION #2: use WPIlib's SimpleMotorFeedforward to calculate the Feedforward term instead of a simple PIDF constant
+    //  V = kS * sign(velocity) + kV * velocity + kA * acceleration      https://docs.wpilib.org/en/stable/docs/software/wpilib-tools/robot-characterization/introduction.html
+    // Ref: https://github.com/STMARobotics/frc-7028-2020/blob/master/src/main/java/frc/robot/subsystems/DriveTrainSubsystem.java 
+    
+    //var leftFeedForwardVolts = FEED_FORWARD.calculate(left);
+    //var rightFeedForwardVolts = FEED_FORWARD.calculate(right);
+    //leftFrontTalon.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms_left, DemandType.ArbitraryFeedForward, leftFeedForwardVolts / 12);
+    //rightFrontTalon.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms_right, DemandType.ArbitraryFeedForward, rightFeedForwardVolts / 12);); 
+  
+  }
   
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     leftFrontTalon.setVoltage(leftVolts);
