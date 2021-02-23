@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
 import com.ctre.phoenix.motorcontrol.InvertType; 
 import com.ctre.phoenix.motorcontrol.ControlMode; 
@@ -47,6 +48,10 @@ import java.util.ArrayList;
 //import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motion.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import frc.robot.Constants;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.controller.PIDController;
 //import edu.wpi.first.wpilibj.DoubleSolenoid;
 //import edu.wpi.first.wpilibj.Solenoid;
 //import edu.wpi.first.wpilibj.AnalogInput;
@@ -67,15 +72,29 @@ public class Drive extends SubsystemBase {
   //public TalonSRX rightFrontTalon = new TalonSRX(RobotMap.rightTalonMaster);
   //public TalonSRX rightBackTalon = new TalonSRX(RobotMap.rightTalonSlave);
 
-  public TalonFX leftFrontTalon = new TalonFX(RobotMap.leftTalonMaster);
-  public TalonFX leftBackTalon = new TalonFX(RobotMap.leftTalonSlave);
-  public TalonFX rightFrontTalon = new TalonFX(RobotMap.rightTalonMaster);
-  public TalonFX rightBackTalon = new TalonFX(RobotMap.rightTalonSlave);
+  public WPI_TalonFX leftFrontTalon = new WPI_TalonFX(RobotMap.leftTalonMaster);
+  public WPI_TalonFX leftBackTalon = new WPI_TalonFX(RobotMap.leftTalonSlave);
+  public WPI_TalonFX rightFrontTalon = new WPI_TalonFX(RobotMap.rightTalonMaster);
+  public WPI_TalonFX rightBackTalon = new WPI_TalonFX(RobotMap.rightTalonSlave);
   
 
   public TalonSRX vinnieTalon = new TalonSRX(RobotMap.vinnieTalonNumber);
 
   public PigeonIMU pigeonVinnie = new PigeonIMU(vinnieTalon);
+
+  // ramsete related variables //
+  DifferentialDrive m_drive ;
+  //DifferentialDriveKinematics kinematics2 = new DifferentialDriveKinematics(Constants.DriveConstants.kTrackwidthMeters);
+  //DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());
+
+  //SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(Constants.DriveConstants.ksVolts, Constants.DriveConstants.kvVoltSecondsPerMeter, Constants.DriveConstants.kaVoltSecondsSquaredPerMeter);
+
+  PIDController leftPIDController = new PIDController(Constants.DriveConstants.kPDriveVel, 0.0, 0.0);
+
+  PIDController rightPIDController = new PIDController(Constants.DriveConstants.kPDriveVel, 0.0, 0.0);
+
+  //Pose2d pose;
+  //////// end of Ramsete related function /////////////////////
 
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
@@ -301,6 +320,144 @@ public class Drive extends SubsystemBase {
 
   }
   
+//////  a set of functions for Ramsete ///////////////////////////
+
+public double getRotationsLeft() {
+  return (double) leftFrontTalon.getSelectedSensorPosition() * Constants.DriveConstants.gearRatio / Constants.DriveConstants.encoderTicksPerRev;
+}
+
+
+public double getRotationsRight() {
+  return (double) rightFrontTalon.getSelectedSensorPosition() * Constants.DriveConstants.gearRatio / Constants.DriveConstants.encoderTicksPerRev;
+}
+
+public double getDistanceRight() {
+  return Constants.DriveConstants.kWheelCircumferenceMeter * getRotationsRight();
+}
+
+
+public double getDistanceLeft() {
+  return Constants.DriveConstants.kWheelCircumferenceMeter * getRotationsLeft();
+}
+
+public double getVelocityRight() {
+  return Constants.DriveConstants.kWheelCircumferenceMeter * getRotationsRight() * 10;
+}
+
+public double getVelocityLeft() {
+  return Constants.DriveConstants.kWheelCircumferenceMeter * getRotationsLeft() * 10;
+}
+
+public double getAverageEncoderDistance() {
+  return (leftFrontTalon.getSelectedSensorPosition(0) + rightFrontTalon.getSelectedSensorPosition(0)) / 2.0;
+}
+
+public void setMaxOutput(double maxOutput) {
+  m_drive.setMaxOutput(maxOutput);
+}
+
+
+/** Zeroes the heading of the robot. */
+public void zeroHeading() {
+  pigeonVinnie.setYaw(0);
+}
+
+// IEEERemainder = dividend - (divisor * Math.Round(dividend / divisor))  
+// IEEEremainder(double dividend, double divisor)
+//  f1 – f2 x n, where n is the mathematical integer closest to the exact mathematical value of the quotient f1/f2, and if two mathematical integers are equally close to f1/f2, then n is the integer that is even.
+public double getYaw() {
+  double ypr[] = {0,0,0};
+  pigeonVinnie.getYawPitchRoll(ypr);
+  //return Math.IEEEremainder(ypr[0], 360.0d);
+  return ypr[0];
+}
+
+ //You can replace Rotation2D with getting the Yaw from the NavX and making sure it has the proper sign (pretty sure it needs to be inverted as NavX is CW positive).
+// pretty sure Pigeon has CCW postive, no need negate
+public Rotation2d getHeading() {
+  double ypr[] = {0,0,0};
+  pigeonVinnie.getYawPitchRoll(ypr);
+
+  return Rotation2d.fromDegrees(ypr[0]);
+  //return Rotation2d.fromDegrees(Math.IEEEremainder(ypr[0], 360.0d));
+
+}
+
+public PIDController getLeftPIDController() {
+  return leftPIDController;
+}
+
+public PIDController getRightPIDController() {
+  return rightPIDController;
+}
+
+public PigeonIMU getPigeonIMU() {
+    return pigeonVinnie;
+}
+
+public void set(double leftVoltage, double rightVoltage) {
+  leftFrontTalon.setVoltage(leftVoltage);
+  rightFrontTalon.setVoltage(rightVoltage); // remove -
+  m_drive.feed();
+}
+
+public void resetEncoders() {
+  leftFrontTalon.setSelectedSensorPosition(0);
+  rightFrontTalon.setSelectedSensorPosition(0);
+}
+
+public void resetHeading() {
+  pigeonVinnie.setYaw(0);
+}
+
+public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+  return new DifferentialDriveWheelSpeeds(
+    leftFrontTalon.getSelectedSensorVelocity() * Constants.DriveConstants.gearRatio * 10.0 / Constants.DriveConstants.encoderTicksPerRev * Constants.DriveConstants.kWheelCircumferenceMeter,
+    rightFrontTalon.getSelectedSensorVelocity() * Constants.DriveConstants.gearRatio * 10.0 / Constants.DriveConstants.encoderTicksPerRev * Constants.DriveConstants.kWheelCircumferenceMeter
+  );
+}
+
+public void stop() {
+  tankDriveVolts(0, 0);
+}
+
+public void arcadeDrive(double fwd, double rot) {
+  m_drive.arcadeDrive(fwd, rot); // left and right drive in oppositve direction as of now
+  m_drive.feed();
+}
+
+public void driveMetersPerSecond(double left, double right) {
+  // drive left and right volecity in meter per second --- either velocityclosed loop or open loop
+  //closed loop,  need consider gear ratio 10.71
+  double targetVelocity_UnitsPer100ms_left = ((left / Constants.DriveConstants.kWheelCircumferenceMeter ) / Constants.DriveConstants.gearRatio) * Constants.DriveConstants.encoderTicksPerRev * 0.1 ; // ticks per 100 ms
+  double targetVelocity_UnitsPer100ms_right = ((right / Constants.DriveConstants.kWheelCircumferenceMeter ) / Constants.DriveConstants.gearRatio) * Constants.DriveConstants.encoderTicksPerRev * 0.1 ; // ticks per 100 ms
+  
+  // OPTION #1:  use Talon Velocity PIDF without kS, kV and kA 
+  leftFrontTalon.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms_left);
+  rightFrontTalon.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms_right); 
+
+  // IF  motor config has only PID, no F (feedforward term), you can use the following way to mimic Feedforward term
+  // OPTION #2: use WPIlib's SimpleMotorFeedforward to calculate the Feedforward term instead of a simple PIDF constant
+  //  V = kS * sign(velocity) + kV * velocity + kA * acceleration      https://docs.wpilib.org/en/stable/docs/software/wpilib-tools/robot-characterization/introduction.html
+  // Ref: https://github.com/STMARobotics/frc-7028-2020/blob/master/src/main/java/frc/robot/subsystems/DriveTrainSubsystem.java 
+  
+  //var leftFeedForwardVolts = FEED_FORWARD.calculate(left);
+  //var rightFeedForwardVolts = FEED_FORWARD.calculate(right);
+  //leftFrontTalon.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms_left, DemandType.ArbitraryFeedForward, leftFeedForwardVolts / 12);
+  //rightFrontTalon.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms_right, DemandType.ArbitraryFeedForward, rightFeedForwardVolts / 12);); 
+
+}
+
+public void tankDriveVolts(double leftVolts, double rightVolts) {
+  leftFrontTalon.setVoltage(leftVolts);
+  rightFrontTalon.setVoltage(rightVolts); // remove -
+  m_drive.feed(); // move in the same direction both two positive voltage (forward)
+}
+
+
+
+//////  end of a set of functions for Ramsete ///////////////////////////
+
   public void setArcade(double velocity, double turn) {
       mercyArcadeDrive(velocity, turn);
   }
