@@ -39,10 +39,10 @@ public class BallStorageCommand extends CommandBase {
     boolean stgDist5=false;
 
     if(RobotContainer.ballStorage.storageSensor1() > 1200  && !RobotContainer.oi.ballFlushButton.get()) stgDist1=true; 
-    if(RobotContainer.ballStorage.storageSensor2() > 1200  && !RobotContainer.oi.ballFlushButton.get()) stgDist2=true; 
-    if(RobotContainer.ballStorage.storageSensor3() > 1200  && !RobotContainer.oi.ballFlushButton.get()) stgDist3=true; 
-    if(RobotContainer.ballStorage.storageSensor4() > 1200  && !RobotContainer.oi.ballFlushButton.get()) stgDist4=true; 
-    if(RobotContainer.ballStorage.storageSensor5() && !RobotContainer.oi.ballFlushButton.get()) stgDist5=true; 
+    if(RobotContainer.ballStorage.storageSensor2()  && !RobotContainer.oi.ballFlushButton.get()) stgDist2=true; 
+    if(RobotContainer.ballStorage.storageSensor3()  && !RobotContainer.oi.ballFlushButton.get()) stgDist3=true; 
+   // if(RobotContainer.ballStorage.storageSensor4() > 1200  && !RobotContainer.oi.ballFlushButton.get()) stgDist4=true; 
+    //if(RobotContainer.ballStorage.storageSensor5() && !RobotContainer.oi.ballFlushButton.get()) stgDist5=true; 
 
     SmartDashboard.putBoolean("Distance Sensor 1", stgDist1);
     SmartDashboard.putBoolean("Distance Sensor 2", stgDist2);
@@ -102,8 +102,8 @@ public class BallStorageCommand extends CommandBase {
     if (!RobotContainer.oi.ballFlushButton.get()){
       if(stgMot1)  RobotContainer.ballStorage.driveBallStorage1(RobotMap.ballStorageSpeed); else RobotContainer.ballStorage.driveBallStorage1(0); 
       if(stgMot2)  RobotContainer.ballStorage.driveBallStorage2(RobotMap.ballStorageSpeed); else RobotContainer.ballStorage.driveBallStorage2(0); 
-      if(stgMot3)  RobotContainer.ballStorage.driveBallStorage3(RobotMap.ballStorageSpeed); else RobotContainer.ballStorage.driveBallStorage3(0); 
-      if(stgMot4)  RobotContainer.ballStorage.driveBallStorage4(RobotMap.ballStorageSpeed); else RobotContainer.ballStorage.driveBallStorage4(0); 
+     // if(stgMot3)  RobotContainer.ballStorage.driveBallStorage3(RobotMap.ballStorageSpeed); else RobotContainer.ballStorage.driveBallStorage3(0); 
+     // if(stgMot4)  RobotContainer.ballStorage.driveBallStorage4(RobotMap.ballStorageSpeed); else RobotContainer.ballStorage.driveBallStorage4(0); 
      }
 
     if (startTimer + RobotMap.ballStorageTimerAndysVision < Timer.getFPGATimestamp())  isBallMoving = false;

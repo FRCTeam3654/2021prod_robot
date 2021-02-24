@@ -38,13 +38,15 @@ public class BallFlushCommand extends CommandBase {
     {
       //Robot.ballShooter.shoot(true);
       RobotContainer.ballStorage.ballCounter = 0;
-      RobotContainer.ballStorage.driveBallStorage4(-0.9);
+      RobotContainer.ballStorage.driveBallStorage1(-0.9);
+      RobotContainer.ballStorage.driveBallStorage2(-0.9);
     }
     else
     {
      // Robot.ballShooter.shoot(false);      
       //Robot.ballShooter.shoot(true);    
-      RobotContainer.ballStorage.driveBallStorage4(0);
+      RobotContainer.ballStorage.driveBallStorage1(0);
+      RobotContainer.ballStorage.driveBallStorage2(-0.9);
     }
     if (RobotContainer.oi.ballPickUpButton.get()){
       isButtonPressed = true;

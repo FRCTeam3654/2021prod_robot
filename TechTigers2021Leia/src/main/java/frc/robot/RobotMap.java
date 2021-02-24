@@ -98,19 +98,19 @@ public static int ArmStatusID = 0;
 //public static int BallStorageID = 7;//7 on competition robot
 
 //temp numbers cuz idk what i'm doinggggggg
-public static int BallStorageID1 = 14;
+public static int BallStorageID1 = 7;
 public static int BallStorageID2 = 15;
-public static int BallStorageID3 = 16;
-public static int BallStorageID4 = 7;
+//public static int BallStorageID3 = 16;
+//public static int BallStorageID4 = 7;
 
 
 public static int colorWheelTalonID = 9;
 
 public static int analogDistanceSensorPort1 = 0; //i changed from 1 to 2 for consistency 
-public static int analogDistanceSensorPort2 = 1; 
-public static int analogDistanceSensorPort3 = 2; 
-public static int analogDistanceSensorPort4 = 3; 
-public static int digitalDistanceSensorPort5 = 4; //oh yeah
+public static int digitalDistanceSensorPort2 = 1; 
+public static int digitalDistanceSensorPort3 = 2; 
+//public static int digitalDistanceSensorPort4 = 3; 
+//public static int digitalDistanceSensorPort5 = 4; //oh yeah
 
 public static double joystickDeadBand = 0.08;
 
@@ -131,6 +131,7 @@ public static int solenoidIn = 3;
 public static int solenoidOut = 2;
 public static double shooterSpeed_nativeUnit = 10240; //3000 rpm
 //^^ calculated by (desired rpm * 2048 / 60sec / 10)
+public static double shooterSpeedTolerance = 200;
 
 //COLOR WHEEL!
 /**4096 * 25

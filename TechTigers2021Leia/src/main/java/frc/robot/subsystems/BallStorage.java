@@ -24,40 +24,40 @@ public class BallStorage extends SubsystemBase {
   // here. Call these from Commands.
   public int ballCounter = 3;
   private AnalogInput analogDistanceSensor1;
-  private AnalogInput analogDistanceSensor2;
-  private AnalogInput analogDistanceSensor3;
-  private AnalogInput analogDistanceSensor4;
-  private DigitalInput digitalDistanceSensor5;
+  private DigitalInput digitalDistanceSensor2;
+  private DigitalInput digitalDistanceSensor3;
+ // private AnalogInput analogDistanceSensor4;
+  //private DigitalInput digitalDistanceSensor5;
 
   private TalonSRX ballStorageTalon1 = new TalonSRX (RobotMap.BallStorageID1);
   private TalonSRX ballStorageTalon2 = new TalonSRX (RobotMap.BallStorageID2);
-  private TalonSRX ballStorageTalon3 = new TalonSRX (RobotMap.BallStorageID3);
-  private TalonSRX ballStorageTalon4 = new TalonSRX (RobotMap.BallStorageID4);
+ // private TalonSRX ballStorageTalon3 = new TalonSRX (RobotMap.BallStorageID3);
+ // private TalonSRX ballStorageTalon4 = new TalonSRX (RobotMap.BallStorageID4);
   
 
   public BallStorage(){
     analogDistanceSensor1 = new AnalogInput(RobotMap.analogDistanceSensorPort1);
-    analogDistanceSensor2 = new AnalogInput(RobotMap.analogDistanceSensorPort2);
-    analogDistanceSensor3 = new AnalogInput(RobotMap.analogDistanceSensorPort3);
-    analogDistanceSensor4 = new AnalogInput(RobotMap.analogDistanceSensorPort4);
-    digitalDistanceSensor5 = new DigitalInput(RobotMap.digitalDistanceSensorPort5);
+    digitalDistanceSensor2 = new DigitalInput(RobotMap.digitalDistanceSensorPort2);
+    digitalDistanceSensor3 = new DigitalInput(RobotMap.digitalDistanceSensorPort3);
+    //analogDistanceSensor4 = new AnalogInput(RobotMap.analogDistanceSensorPort4);
+    //digitalDistanceSensor5 = new DigitalInput(RobotMap.digitalDistanceSensorPort5);
 
     analogDistanceSensor1.setAverageBits(40);
-    analogDistanceSensor2.setAverageBits(40);
+    /*analogDistanceSensor2.setAverageBits(40);
     analogDistanceSensor3.setAverageBits(40);
     analogDistanceSensor4.setAverageBits(40);
-    
+    */
 
     ballStorageTalon1.configFactoryDefault();
     ballStorageTalon2.configFactoryDefault();
-    ballStorageTalon3.configFactoryDefault();
-    ballStorageTalon4.configFactoryDefault();
+    //ballStorageTalon3.configFactoryDefault();
+    //ballStorageTalon4.configFactoryDefault();
     
 
     ballStorageTalon1.setNeutralMode(NeutralMode.Brake);
     ballStorageTalon2.setNeutralMode(NeutralMode.Brake);
-    ballStorageTalon3.setNeutralMode(NeutralMode.Brake);
-    ballStorageTalon4.setNeutralMode(NeutralMode.Brake);
+    //ballStorageTalon3.setNeutralMode(NeutralMode.Brake);
+    //ballStorageTalon4.setNeutralMode(NeutralMode.Brake);
     
   }
 
@@ -69,22 +69,22 @@ public class BallStorage extends SubsystemBase {
     return cmDistanceSensor1;
   }
 
-  public double storageSensor2() {
+  public boolean storageSensor2() {
     //double cmDistanceSensor = (27048/(analogDistanceSensor.getAverageValue()-36))-4;
-    double cmDistanceSensor2;
-    cmDistanceSensor2 = analogDistanceSensor2.getAverageValue();
-    SmartDashboard.putNumber("Analog Distance Sensor 2 raw", cmDistanceSensor2);
+    boolean cmDistanceSensor2;
+    cmDistanceSensor2 = !digitalDistanceSensor2.get();
+    SmartDashboard.putBoolean("Digital Distance Sensor 2 raw", cmDistanceSensor2);
     return cmDistanceSensor2;
   }
 
-  public double storageSensor3() {
+  public boolean storageSensor3() {
     //double cmDistanceSensor = (27048/(analogDistanceSensor.getAverageValue()-36))-4;
-    double cmDistanceSensor3;
-    cmDistanceSensor3 = analogDistanceSensor3.getAverageValue();
-    SmartDashboard.putNumber("Analog Distance Sensor 3 raw", cmDistanceSensor3);
+    boolean cmDistanceSensor3;
+    cmDistanceSensor3 = !digitalDistanceSensor3.get();
+    SmartDashboard.putBoolean("Digital Distance Sensor 3 raw", cmDistanceSensor3);
     return cmDistanceSensor3;
   }
-
+/*
   public double storageSensor4() {
     //double cmDistanceSensor = (27048/(analogDistanceSensor.getAverageValue()-36))-4;
     double cmDistanceSensor4;
@@ -100,7 +100,7 @@ public class BallStorage extends SubsystemBase {
     SmartDashboard.putBoolean("Digital Distance Sensor 5 raw", cmDistanceSensor5);
     return cmDistanceSensor5;
   }
-
+*/
   public void driveBallStorage1(double percentOutput){
     // if (Robot.oi.reverseBallShooterButton.get()){
     //    Robot.ballStorage.driveBallStorage((-1) * percentOutput); // reverse the direction to clear the jam
@@ -116,7 +116,7 @@ public class BallStorage extends SubsystemBase {
     ballStorageTalon2.set(ControlMode.PercentOutput, percentOutput);
     SmartDashboard.putNumber("Ball Motor 2 Speed", percentOutput);
   }
-  
+  /*
   public void driveBallStorage3(double percentOutput){
     // if (Robot.oi.reverseBallShooterButton.get()){
     //    Robot.ballStorage.driveBallStorage((-1) * percentOutput); // reverse the direction to clear the jam
@@ -132,7 +132,7 @@ public class BallStorage extends SubsystemBase {
     ballStorageTalon4.set(ControlMode.PercentOutput, percentOutput);
     SmartDashboard.putNumber("Ball Motor 4 Speed", percentOutput);
   }
-
+*/
 
   @Override
   public void periodic() {

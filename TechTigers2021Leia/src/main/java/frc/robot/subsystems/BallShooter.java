@@ -93,6 +93,16 @@ public class BallShooter extends SubsystemBase {
     //System.out.println(""+ speed);
   }
 
+  public boolean targetSpeed(){
+    double speed = ballShooterTalon.getSelectedSensorVelocity(RobotMap.kPIDLoopIDx);
+    double speedDifferential = speed - RobotMap.shooterSpeed_nativeUnit;
+    if (Math.abs(speedDifferential) < RobotMap.shooterSpeedTolerance){
+      return true;
+    }
+    return false;
+    
+  }
+
   @Override
   public void periodic() {
    

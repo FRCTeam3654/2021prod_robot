@@ -48,7 +48,12 @@ public class BallShooterCommand extends CommandBase {
     {
       RobotContainer.ballShooter.shoot(true);
       RobotContainer.ballStorage.ballCounter = 0;
-      RobotContainer.ballStorage.driveBallStorage4(1.0);
+      
+      if (RobotContainer.ballShooter.targetSpeed()){
+        RobotContainer.ballStorage.driveBallStorage1(1.0);
+        RobotContainer.ballStorage.driveBallStorage2(1.0);
+      }
+      
 
 
       if (!ballShooterAutonomousFlag){
@@ -58,8 +63,9 @@ public class BallShooterCommand extends CommandBase {
     }
     else
     {
-      RobotContainer.ballShooter.shoot(false);  
-      RobotContainer.ballStorage.driveBallStorage4(0);
+      RobotContainer.ballShooter.shoot(false); 
+      RobotContainer.ballStorage.driveBallStorage1(0); 
+      RobotContainer.ballStorage.driveBallStorage2(0);
 
     }
   }
@@ -76,7 +82,8 @@ public class BallShooterCommand extends CommandBase {
       else if(startTimeAutonomous + RobotMap.autonomousBallShooterTimeOut < Timer.getFPGATimestamp()) {
           ballShooterAutonomousFlag = false;
           //Robot.ballShooter.shoot(false);  
-          RobotContainer.ballStorage.driveBallStorage4(0); 
+          RobotContainer.ballStorage.driveBallStorage1(0);
+          RobotContainer.ballStorage.driveBallStorage2(0); 
           _mode.set(0);
            return true;
       }
@@ -90,7 +97,8 @@ public class BallShooterCommand extends CommandBase {
   public void end(boolean interrupted) {
     ballShooterAutonomousFlag = false;
     RobotContainer.ballShooter.shoot(false);  
-    RobotContainer.ballStorage.driveBallStorage4(0); 
+    RobotContainer.ballStorage.driveBallStorage1(0);
+    RobotContainer.ballStorage.driveBallStorage2(0); 
   }
 
 }
