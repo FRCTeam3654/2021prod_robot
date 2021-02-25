@@ -51,7 +51,7 @@ public class BallShooterCommand extends CommandBase {
       
       if (RobotContainer.ballShooter.targetSpeed()){
         RobotContainer.ballStorage.driveBallStorage1(1.0);
-        RobotContainer.ballStorage.driveBallStorage2(1.0);
+        RobotContainer.ballStorage.driveBallStorage2(-0.5);
       }
       
 
