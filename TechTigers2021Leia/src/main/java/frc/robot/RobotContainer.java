@@ -5,6 +5,7 @@
 package frc.robot;
 
 import static edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -27,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
+import frc.robot.subsystems.RobotOdometry;
 
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Climb;
@@ -35,6 +37,7 @@ import frc.robot.subsystems.BallPickUp;
 import frc.robot.subsystems.BallShooter;
 import frc.robot.subsystems.BallStorage;
 import frc.robot.subsystems.Turret;
+import frc.robot.commands.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -55,6 +58,9 @@ public class RobotContainer {
   public static Turret turret;
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  
+  private RobotOdometry odometry;
+  private final SendableChooser<Command> autoChooser = new SendableChooser<Command>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -69,10 +75,15 @@ public class RobotContainer {
     
     // Configure the button bindings
     configureButtonBindings();
+    drive.resetEncoders();
+    drive.resetHeading();
+    odometry = new RobotOdometry(drive, drive.getPigeonIMU());
+    odometry.resetOdometry();
+    autoChooser.setDefaultOption("AutoNav (Barrel Racing)", new RunAutoNavBarrelRacing(odometry, drive));
 
     // Configure default commands
     // Set the default drive command to split-stick arcade drive
-    m_robotDrive.setDefaultCommand(
+    /*m_robotDrive.setDefaultCommand(
         // A split-stick arcade command, with forward/backward controlled by the left
         // hand, and turning controlled by the right.
         new RunCommand(
@@ -81,6 +92,7 @@ public class RobotContainer {
                     m_driverController.getY(GenericHID.Hand.kLeft),
                     m_driverController.getX(GenericHID.Hand.kRight)),
             m_robotDrive));
+            */
   }
 
   /**
@@ -91,9 +103,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Drive at half speed when the right bumper is held
-    new JoystickButton(m_driverController, Button.kBumperRight.value)
+    /*new JoystickButton(m_driverController, Button.kBumperRight.value)
         .whenPressed(() -> m_robotDrive.setMaxOutput(0.5))
         .whenReleased(() -> m_robotDrive.setMaxOutput(1));
+        */
   }
 
   /**
@@ -102,9 +115,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-
+    return autoChooser.getSelected();
     // Create a voltage constraint to ensure we don't accelerate too fast
-    var autoVoltageConstraint =
+   /* var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
             new SimpleMotorFeedforward(
                 DriveConstants.ksVolts,
@@ -157,5 +170,6 @@ public class RobotContainer {
 
     // Run path following command, then stop at the end.
     return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
+    */
   }
 }
