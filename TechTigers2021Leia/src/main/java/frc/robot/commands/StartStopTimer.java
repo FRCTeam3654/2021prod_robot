@@ -49,6 +49,7 @@ public class StartStopTimer extends CommandBase {
     @Override
     public void initialize() {
       startTime = currTime = System.currentTimeMillis();
+      
     }
   
     // Called every time the scheduler runs while the command is scheduled.
@@ -56,6 +57,7 @@ public class StartStopTimer extends CommandBase {
     public void execute() {
       currTime = System.currentTimeMillis();
       SmartDashboard.putNumber("Timer", currTime-startTime);
+      
     }
   
     // Called once the command ends or is interrupted.

@@ -54,9 +54,9 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
             new Pose2d(Units.inchesToMeters(180.0), Units.inchesToMeters(90.0), new Rotation2d()),
             new CirclePath(new Translation2d(Units.inchesToMeters(300), Units.inchesToMeters(60)), Units.inchesToMeters(30), Rotation2d.fromDegrees(-160), Rotation2d.fromDegrees(160),
                 false),
-            new Pose2d(Units.inchesToMeters(180.0), Units.inchesToMeters(30.0), Rotation2d.fromDegrees(-180.0)),
+            new Pose2d(Units.inchesToMeters(180.0), Units.inchesToMeters(30.0), Rotation2d.fromDegrees(180.0)),
             new Pose2d(Units.inchesToMeters(90.0), Units.inchesToMeters(60.0), Rotation2d.fromDegrees(90.0 + 45.0)),
-            new Pose2d(Units.inchesToMeters(60.0), Units.inchesToMeters(90.0), Rotation2d.fromDegrees(90.0 + 45.0))),
+            new Pose2d(Units.inchesToMeters(50.0), Units.inchesToMeters(90.0), Rotation2d.fromDegrees(90.0 + 90.0))),
         0, false, false);
     
 

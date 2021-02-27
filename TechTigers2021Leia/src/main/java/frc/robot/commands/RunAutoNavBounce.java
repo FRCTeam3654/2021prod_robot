@@ -34,7 +34,8 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
     /** Creates a new RunAutoNavBounce. */
     public RunAutoNavBounce(RobotOdometry odometry, Drive driveTrain) {
        
-    // test
+    // test 
+    /*
     
     mp1 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()), 0,
         List.of(), new Pose2d(Units.inchesToMeters(60), Units.inchesToMeters(120), Rotation2d.fromDegrees(90)), 0, false, false);
@@ -50,8 +51,8 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
     mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(150), Units.inchesToMeters(90),  Rotation2d.fromDegrees(360)), 0,
         List.of(), new Pose2d(Units.inchesToMeters(120), Units.inchesToMeters(120), Rotation2d.fromDegrees(270)), 0, true, false);
     
+    */
     
-    /*
     // real path
     mp1 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()), 0,
                List.of(new Translation2d(Units.inchesToMeters(70), Units.inchesToMeters(90))), new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(150), Rotation2d.fromDegrees(90)), 0, false, false);
@@ -72,7 +73,7 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
     mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(280), Units.inchesToMeters(150), Rotation2d.fromDegrees(450)), 0,
                 List.of(new Translation2d(Units.inchesToMeters(290), Units.inchesToMeters(100))), new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(100), Rotation2d.fromDegrees(540)), 0, true,
                 false);
-    */
+    
 
     
      
@@ -81,7 +82,7 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
             new ParallelDeadlineGroup(
                 new SequentialCommandGroup(
                     new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()))), 
-                    mp1 
+                    mp1, mp2, mp3, mp4 
                 )
                 , 
             new StartStopTimer())

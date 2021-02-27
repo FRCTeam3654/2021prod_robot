@@ -16,6 +16,7 @@ import frc.robot.Constants;
 //import frc.robot.Constants.RobotType;
 import frc.robot.subsystems.RobotOdometry;
 import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 
 
 public class RunAutoNavBarrelRacing extends SequentialCommandGroup {
@@ -47,11 +48,21 @@ public class RunAutoNavBarrelRacing extends SequentialCommandGroup {
         new CirclePath(new Translation2d(Units.inchesToMeters(240), Units.inchesToMeters(120)), Units.inchesToMeters(30), new Rotation2d(), Rotation2d.fromDegrees(180), false),
         new CirclePath(new Translation2d(Units.inchesToMeters(300), Units.inchesToMeters(60)), Units.inchesToMeters(30), Rotation2d.fromDegrees(-90), Rotation2d.fromDegrees(90),
             false),
-        new Pose2d(Units.inchesToMeters(150.0), Units.inchesToMeters(90), Rotation2d.fromDegrees(180)), new Pose2d(Units.inchesToMeters(42.0), Units.inchesToMeters(90.0), Rotation2d.fromDegrees(180))),
-    0.0, false, false);
+        new Pose2d(Units.inchesToMeters(150.0), Units.inchesToMeters(90), Rotation2d.fromDegrees(180)), new Pose2d(Units.inchesToMeters(30.0), Units.inchesToMeters(84.0), Rotation2d.fromDegrees(180))),
+    2.0, false, false);
     // Add your addCommands(new FooCommand(), new BarCommand());
-    addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()))), mp,
-        new InstantCommand(() -> driveTrain.stop()));
+    //addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()))), mp,
+       // new InstantCommand(() -> driveTrain.stop()));
+
+        addCommands(
+            new ParallelDeadlineGroup(
+                new SequentialCommandGroup(
+                    new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()))), mp,
+                    new InstantCommand(() -> driveTrain.stop())
+                )
+                , 
+            new StartStopTimer())
+        );
     
   }
 
