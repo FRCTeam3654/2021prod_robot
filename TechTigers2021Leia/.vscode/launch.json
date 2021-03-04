@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch RunGalacticSearchA",
+      "request": "launch",
+      "mainClass": "frc.robot.commands.RunGalacticSearchA",
+      "projectName": "TechTigers2021Leia"
+    },
+    {
+      "type": "java",
       "name": "Launch RunAutoNavBounce",
       "request": "launch",
       "mainClass": "frc.robot.commands.RunAutoNavBounce",

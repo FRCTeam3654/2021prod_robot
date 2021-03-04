@@ -26,7 +26,7 @@ public class DriveTargetCommand extends CommandBase {
   private double readJoeyX = 2;
   private double readJoeyY = 0;
   private double startTimeLimelight = 0;
-  //private double startTimeLimelight = 0;
+  
 
   public DriveTargetCommand() {
     addRequirements(RobotContainer.drive);
@@ -37,6 +37,7 @@ public class DriveTargetCommand extends CommandBase {
   public void initialize() {
     startTimeLimelight = Timer.getFPGATimestamp();
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3); //3 is force on
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0); //setting the pipeline to 0 for targetting the goal
   }
 
   // Called repeatedly when this Command is scheduled to run
