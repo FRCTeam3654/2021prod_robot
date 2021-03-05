@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.RobotOdometry;
@@ -19,11 +20,16 @@ public class RunGalacticSearchASequential extends SequentialCommandGroup {
   public static NewRunMotionProfile mp;
 
   public RunGalacticSearchASequential(RobotOdometry odometry, Drive driveTrain) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addCommands(new BallPickUpCommand(1));
-    RunGalacticSearchA galacticA = new RunGalacticSearchA(odometry, driveTrain);
-    addCommands(galacticA);
-    addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(30), new Rotation2d()))));
-    addCommands(mp);
+
+    addCommands(
+      new ParallelDeadlineGroup(
+          new SequentialCommandGroup(
+            new RunGalacticSearchA(odometry, driveTrain),
+            new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(30), new Rotation2d()))), mp
+          )
+          , 
+      new BallPickUpCommand(1))
+    );
+
   }
 }
