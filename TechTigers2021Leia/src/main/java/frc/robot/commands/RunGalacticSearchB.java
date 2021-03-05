@@ -27,8 +27,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class RunGalacticSearchA extends CommandBase {
-  public boolean galacticRedA;
+public class RunGalacticSearchB extends CommandBase {
+  public boolean galacticRedB;
 
   NetworkTable mercyLimelightTable = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry MercyLimelightx = mercyLimelightTable.getEntry("tx");
@@ -41,7 +41,7 @@ public class RunGalacticSearchA extends CommandBase {
   private RobotOdometry odometry;
   private Drive driveTrain;
   
-  public RunGalacticSearchA(RobotOdometry odometry, Drive driveTrain) {
+  public RunGalacticSearchB(RobotOdometry odometry, Drive driveTrain) {
     this.odometry = odometry;
     this.driveTrain = driveTrain;
   }
@@ -74,18 +74,18 @@ public class RunGalacticSearchA extends CommandBase {
   public boolean isFinished() {
     if(startTimeLimelight + 0.25 < Timer.getFPGATimestamp()) {
       if(Math.abs(locationX) < 10){
-      galacticRedA = true;
+      galacticRedB = true;
       }else {
-      galacticRedA = false;
+      galacticRedB = false;
       }
-      if(galacticRedA == true){
-        RunGalacticSearchASequential.mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(120), Rotation2d.fromDegrees(0)), 0,
-        List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(90)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(150))),
-        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(150), new Rotation2d()), 0, false, false);
+      if(galacticRedB == true){
+        RunGalacticSearchASequential.mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(120), new Rotation2d()), 0,
+        List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(120))),
+        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(135), Rotation2d.fromDegrees(0)), 0, false, false);
       } else {
-        RunGalacticSearchASequential.mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(30), new Rotation2d()), 0,
-        List.of(new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(30)), new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(120))),
-        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(60), Rotation2d.fromDegrees(-30)), 0.0, false, false);
+        RunGalacticSearchASequential.mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(45), new Rotation2d()), 0,
+        List.of(new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(240), Units.inchesToMeters(120))),
+        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(30), Rotation2d.fromDegrees(-45)), 0, false, false);
       }
       return true;
     }

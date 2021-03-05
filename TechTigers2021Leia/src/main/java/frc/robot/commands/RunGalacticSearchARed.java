@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.util.Units;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class RunGalacticSearchARed extends SequentialCommandGroup {
 
-  NewRunMotionProfile mp;
+  public static NewRunMotionProfile mp;
 
   /** Creates a new RunGalacticSearchARed. */
   public RunGalacticSearchARed(RobotOdometry odometry, Drive driveTrain) {
