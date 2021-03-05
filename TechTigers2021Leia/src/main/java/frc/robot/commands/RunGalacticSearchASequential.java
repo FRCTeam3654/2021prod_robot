@@ -20,6 +20,7 @@ public class RunGalacticSearchASequential extends SequentialCommandGroup {
 
   public RunGalacticSearchASequential(RobotOdometry odometry, Drive driveTrain) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addCommands(new BallPickUpCommand(1));
     RunGalacticSearchA galacticA = new RunGalacticSearchA(odometry, driveTrain);
     addCommands(galacticA);
     addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(30), new Rotation2d()))));
