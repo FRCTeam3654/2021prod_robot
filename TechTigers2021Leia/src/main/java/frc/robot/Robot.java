@@ -86,6 +86,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    RobotContainer.drive.configureDrive(); //to reset to correct drive PID settings for teleop
   }
 
   /** This function is called periodically during operator control. */
