@@ -15,6 +15,7 @@ import frc.robot.commands.RunGalacticSearchABlue;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.RobotOdometry;
 import edu.wpi.first.wpilibj.util.Units;
@@ -40,6 +41,9 @@ public class RunGalacticSearchB extends CommandBase {
   private double startTimeLimelight = 0;
   private RobotOdometry odometry;
   private Drive driveTrain;
+  private boolean runOnce = false;
+  private Command runGalacticSearchBRed;
+  private Command runGalacticSearchBBlue;
   
   public RunGalacticSearchB(RobotOdometry odometry, Drive driveTrain) {
     this.odometry = odometry;
@@ -53,42 +57,45 @@ public class RunGalacticSearchB extends CommandBase {
     startTimeLimelight = Timer.getFPGATimestamp();
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1); //1 is force off
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1); //setting the pipeline to 1 for finding power cell
+  
+    runGalacticSearchBRed = new RunGalacticSearchBRed(odometry, driveTrain);
+    runGalacticSearchBBlue = new RunGalacticSearchBBlue(odometry, driveTrain);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    //read values periodically
-    locationX = MercyLimelightx.getDouble(0.0);
-    locationY = MercyLimelighty.getDouble(0.0);
-    locationA = MercyLimelightArea.getDouble(0.0);
+    if(runOnce == false) {
+      //read values periodically
+      locationX = MercyLimelightx.getDouble(0.0);
+      locationY = MercyLimelighty.getDouble(0.0);
+      locationA = MercyLimelightArea.getDouble(0.0);
 
-    //post to smart dashboard periodically
-    SmartDashboard.putNumber("LimelightX", locationX);
-    SmartDashboard.putNumber("LimelightY", locationY);
-    SmartDashboard.putNumber("LimelightArea", locationA);
+      //post to smart dashboard periodically
+      SmartDashboard.putNumber("LimelightX", locationX);
+      SmartDashboard.putNumber("LimelightY", locationY);
+      SmartDashboard.putNumber("LimelightArea", locationA);
+
+      if(startTimeLimelight + 0.25 < Timer.getFPGATimestamp()) {
+        if(locationY < -2 && locationA > 0.2){
+        galacticRedB = true;
+        }else {
+        galacticRedB = false;
+        }
+        SmartDashboard.putBoolean("GalacticRedB", galacticRedB);
+        if(galacticRedB == true){
+          runGalacticSearchBRed.schedule();
+        } else { 
+          runGalacticSearchBBlue.schedule();
+        }
+        runOnce = true;
+      }
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   public boolean isFinished() {
-    if(startTimeLimelight + 0.25 < Timer.getFPGATimestamp()) {
-      if(Math.abs(locationX) < 10){
-      galacticRedB = true;
-      }else {
-      galacticRedB = false;
-      }
-      if(galacticRedB == true){
-        RunGalacticSearchASequential.mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(120), new Rotation2d()), 0,
-        List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(120))),
-        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(135), Rotation2d.fromDegrees(0)), 0, false, false);
-      } else {
-        RunGalacticSearchASequential.mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(45), new Rotation2d()), 0,
-        List.of(new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(240), Units.inchesToMeters(120))),
-        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(30), Rotation2d.fromDegrees(-45)), 0, false, false);
-      }
-      return true;
-    }
   return false;
 }
 
@@ -96,6 +103,7 @@ public class RunGalacticSearchB extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1); //1 is force off LED - required by FRC
-  }
-    
+    runGalacticSearchBRed.cancel();
+    runGalacticSearchBBlue.cancel();
+  } 
 }
