@@ -33,7 +33,7 @@ public static double ballStorageTimerAndysVision = 2;
 public static double autonomousVelocity = 0.5; 
 public static double leftOverRightCompensation = .98;
 public static double talonDriveAccelerationRate = 0.3654;
-public static double ballStorageSpeed = 0.6;
+public static double ballStorageSpeed = -0.6;
 public static double effectiveTurnWheelWidth = 0.64; // meter, measured by turning the robot
 
 // ^^^ Must be experimentally derived
@@ -106,18 +106,18 @@ public static int BallStorageID2 = 15;
 
 public static int colorWheelTalonID = 9;
 
-public static int analogDistanceSensorPort1 = 0; //i changed from 1 to 2 for consistency 
-public static int digitalDistanceSensorPort2 = 1; 
-public static int digitalDistanceSensorPort3 = 2; 
+public static int analogDistanceSensorPort1 = 0; 
+public static int digitalDistanceSensorPort2 = 0; 
+public static int digitalDistanceSensorPort3 = 1; 
 //public static int digitalDistanceSensorPort4 = 3; 
-//public static int digitalDistanceSensorPort5 = 4; //oh yeah
+//public static int digitalDistanceSensorPort5 = 4; //oh yeah 
 
 public static double joystickDeadBand = 0.08;
 
 public static double autonomousTimeOut = 40; // used to be 7 second in normal auto mode but 2021 is different
 
 public static double autonomousBallShooterTimeOut = 3;
-public static double autonomousBallPickUpTimeOut = 4;
+public static double autonomousBallPickUpTimeOut = 4; // MICHELE WAS HERE
 
 public static double motionMagicTimeOut = 40;// in regular, it should time out in 4 seconds
 
