@@ -35,8 +35,8 @@ public class BallStorageCommand extends CommandBase {
     boolean stgDist1=false;
     boolean stgDist2=false;
     boolean stgDist3=false;
-    boolean stgDist4=false;
-    boolean stgDist5=false;
+    //boolean stgDist4=false;
+    //boolean stgDist5=false;
 
     if(RobotContainer.ballStorage.storageSensor1() > 1200  && !RobotContainer.oi.ballFlushButton.get()) stgDist1=true; 
     if(RobotContainer.ballStorage.storageSensor2()  && !RobotContainer.oi.ballFlushButton.get()) stgDist2=true; 
@@ -47,34 +47,35 @@ public class BallStorageCommand extends CommandBase {
     SmartDashboard.putBoolean("Distance Sensor 1", stgDist1);
     SmartDashboard.putBoolean("Distance Sensor 2", stgDist2);
     SmartDashboard.putBoolean("Distance Sensor 3", stgDist3);
-    SmartDashboard.putBoolean("Distance Sensor 4", stgDist4);
-    SmartDashboard.putBoolean("Distance Sensor 5", stgDist5);
+    //SmartDashboard.putBoolean("Distance Sensor 4", stgDist4);
+    //SmartDashboard.putBoolean("Distance Sensor 5", stgDist5);
 
     boolean stgMot1=true;
     boolean stgMot2=true;
-    boolean stgMot3=true;
-    boolean stgMot4=true;
+    //boolean stgMot3=true;
+    //boolean stgMot4=true;
     
     //If 5 then motor 4 OFF
-    if(stgDist5) {
-      stgMot4 =false; 
-      if (!stgDist1 && !stgDist2 && !stgDist3 && !stgDist4){   // if No other balls shut rest down
-        stgMot1 =false; 
-        stgMot2 =false;
-        stgMot3 =false;
-      }
-    }
+    //if(stgDist5) {
+     // stgMot4 =false; 
+     // if (!stgDist1 && !stgDist2 && !stgDist3 && !stgDist4){   // if No other balls shut rest down
+     //   stgMot1 =false; 
+     //   stgMot2 =false;
+     //   stgMot3 =false;
+     // }
+    //}
 
     //If 4 & 5 then motor 3 OFF
-    if(stgDist4 && stgDist5) {
-      stgMot3 =false; 
-      if (!stgDist1 && !stgDist2 && !stgDist3){  // if No other balls shut rest down
-        stgMot1 =false; 
-        stgMot2 =false;
-      }
-    }
+    //if(stgDist4 && stgDist5) {
+    //  stgMot3 =false; 
+    //  if (!stgDist1 && !stgDist2 && !stgDist3){  // if No other balls shut rest down
+    //    stgMot1 =false; 
+    //    stgMot2 =false;
+    //  }
+    //}
+
     //If 3 & 4 & 5 then motor 2 OFF
-    if(stgDist3 && stgDist4 && stgDist5) {  // if No other balls shut rest down
+    if(stgDist3 ) {  // if No other balls shut rest down
       stgMot2 =false;
       if (!stgDist1 && !stgDist2){
         stgMot1 =false; 
@@ -82,22 +83,22 @@ public class BallStorageCommand extends CommandBase {
     }
 
     //If 2 & 3 & 4 & 5 then motor 1 OFF
-    if(stgDist2 && stgDist3 && stgDist4 && stgDist5) {  // We are full
+    if(stgDist2 && stgDist3 ) {  // We are full
       stgMot1 =false;
     }
 
     //if nothing on  then all off
-    if(!stgDist1 && !stgDist2 && !stgDist3 && !stgDist4 && !stgDist5){
+    if(!stgDist1 && !stgDist2 && !stgDist3 ){
       stgMot1 =false; 
       stgMot2 =false;
-      stgMot3 =false;
-      stgMot4 =false;
+      //stgMot3 =false;
+      //stgMot4 =false;
     }
 
     SmartDashboard.putBoolean("Distance Motor 1", stgMot1);
     SmartDashboard.putBoolean("Distance Motor 2", stgMot2);
-    SmartDashboard.putBoolean("Distance Motor 3", stgMot3);
-    SmartDashboard.putBoolean("Distance Motor 4", stgMot4);
+  //  SmartDashboard.putBoolean("Distance Motor 3", stgMot3);
+  //  SmartDashboard.putBoolean("Distance Motor 4", stgMot4);
 
     if (!RobotContainer.oi.ballFlushButton.get()){
       if(stgMot1)  RobotContainer.ballStorage.driveBallStorage1(RobotMap.ballStorageSpeed); else RobotContainer.ballStorage.driveBallStorage1(0); 
