@@ -67,8 +67,8 @@ public static int limeLightButtonNumber = 8;
 //OPERATOR STICK
 public static int colorWheelSpinButtonNumber = 9;
 public static int climbLockLeftButtonNumber = 7;
-public static int climbLockRightButtonNumber = 8;
-public static int climbUnlockLeftButtonNumber = 5;
+public static int climbLockRightButtonNumber = 5;
+public static int climbUnlockLeftButtonNumber = 8;
 public static int climbUnlockRightButtonNumber = 6;
 public static int ballFlushButtonNumber = 2;  
 public static int colorSensorButtonNumber = 10; 

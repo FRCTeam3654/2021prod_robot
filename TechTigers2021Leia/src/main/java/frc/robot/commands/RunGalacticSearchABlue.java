@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 
 import java.util.List;
 
+import frc.robot.commands.BallPickUpCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -38,8 +40,17 @@ public class RunGalacticSearchABlue extends SequentialCommandGroup {
         new Pose2d(8.382, 1.524, Rotation2d.fromDegrees(-0.762)), 0.0, false, false);
     */
     // Add your addCommands(new FooCommand(), new BarCommand());
-    addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(30), new Rotation2d()))), mp);
-    //addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(0.762, 0.762, new Rotation2d()))), mp);
+    //addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(30), new Rotation2d()))), mp);
+    addCommands(
+            new ParallelDeadlineGroup(
+                new SequentialCommandGroup(
+                  new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(30), new Rotation2d()))), 
+                  mp
+                  )
+                  ,               
+            new BallPickUpCommand(1))
+        );
+    
   }
 
   public static void main(String[] args) {

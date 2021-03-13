@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 
 import java.util.List;
 
+import frc.robot.commands.BallPickUpCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -31,17 +33,15 @@ public class RunGalacticSearchBRed extends SequentialCommandGroup {
     mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(120), new Rotation2d()), 0,
         List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(120))),
         new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(135), Rotation2d.fromDegrees(0)), 0, false, false);
-    // Add your addCommands(new FooCommand(), new BarCommand());
-    addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(120), new Rotation2d()))), mp);
-    
-
-    /*
-    mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(0.762, 3.429, new Rotation2d()), 0,
-        List.of(new Translation2d(2.286, 3.048), new Translation2d(3.81, 1.524), new Translation2d(5.334, 3.048)),
-        new Pose2d(8.382, 3.429, Rotation2d.fromDegrees(0)), 0, false, false);
-    // Add your addCommands(new FooCommand(), new BarCommand());
-    addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(0.762, 3.429, new Rotation2d()))), mp);
-    */
+    addCommands(
+       new ParallelDeadlineGroup(
+           new SequentialCommandGroup(
+             new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(120), new Rotation2d()))), 
+                mp
+                )
+                ,               
+      new BallPickUpCommand(1))
+      ); 
   }
 
   public static void main(String[] args) {

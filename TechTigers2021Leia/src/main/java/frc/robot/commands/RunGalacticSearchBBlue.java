@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 
 import java.util.List;
 
+import frc.robot.commands.BallPickUpCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -31,17 +33,15 @@ public class RunGalacticSearchBBlue extends SequentialCommandGroup {
     mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(45), new Rotation2d()), 0,
         List.of(new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(240), Units.inchesToMeters(120))),
         new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(30), Rotation2d.fromDegrees(-45)), 0, false, false);
-    // Add your addCommands(new FooCommand(), new BarCommand());
-    addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(45), new Rotation2d()))), mp);
-    
-
-    /*
-    mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(0.762, 1.143, new Rotation2d()), 0,
-    List.of(new Translation2d(4.572, 1.524), new Translation2d(6.096, 3.048)),
-    new Pose2d(8.382, 0.762, Rotation2d.fromDegrees(-45)), 0, false, false);
-    // Add your addCommands(new FooCommand(), new BarCommand());
-     addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(0.762, 1.143, new Rotation2d()))), mp);
-     */
+    addCommands(
+       new ParallelDeadlineGroup(
+           new SequentialCommandGroup(
+             new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(45), new Rotation2d()))), 
+                mp
+                )
+                ,               
+      new BallPickUpCommand(1))
+      );
   }
 
   public static void main(String[] args) {
