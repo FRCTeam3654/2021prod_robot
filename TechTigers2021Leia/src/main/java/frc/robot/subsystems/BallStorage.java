@@ -29,8 +29,8 @@ public class BallStorage extends SubsystemBase {
  // private AnalogInput analogDistanceSensor4;
   //private DigitalInput digitalDistanceSensor5;
 
-  private TalonSRX ballStorageTalon1 = new TalonSRX (RobotMap.BallStorageID1);
-  private TalonSRX ballStorageTalon2 = new TalonSRX (RobotMap.BallStorageID2);
+  private TalonSRX ballStorageTalon1 = new TalonSRX (RobotMap.BallStorageID1); //bottom motor of belt, neg value to move belt forward
+  private TalonSRX ballStorageTalon2 = new TalonSRX (RobotMap.BallStorageID2); //motor after belt, moves ball to shooter 
  // private TalonSRX ballStorageTalon3 = new TalonSRX (RobotMap.BallStorageID3);
  // private TalonSRX ballStorageTalon4 = new TalonSRX (RobotMap.BallStorageID4);
   

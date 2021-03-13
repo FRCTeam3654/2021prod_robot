@@ -97,7 +97,6 @@ public static int ArmStatusID = 0;
 
 //public static int BallStorageID = 7;//7 on competition robot
 
-//temp numbers cuz idk what i'm doinggggggg
 public static int BallStorageID1 = 7;
 public static int BallStorageID2 = 15;
 //public static int BallStorageID3 = 16;
