@@ -48,11 +48,11 @@ public class BallShooterCommand extends CommandBase {
     {
       RobotContainer.ballShooter.shoot(true);
       RobotContainer.ballStorage.ballCounter = 0;
-      
-      if (RobotContainer.ballShooter.targetSpeed()){
+      //RobotContainer.ballShooter.targetSpeed();
+     if (RobotContainer.ballShooter.targetSpeed()){
         RobotContainer.ballStorage.driveBallStorage1(-1.0);//-1  to move belt forward //1.0
         RobotContainer.ballStorage.driveBallStorage2(-0.5);//-0.5
-      }
+    }
       
 
 

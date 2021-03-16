@@ -95,7 +95,9 @@ public class BallShooter extends SubsystemBase {
 
   public boolean targetSpeed(){
     double speed = ballShooterTalon.getSelectedSensorVelocity(RobotMap.kPIDLoopIDx);
+    SmartDashboard.putNumber("Shooter Speed 2", speed);
     double speedDifferential = speed - RobotMap.shooterSpeed_nativeUnit;
+    SmartDashboard.putNumber("Shooter Speed Differential", speedDifferential);
     if (Math.abs(speedDifferential) < RobotMap.shooterSpeedTolerance){
       return true;
     }

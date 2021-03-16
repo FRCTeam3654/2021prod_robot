@@ -130,7 +130,7 @@ public static int solenoidIn = 3;
 public static int solenoidOut = 2;
 public static double shooterSpeed_nativeUnit = 10240; //3000 rpm
 //^^ calculated by (desired rpm * 2048 / 60sec / 10)
-public static double shooterSpeedTolerance = 200;
+public static double shooterSpeedTolerance = 450;
 
 //COLOR WHEEL!
 /**4096 * 25
@@ -208,7 +208,7 @@ public final static Gains turnGainsVelocity = new Gains( 1.5, 0.0, 0.0, 0.000, 1
 public final static Gains driveGainsVelocity = new Gains( 0.1, 0.0, 0.0, 0.0451, 100, 1); //0.3 used by motion profile as position loop
 
 public final static Gains climbGainsVelocity = new Gains( 0.3, 0.0, 0.0, 0.0451, 400, 1);
-public final static Gains shooterGainsVelocity = new Gains( 0.03, 0.0, 0, 0.0451, 0, 1);
+public final static Gains shooterGainsVelocity = new Gains(0.095, 0.0, 0, 0.0451, 0, 1); //0.03
 public final static Gains turretGainsVelocity = new Gains( 0.03, 0.0, 0, 0.0451, 0, 1);
 public final static Gains kGains_MotProf = new Gains( 0.001, 0.0,  0.0, 0.0451,  100,  1.0 );// p=0.00095
 //static final Gains kGains = new Gains(0.03, 0.0, 0, 0.0451, 0, 0.5);
