@@ -21,6 +21,7 @@ public class Turret extends SubsystemBase {
   // here. Call these from Commands.
 
   private TalonFX turretTurningTalon = new TalonFX (RobotMap.turretTurningID);
+  private double turretTargetPosition;
 
   public Turret(){
     turretTurningTalon.configFactoryDefault();
@@ -52,9 +53,7 @@ public class Turret extends SubsystemBase {
 		turretTurningTalon.configMotionCruiseVelocity(500, RobotMap.pidLoopTimeout);
 		turretTurningTalon.configMotionAcceleration(500, RobotMap.pidLoopTimeout);
 
-		/* Zero the sensor once on robot boot up */
-		turretTurningTalon.setSelectedSensorPosition(0, RobotMap.kPIDLoopIDx, RobotMap.pidLoopTimeout);
-    
+		/* Zero the sensor once on robot boot up */    
     zeroSensor();
   }
   
@@ -64,6 +63,13 @@ public class Turret extends SubsystemBase {
   }
 
   public void turretTurning(double targetPos) {
+    if(targetPos > 5000){
+      targetPos = 5000;
+    }
+    if(targetPos < -5000){
+      targetPos = -5000;  //adjust 5000 based on experimental limits 
+    }
+    turretTargetPosition = targetPos;
     turretTurningTalon.set(ControlMode.MotionMagic, targetPos);
     System.out.println(turretTurningTalon.getSelectedSensorVelocity(0) + ",  " + turretTurningTalon.getClosedLoopError(0) + ",  " + turretTurningTalon.getSelectedSensorPosition(0));
   }
@@ -76,10 +82,14 @@ public class Turret extends SubsystemBase {
     turretTurningTalon.set(ControlMode.PercentOutput, percentOutput);
   }
 
+  public boolean atTargetPosition(){
+    if(Math.abs(turretTargetPosition - (double)turretTickCount()) <= 100){ //deadband for position of turret when shooting
+      return true;
+    }
+    return false;
+  }
   
   @Override
   public void periodic() {
-   
-   
   }
 }

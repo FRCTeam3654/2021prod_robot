@@ -26,7 +26,6 @@ public class DriveTargetCommand extends CommandBase {
   private double readJoeyX = 2;
   private double readJoeyY = 0;
   private double startTimeLimelight = 0;
-  
 
   public DriveTargetCommand() {
     addRequirements(RobotContainer.drive);
@@ -59,7 +58,7 @@ public class DriveTargetCommand extends CommandBase {
     turn90X = readJoeyX * RobotMap.LimelightJoeyX; // A little drive forward
     turn90X = Math.min(0.1, turn90X);
     turn90X = Math.max(-0.1, turn90X);
-    turn90Y =(readJoeyY - 20)/150;   //ratio to  determinte how much to turn based on limelight Input
+    turn90Y = (readJoeyY - 20)/150;   //ratio to  determinte how much to turn based on limelight Input
     turn90Y = Math.min(0.3, turn90Y);
     turn90Y = Math.max(-0.3, turn90Y);
     SmartDashboard.putNumber("LimelightSpeed", turn90X);
