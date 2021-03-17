@@ -38,7 +38,7 @@ public class BallFlushCommand extends CommandBase {
     {
       //Robot.ballShooter.shoot(true);
       RobotContainer.ballStorage.ballCounter = 0;
-      RobotContainer.ballStorage.driveBallStorage1(-0.9);
+      RobotContainer.ballStorage.driveBallStorage1(0.9); //was -0.9
       RobotContainer.ballStorage.driveBallStorage2(-0.9);
     }
     else

@@ -18,6 +18,9 @@ import frc.robot.RobotContainer;
 public class BallStorageCommand extends CommandBase {
   private double startTimer = 0;
   private boolean isBallMoving =false;
+  boolean isBeltRunningLastCycle = false;
+  double beltTimer = 0.0;
+
   public BallStorageCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -37,6 +40,7 @@ public class BallStorageCommand extends CommandBase {
     boolean stgDist3=false;
     //boolean stgDist4=false;
     //boolean stgDist5=false;
+    
 
     if(RobotContainer.ballStorage.storageSensor1() > 1200  && !RobotContainer.oi.ballFlushButton.get()) stgDist1=true; 
     if(RobotContainer.ballStorage.storageSensor2()  && !RobotContainer.oi.ballFlushButton.get()) stgDist2=true; 
@@ -101,7 +105,34 @@ public class BallStorageCommand extends CommandBase {
   //  SmartDashboard.putBoolean("Distance Motor 4", stgMot4);
 
     if (!RobotContainer.oi.ballFlushButton.get()){
-      if(stgMot1)  RobotContainer.ballStorage.driveBallStorage1(RobotMap.ballStorageSpeed); else RobotContainer.ballStorage.driveBallStorage1(0); 
+
+      if(stgMot1) { 
+        
+        RobotContainer.ballStorage.driveBallStorage1(RobotMap.ballStorageSpeed); 
+        isBeltRunningLastCycle = true;
+        beltTimer = Timer.getFPGATimestamp();
+      }
+      else {
+        
+        
+        if (isBeltRunningLastCycle == true){
+          if (Timer.getFPGATimestamp() - beltTimer > 2.0){
+            RobotContainer.ballStorage.driveBallStorage1(0);
+            isBeltRunningLastCycle = false;
+          }
+          else 
+          {
+          RobotContainer.ballStorage.driveBallStorage1(RobotMap.ballStorageSpeed);
+          }
+
+        }
+        else 
+        {
+          RobotContainer.ballStorage.driveBallStorage1(0);
+        }
+      
+      }
+
       if(stgMot2)  RobotContainer.ballStorage.driveBallStorage2(RobotMap.ballStorageSpeed); else RobotContainer.ballStorage.driveBallStorage2(0); 
      // if(stgMot3)  RobotContainer.ballStorage.driveBallStorage3(RobotMap.ballStorageSpeed); else RobotContainer.ballStorage.driveBallStorage3(0); 
      // if(stgMot4)  RobotContainer.ballStorage.driveBallStorage4(RobotMap.ballStorageSpeed); else RobotContainer.ballStorage.driveBallStorage4(0); 

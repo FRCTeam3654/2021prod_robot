@@ -62,7 +62,7 @@ public static int turnLeft90ButtonNumber = 3;
 public static int turnRight90ButtonNumber = 4; 
 public static int turnLeft180ButtonNumber = 5; 
 public static int turnRight180ButtonNumber = 6;
-public static int limeLightButtonNumber = 8; 
+public static int limeLightButtonNumber = 8; //not programmed properly 3/17/21
 
 //OPERATOR STICK
 public static int colorWheelSpinButtonNumber = 9;
@@ -115,7 +115,7 @@ public static double joystickDeadBand = 0.08;
 
 public static double autonomousTimeOut = 40; // used to be 7 second in normal auto mode but 2021 is different
 
-public static double autonomousBallShooterTimeOut = 3;
+public static double autonomousBallShooterTimeOut = 10;
 public static double autonomousBallPickUpTimeOut = 4; // MICHELE WAS HERE
 
 public static double motionMagicTimeOut = 40;// in regular, it should time out in 4 seconds
@@ -128,7 +128,7 @@ public static double radianConversionToDegree = 57.2958;
 public static double ballPickUpSpeed = 0.5;// used to 0.4
 public static int solenoidIn = 3;
 public static int solenoidOut = 2;
-public static double shooterSpeed_nativeUnit = 10240; //3000 rpm
+public static double shooterSpeed_nativeUnit = 15360; //4500 rpm
 //^^ calculated by (desired rpm * 2048 / 60sec / 10)
 public static double shooterSpeedTolerance = 450;
 
