@@ -83,7 +83,7 @@ public class Turret extends SubsystemBase {
   }
 
   public boolean atTargetPosition(){
-    if(Math.abs(turretTargetPosition - (double)turretTickCount()) <= 100){ //deadband for position of turret when shooting
+    if(Math.abs(turretTargetPosition - (double)turretTickCount()) <= 400){ //100 //deadband for position of turret when shooting
       return true;
     }
     return false;

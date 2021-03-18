@@ -137,6 +137,7 @@ public static double shooterSpeedTolerance = 450;
 *25 is minimum times small wheel should turn for big wheel turning 3 times
 **/
 public static int turretTickAmount = 20000; //82,944 ticks 1:81 gear ratio for half turn
+public static double turretTickchangemultiplier = 458.4; //tick count per degree =82944/181
 public static int colorWheelSpinTickAmount = 102400;
 public static int colorWheelCruiseVelocity = 4000;
 public static int colorWheelAcceleration = 4000;

@@ -48,6 +48,7 @@ public class BallShooterCommand extends CommandBase {
     addRequirements(RobotContainer.ballStorage);
     addRequirements(RobotContainer.turret);
     _mode.set(mode);
+    //turret=turny thing, shooter=spinny thing, storage=pushy thing -tory<3
   }
   // Called just before this Command runs the first time
   @Override
@@ -62,6 +63,9 @@ public class BallShooterCommand extends CommandBase {
   @Override
   public void execute() {
 
+      double currentTickCount;
+
+    double  turretTickChange;
   if (RobotContainer.oi.ballShooterButton.get() || _mode.get() == 1){
     RobotContainer.ballShooter.shoot(true);
       
@@ -76,12 +80,15 @@ public class BallShooterCommand extends CommandBase {
     SmartDashboard.putNumber("LimelightArea", readJoeyArea);
 
 
-
+      turretTickChange = readJoeyY * RobotMap.turretTickchangemultiplier;
+      currentTickCount = (double)RobotContainer.turret.turretTickCount();
+      //figure out positive or negative
+      RobotContainer.turret.turretTurning (currentTickCount + turretTickChange);
 
 
     if (RobotContainer.ballShooter.targetSpeed() && RobotContainer.turret.atTargetPosition()){
       RobotContainer.ballStorage.driveBallStorage1(-1.0);//-1  to move belt forward //1.0
-      RobotContainer.ballStorage.driveBallStorage2(-0.5);//-0.5
+      RobotContainer.ballStorage.driveBallStorage2(-0.8);//-0.5
     }
    
       if (!ballShooterAutonomousFlag){
