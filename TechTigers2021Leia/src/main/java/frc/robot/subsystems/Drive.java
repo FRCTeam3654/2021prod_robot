@@ -145,12 +145,12 @@ public class Drive extends SubsystemBase {
       rightFrontTalon.selectProfileSlot(0,0);
 
       leftFrontTalon.config_kF(0,0.045,30);// 0.045
-      leftFrontTalon.config_kP(0,0.049,30); //0.095
+      leftFrontTalon.config_kP(0,0.049,30); //0.095 //0.049
       leftFrontTalon.config_kI(0,0,30);
       leftFrontTalon.config_kD(0,0,30);
 
       rightFrontTalon.config_kF(0,0.045,30); // 0.045
-      rightFrontTalon.config_kP(0,0.049,30); //0.095
+      rightFrontTalon.config_kP(0,0.049,30); //0.095 //0.049
       rightFrontTalon.config_kI(0,0,30);
       rightFrontTalon.config_kD(0,0,30);
       

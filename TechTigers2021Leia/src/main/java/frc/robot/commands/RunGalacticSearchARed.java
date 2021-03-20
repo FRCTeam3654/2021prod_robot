@@ -30,19 +30,20 @@ public class RunGalacticSearchARed extends SequentialCommandGroup {
     // new Pose2d(30, 90, Rotation2d.fromDegrees(10)) <- center start
     
     // changed: ending speed from 2.5 m to 0 for now,   changed starting angle -25 to 0
-    mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(120), Rotation2d.fromDegrees(0)), 0,
-        List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(90)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(150))),
+    mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), Rotation2d.fromDegrees(0)), 0,
+        List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(90)), new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(75)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(50)), new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(40)), new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(90)), new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(145))),
         new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(150), new Rotation2d()), 0, false, false);
-        
+       
     addCommands(
        new ParallelDeadlineGroup(
            new SequentialCommandGroup(
-             new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(120), new Rotation2d()))), 
+             new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(90), new Rotation2d()))), 
                 mp
                 )
                 ,               
       new BallPickUpCommand(1))
       );
+      
   }
 
   public static void main(String[] args) {
