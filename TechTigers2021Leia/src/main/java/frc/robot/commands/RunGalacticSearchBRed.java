@@ -31,8 +31,8 @@ public class RunGalacticSearchBRed extends SequentialCommandGroup {
   
     // changed: ending speed to 0 for now,  need change intital Y: 120 or 135?  changed to 120
     mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(120), new Rotation2d()), 0,
-        List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(120))),
-        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(135), Rotation2d.fromDegrees(0)), 0, false, false);
+        List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(110), Units.inchesToMeters(105)), new Translation2d(Units.inchesToMeters(160), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(170), Units.inchesToMeters(55)), new Translation2d(Units.inchesToMeters(187), Units.inchesToMeters(90)), new Translation2d(Units.inchesToMeters(220), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(245), Units.inchesToMeters(130))),
+        new Pose2d(Units.inchesToMeters(340), Units.inchesToMeters(135), Rotation2d.fromDegrees(0)), 0, false, false);
     addCommands(
        new ParallelDeadlineGroup(
            new SequentialCommandGroup(
