@@ -31,8 +31,8 @@ public class RunGalacticSearchABlue extends SequentialCommandGroup {
     
     // changed ending speed from 2.5 m/s to 0 for now
     mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), new Rotation2d()), 0,
-        List.of(new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(35)), new Translation2d(Units.inchesToMeters(217), Units.inchesToMeters(120))),
-        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(60), Rotation2d.fromDegrees(-30)), 0.0, false, false);
+        List.of(new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(35)), new Translation2d(Units.inchesToMeters(220), Units.inchesToMeters(125)), new Translation2d(Units.inchesToMeters(270), Units.inchesToMeters(90))),
+        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(55), Rotation2d.fromDegrees(-40)), 0.0, false, false);
         
     /*
     mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(0.762, 0.762, new Rotation2d()), 0,
