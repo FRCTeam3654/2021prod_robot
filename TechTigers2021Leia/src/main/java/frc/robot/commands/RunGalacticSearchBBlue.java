@@ -30,13 +30,13 @@ public class RunGalacticSearchBBlue extends SequentialCommandGroup {
     // new Pose2d(30, 90, Rotation2d.fromDegrees(-20)) <- center start
     
     // changed: ending speend to 0,  and initial postion from 65 to 45  (addCommands)
-    mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(45), new Rotation2d()), 0,
-        List.of(new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(240), Units.inchesToMeters(120))),
-        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(30), Rotation2d.fromDegrees(-45)), 0, false, false);
+    mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(120), new Rotation2d()), 0,
+        List.of(new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(240), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(270), Units.inchesToMeters(125)), new Translation2d(Units.inchesToMeters(290), Units.inchesToMeters(90)), new Translation2d(Units.inchesToMeters(300), Units.inchesToMeters(60))),
+        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(15), Rotation2d.fromDegrees(-45)), 0, false, false);
     addCommands(
        new ParallelDeadlineGroup(
            new SequentialCommandGroup(
-             new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(45), new Rotation2d()))), 
+             new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(120), new Rotation2d()))), 
                 mp
                 )
                 ,               

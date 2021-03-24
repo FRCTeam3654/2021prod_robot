@@ -41,7 +41,7 @@ public class RunGalacticSearchBRed extends SequentialCommandGroup {
                 )
                 ,               
       new BallPickUpCommand(1))
-      ); 
+      );
   }
 
   public static void main(String[] args) {
