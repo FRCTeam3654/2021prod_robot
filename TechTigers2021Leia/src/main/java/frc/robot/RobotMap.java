@@ -125,7 +125,7 @@ public static int maximumVelocityFalcon = 21000;
 public static double radianConversionToDegree = 57.2958;
 
 //BALL INTAKE/SHOOTER
-public static double ballPickUpSpeed = 0.69;// 0.5; //used to 0.4
+public static double ballPickUpSpeed = 0.8; //1; //0.9;//0.69// 0.5; //used to 0.4
 public static int solenoidIn = 3;
 public static int solenoidOut = 2;
 public static double shooterSpeed_nativeUnit = 15360; //4500 rpm
