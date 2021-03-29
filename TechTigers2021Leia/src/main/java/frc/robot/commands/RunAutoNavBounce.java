@@ -71,7 +71,7 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
      
     //  changed: 90 -> 450, 180 -> 540  ( added 360 degree to match pigeon reading)
     mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(280), Units.inchesToMeters(150), Rotation2d.fromDegrees(450)), 0,
-                List.of(new Translation2d(Units.inchesToMeters(290), Units.inchesToMeters(100))), new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(100), Rotation2d.fromDegrees(540)), 0, true,
+                List.of(new Translation2d(Units.inchesToMeters(290), Units.inchesToMeters(100))), new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(85), Rotation2d.fromDegrees(520)), 0, true,
                 false);
     
 

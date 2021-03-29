@@ -24,16 +24,37 @@ import edu.wpi.first.wpilibj.util.Units;
 public class RunGalacticSearchBRed extends SequentialCommandGroup {
 
   NewRunMotionProfile mp;
+  NewRunMotionProfile mp1;
+  NewRunMotionProfile mp2;
+  NewRunMotionProfile mp3;
+  NewRunMotionProfile mp4;
 
   /** Creates a new RunGalacticSearchBRed. */
   public RunGalacticSearchBRed(RobotOdometry odometry, Drive driveTrain) {
     // new Pose2d(30, 90, Rotation2d.fromDegrees(35)) <- center start
   
     // changed: ending speed to 0 for now,  need change intital Y: 120 or 135?  changed to 120
-    mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(120), new Rotation2d()), 0,
+    /*mp = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(120), new Rotation2d()), 0,
         List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(110), Units.inchesToMeters(105)), new Translation2d(Units.inchesToMeters(160), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(170), Units.inchesToMeters(55)), new Translation2d(Units.inchesToMeters(187), Units.inchesToMeters(90)), new Translation2d(Units.inchesToMeters(220), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(245), Units.inchesToMeters(130))),
         new Pose2d(Units.inchesToMeters(340), Units.inchesToMeters(135), Rotation2d.fromDegrees(0)), 0, false, false);
-    addCommands(
+    */
+    mp1 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(120), new Rotation2d()), 0,
+        List.of(),
+        new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(120), Rotation2d.fromDegrees(0)), 0, false, false);
+
+     mp2 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(120), Rotation2d.fromDegrees(0)), 0,
+        List.of( new Translation2d(Units.inchesToMeters(110), Units.inchesToMeters(105))),
+        new Pose2d(Units.inchesToMeters(150), Units.inchesToMeters(60), Rotation2d.fromDegrees(0)), 0, false, false);
+
+    mp3 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(150), Units.inchesToMeters(60), Rotation2d.fromDegrees(0)), 0,
+        List.of(   new Translation2d(Units.inchesToMeters(170), Units.inchesToMeters(55)), new Translation2d(Units.inchesToMeters(187), Units.inchesToMeters(90))), 
+        new Pose2d(Units.inchesToMeters(210), Units.inchesToMeters(120), Rotation2d.fromDegrees(0)), 0, false, false);
+
+    mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(210), Units.inchesToMeters(120), Rotation2d.fromDegrees(0)), 0,
+        List.of(),
+        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(120), Rotation2d.fromDegrees(0)), 0, false, false);
+    
+    /*    addCommands(
        new ParallelDeadlineGroup(
            new SequentialCommandGroup(
              new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(120), new Rotation2d()))), 
@@ -42,10 +63,20 @@ public class RunGalacticSearchBRed extends SequentialCommandGroup {
                 ,               
       new BallPickUpCommand(1))
       );
+      */
+      addCommands(
+        new ParallelDeadlineGroup(
+            new SequentialCommandGroup(
+              new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(120), new Rotation2d()))), 
+                 mp1, mp2, mp3, mp4
+                 )
+                 ,               
+       new BallPickUpCommand(1))
+       );
   }
 
   public static void main(String[] args) {
     RunGalacticSearchBRed cmd = new RunGalacticSearchBRed(null, null);
-    cmd.mp.visualize(80, List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(120))));
+    cmd.mp4.visualize(80, List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(120))));
   }
 }

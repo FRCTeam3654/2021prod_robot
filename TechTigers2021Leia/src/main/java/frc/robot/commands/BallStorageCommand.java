@@ -116,7 +116,9 @@ public class BallStorageCommand extends CommandBase {
         
         
         if (isBeltRunningLastCycle == true){
-          if (Timer.getFPGATimestamp() - beltTimer > 2.0){
+          //if (Timer.getFPGATimestamp() - beltTimer > 0.01){
+            if (Timer.getFPGATimestamp() - beltTimer > 2 || stgMot2 == false){
+
             RobotContainer.ballStorage.driveBallStorage1(0);
             isBeltRunningLastCycle = false;
           }
