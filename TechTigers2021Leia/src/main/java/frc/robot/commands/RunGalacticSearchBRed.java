@@ -44,15 +44,15 @@ public class RunGalacticSearchBRed extends SequentialCommandGroup {
 
      mp2 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(120), Rotation2d.fromDegrees(0)), 0,
         List.of( new Translation2d(Units.inchesToMeters(110), Units.inchesToMeters(105))),
-        new Pose2d(Units.inchesToMeters(150), Units.inchesToMeters(60), Rotation2d.fromDegrees(0)), 0, false, false);
+        new Pose2d(Units.inchesToMeters(160), Units.inchesToMeters(70), Rotation2d.fromDegrees(0)), 0, false, false);
 
-    mp3 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(150), Units.inchesToMeters(60), Rotation2d.fromDegrees(0)), 0,
-        List.of(   new Translation2d(Units.inchesToMeters(170), Units.inchesToMeters(55)), new Translation2d(Units.inchesToMeters(187), Units.inchesToMeters(90))), 
+    mp3 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(160), Units.inchesToMeters(70), Rotation2d.fromDegrees(0)), 0,
+        List.of( new Translation2d(Units.inchesToMeters(187), Units.inchesToMeters(90))), 
         new Pose2d(Units.inchesToMeters(210), Units.inchesToMeters(120), Rotation2d.fromDegrees(0)), 0, false, false);
 
     mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(210), Units.inchesToMeters(120), Rotation2d.fromDegrees(0)), 0,
         List.of(),
-        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(120), Rotation2d.fromDegrees(0)), 0, false, false);
+        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(110), Rotation2d.fromDegrees(0)), 0, false, false);
     
     /*    addCommands(
        new ParallelDeadlineGroup(
@@ -77,6 +77,6 @@ public class RunGalacticSearchBRed extends SequentialCommandGroup {
 
   public static void main(String[] args) {
     RunGalacticSearchBRed cmd = new RunGalacticSearchBRed(null, null);
-    cmd.mp4.visualize(80, List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(120))));
+    cmd.mp2.visualize(80, List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(120)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(120))));
   }
 }

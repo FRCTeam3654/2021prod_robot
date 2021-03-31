@@ -40,21 +40,21 @@ public class RunGalacticSearchARed extends SequentialCommandGroup {
     */
       mp1 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(30), Units.inchesToMeters(90), Rotation2d.fromDegrees(0)), 0,
         List.of(),
-        new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(90), new Rotation2d()), 0, false, false);
+        new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(90), new Rotation2d()), 0.3, false, false);
 
       mp2 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(90), Rotation2d.fromDegrees(0)), 0,
         List.of( new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(75))),
-        new Pose2d(Units.inchesToMeters(150), Units.inchesToMeters(60), Rotation2d.fromDegrees(45)), 0, false, false);
+        new Pose2d(Units.inchesToMeters(170), Units.inchesToMeters(74), Rotation2d.fromDegrees(45)), 0.3, false, false);
 
-      mp3 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(150), Units.inchesToMeters(60), Rotation2d.fromDegrees(45)), 0,
+      mp3 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(170), Units.inchesToMeters(60), Rotation2d.fromDegrees(45)), 0,
         List.of(),
-        new Pose2d(Units.inchesToMeters(180), Units.inchesToMeters(150), new Rotation2d()), 0, false, false);
+        new Pose2d(Units.inchesToMeters(195), Units.inchesToMeters(150), new Rotation2d()), 0.3, false, false);
 
-      mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(180), Units.inchesToMeters(150), Rotation2d.fromDegrees(0)), 0,
+      mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(195), Units.inchesToMeters(150), Rotation2d.fromDegrees(0)), 0,
         List.of(),
-        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(150), new Rotation2d()), 0, false, false);
+        new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(150), new Rotation2d()), 1.5, false, false);
        
-   /* addCommands(
+    /*addCommands(
        new ParallelDeadlineGroup(
            new SequentialCommandGroup(
              new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(90), new Rotation2d()))), 
@@ -79,6 +79,6 @@ public class RunGalacticSearchARed extends SequentialCommandGroup {
   public static void main(String[] args) {
 
     RunGalacticSearchARed cmd = new RunGalacticSearchARed(null, null);
-    cmd.mp4.visualize(80, List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(90)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(150))));
+    cmd.mp3.visualize(80, List.of(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(90)), new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)), new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(150))));
   }
 }
