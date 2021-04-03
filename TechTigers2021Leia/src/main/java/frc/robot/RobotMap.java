@@ -47,7 +47,7 @@ public final static double kNeutralDeadband = 0.001; // testing MP
 public static double leftPercentOutput = 0.9;
 public static double rightPercentOutput = 0.9;
 public static double nonTurboMultiplierTurn = 0.15;
-public static double nonTurboMultiplierForward = 0.32; 
+public static double nonTurboMultiplierForward = 0.38; //.32, .40 
 
 public static boolean driveClosedLoopMode = false;
 
