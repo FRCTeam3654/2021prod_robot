@@ -32,7 +32,7 @@ public static double limeLightTimeout = 2;
 public static double ballStorageTimerAndysVision = 2;
 public static double autonomousVelocity = 0.5; 
 public static double leftOverRightCompensation = .98;
-public static double talonDriveAccelerationRate = 0.3654;
+public static double talonDriveAccelerationRate = 0.1654;//0.3654
 public static double ballStorageSpeed = -0.6;
 public static double effectiveTurnWheelWidth = 0.64; // meter, measured by turning the robot
 

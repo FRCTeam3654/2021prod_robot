@@ -42,15 +42,15 @@ public class RunGalacticSearchABlue extends SequentialCommandGroup {
         List.of(),
         new Pose2d(Units.inchesToMeters(195), Units.inchesToMeters(50), Rotation2d.fromDegrees(45)), 0.3, false, false);
 
-      mp2 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(195), Units.inchesToMeters(50), Rotation2d.fromDegrees(45)), 0,
-        List.of(),
-        new Pose2d(Units.inchesToMeters(225), Units.inchesToMeters(120), Rotation2d.fromDegrees(-15)), 0.3, false, false);
+      mp2 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(195), Units.inchesToMeters(50), Rotation2d.fromDegrees(45)), 0.3,
+        List.of(new Translation2d(Units.inchesToMeters(190), Units.inchesToMeters(90))),
+        new Pose2d(Units.inchesToMeters(215), Units.inchesToMeters(110), Rotation2d.fromDegrees(-15)), 0.1, false, false);
 
-      mp3 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(225), Units.inchesToMeters(120), Rotation2d.fromDegrees(-15)), 0,
+      mp3 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(225), Units.inchesToMeters(120), Rotation2d.fromDegrees(-15)), 0.1,
         List.of(),
-        new Pose2d(Units.inchesToMeters(270), Units.inchesToMeters(90), Rotation2d.fromDegrees(-45)), 0.3, false, false);
+        new Pose2d(Units.inchesToMeters(270), Units.inchesToMeters(105), Rotation2d.fromDegrees(-45)), 0.3, false, false);
 
-      mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(270), Units.inchesToMeters(90), Rotation2d.fromDegrees(-45)), 0,
+      mp4 = new NewRunMotionProfile(driveTrain, odometry, new Pose2d(Units.inchesToMeters(270), Units.inchesToMeters(105), Rotation2d.fromDegrees(-45)), 0.3,
         List.of(),
         new Pose2d(Units.inchesToMeters(330), Units.inchesToMeters(50), Rotation2d.fromDegrees(-45)), 1.3, false, false);
         
@@ -67,7 +67,7 @@ public class RunGalacticSearchABlue extends SequentialCommandGroup {
             new BallPickUpCommand(1))
         );
         */
-    /*
+    
         addCommands(
             new ParallelDeadlineGroup(
                 new SequentialCommandGroup(
@@ -77,7 +77,6 @@ public class RunGalacticSearchABlue extends SequentialCommandGroup {
                   ,               
             new BallPickUpCommand(1))
         );
-        */
   }
 
   public static void main(String[] args) {
