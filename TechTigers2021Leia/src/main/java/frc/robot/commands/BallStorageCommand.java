@@ -82,9 +82,9 @@ public class BallStorageCommand extends CommandBase {
     //If 3 & 4 & 5 then motor 2 OFF
     if(stgDist3 ) {  // if No other balls shut rest down
       stgMot2 =false;
-      if (!stgDist1 && !stgDist2){
-        stgMot1 =false; 
-      }
+      //if (!stgDist1 && !stgDist2){
+        //stgMot1 =false; 
+      //}
     }
 
     //If 2 & 3 & 4 & 5 then motor 1 OFF
@@ -94,6 +94,13 @@ public class BallStorageCommand extends CommandBase {
 
     //if nothing on  then all off
     if(!stgDist1 && !stgDist2 && !stgDist3 ){
+      stgMot1 =false; 
+      stgMot2 =false;
+      //stgMot3 =false;
+      //stgMot4 =false;
+    }
+    //if sensor 1 off then all off
+    if(!stgDist1){
       stgMot1 =false; 
       stgMot2 =false;
       //stgMot3 =false;
