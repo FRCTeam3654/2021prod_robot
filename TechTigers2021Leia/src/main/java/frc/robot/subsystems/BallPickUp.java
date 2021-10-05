@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.InvertType; 
+//import com.ctre.phoenix.motorcontrol.InvertType; 
 import com.ctre.phoenix.motorcontrol.ControlMode; 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+//import com.ctre.phoenix.motorcontrol.NeutralMode;
+//import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Solenoid;
+//import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 
@@ -89,7 +89,7 @@ public void moveArm(boolean Izzys_boolean){
     SmartDashboard.putNumber("BallPickUpPercentVoltage", percentOutput);
   }
 
-  private TalonSRX BallPickUpID = new TalonSRX (RobotMap.BallPickUpID);
+  
 
   @Override
   public void periodic() {

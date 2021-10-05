@@ -43,7 +43,7 @@ public class RobotOdometry extends SubsystemBase {
 
   @Override
   public void periodic() {
-    Pose2d pose = updateOdometry();
+    updateOdometry();
   }
 
   private Pose2d updateOdometry() {

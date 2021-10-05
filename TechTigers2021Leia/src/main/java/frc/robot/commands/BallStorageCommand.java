@@ -8,7 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
+//import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -49,6 +49,7 @@ public class BallStorageCommand extends CommandBase {
     //if(RobotContainer.ballStorage.storageSensor5() && !RobotContainer.oi.ballFlushButton.get()) stgDist5=true; 
 
     SmartDashboard.putBoolean("Distance Sensor 1", stgDist1);
+    SmartDashboard.putNumber("Distance Sensor 1 Analog",RobotContainer.ballStorage.storageSensor1());
     SmartDashboard.putBoolean("Distance Sensor 2", stgDist2);
     SmartDashboard.putBoolean("Distance Sensor 3", stgDist3);
     //SmartDashboard.putBoolean("Distance Sensor 4", stgDist4);
