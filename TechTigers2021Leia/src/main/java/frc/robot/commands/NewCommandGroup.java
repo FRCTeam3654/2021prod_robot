@@ -12,6 +12,7 @@ import java.util.List;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.RobotOdometry;
 import edu.wpi.first.wpilibj.util.Units;
@@ -44,7 +45,7 @@ public class NewCommandGroup extends SequentialCommandGroup {
         new Pose2d(8.382, 1.524, Rotation2d.fromDegrees(-0.762)), 0.0, false, false);
     */
     // Add your addCommands(new FooCommand(), new BarCommand());
-    addCommands(new BallShooterCommand(1), new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(30), new Rotation2d()))), mp);
+    addCommands(new WaitCommand(2), new BallShooterCommand(1),  new InstantCommand(() -> odometry.setPosition(new Pose2d( Units.inchesToMeters(30),  Units.inchesToMeters(30), new Rotation2d()))), mp);
     //addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(0.762, 0.762, new Rotation2d()))), mp);
   }
 

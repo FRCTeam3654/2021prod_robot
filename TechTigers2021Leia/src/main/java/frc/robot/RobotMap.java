@@ -115,7 +115,7 @@ public static double joystickDeadBand = 0.08;
 
 public static double autonomousTimeOut = 40; // used to be 7 second in normal auto mode but 2021 is different
 
-public static double autonomousBallShooterTimeOut = 10;
+public static double autonomousBallShooterTimeOut = 8;
 public static double autonomousBallPickUpTimeOut = 25; // MICHELE WAS HERE
 
 public static double motionMagicTimeOut = 40;// in regular, it should time out in 4 seconds
