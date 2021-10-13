@@ -69,7 +69,9 @@ public class RobotContainer {
     ballStorage.setDefaultCommand( new BallStorageCommand());
     ballPickUp.setDefaultCommand(new BallPickUpCommand());
 
-    autoChooser.setDefaultOption("AutoNav (Barrel Racing)", new RunAutoNavBarrelRacing(odometry, drive));
+    autoChooser.setDefaultOption("Auto (Shot and Move)", new NewCommandGroup(odometry, drive));
+    
+    //autoChooser.setDefaultOption("AutoNav (Barrel Racing)", new RunAutoNavBarrelRacing(odometry, drive));
     
     autoChooser.addOption("Galactic Search (A)", new RunGalacticSearchA(odometry, drive));
     autoChooser.addOption("Galactic Search (B)", new RunGalacticSearchB(odometry, drive));
