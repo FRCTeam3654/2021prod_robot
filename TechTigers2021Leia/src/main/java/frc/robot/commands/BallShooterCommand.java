@@ -83,10 +83,10 @@ public class BallShooterCommand extends CommandBase {
       turretTickChange = readJoeyY * RobotMap.turretTickchangemultiplier;
       currentTickCount = (double)RobotContainer.turret.turretTickCount();
       //figure out positive or negative
-      RobotContainer.turret.turretTurning (currentTickCount + turretTickChange);
+     // RobotContainer.turret.turretTurning (currentTickCount + turretTickChange);
 
-
-    if (RobotContainer.ballShooter.targetSpeed() && RobotContainer.turret.atTargetPosition()){
+    // if (RobotContainer.ballShooter.targetSpeed() && RobotContainer.turret.atTargetPosition()){
+    if (RobotContainer.ballShooter.targetSpeed() ){
       RobotContainer.ballStorage.driveBallStorage1(-1.0);//-1  to move belt forward //1.0
       RobotContainer.ballStorage.driveBallStorage2(-0.8);//-0.5
     }
