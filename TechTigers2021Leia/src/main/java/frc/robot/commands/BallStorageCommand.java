@@ -125,14 +125,18 @@ public class BallStorageCommand extends CommandBase {
         
         if (isBeltRunningLastCycle == true){
           //if (Timer.getFPGATimestamp() - beltTimer > 0.01){
-            if (Timer.getFPGATimestamp() - beltTimer > 2 || stgMot2 == false){
+          //  if (Timer.getFPGATimestamp() - beltTimer > 2 || stgMot2 == false){
 
+          // give 2 seconds to move ball up a little only if not in shooting mode 
+          if (Timer.getFPGATimestamp() - beltTimer > 2 && !RobotContainer.oi.ballShooterButton.get() ){
             RobotContainer.ballStorage.driveBallStorage1(0);
             isBeltRunningLastCycle = false;
           }
           else 
           {
-          RobotContainer.ballStorage.driveBallStorage1(RobotMap.ballStorageSpeed);
+            if( !RobotContainer.oi.ballShooterButton.get() ) {
+              RobotContainer.ballStorage.driveBallStorage1(RobotMap.ballStorageSpeed);
+            }
           }
 
         }
